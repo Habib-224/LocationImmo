@@ -1,0 +1,28 @@
+<div class="Container">
+  <div class="Section_Contenu">
+    <div class="Inscription">
+      <div class="Formulaire">
+        <h3>Se connecter</h3>
+        <p>
+          Vous n'avez pas de compte? <span id="Compte">Creer un Compte</span>
+        </p>
+        <form action="" (ngSubmit)="login()">
+          <div class="formGroup">
+            <label for="">Votre e-mail:</label><br />
+            <input type="text" name="login" [(ngModel)]="emailLogin" />
+          </div>
+          <div class="formGroup">
+            <label for="">Votre Mot de passe:</label><br />
+            <input type="text" name="password" [(ngModel)]="PasswordLogin" />
+          </div>
+          <button type="submit" style="background-color: black; color: white">
+            Se Connecter
+          </button>
+          <p id="forgot">Mot de passe Oublié?</p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</div>

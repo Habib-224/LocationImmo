@@ -1,0 +1,169 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --couleur-principale: #1b9476;
+  --couleur-texte: #ffd100;
+  --couleur-fond: #133e33;
+  --couleur-footer: #d9d9d9;
+}
+
+/*---------------Debut Section Header-------------- */
+.navbar {
+  background-color: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 1.3em;
+}
+
+.navbar-brand img {
+  width: 150px;
+}
+
+.navbar ul li:last-child {
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+}
+
+.navbar ul li:nth-child(5) {
+  position: absolute;
+  right: 0;
+  margin-right: 210px;
+}
+
+.navbar ul li button {
+  background-color: var(--couleur-principale);
+  border: none;
+  padding: 0.7em;
+  color: white;
+  margin-top: -40px;
+  border-radius: 10px;
+}
+
+.navbar ul li a:hover {
+  color: var(--couleur-principale);
+}
+
+/*---------------Fin Section Header ------------------*/
+
+/*-------------- Debut Section Footer-----------------*/
+
+.footer {
+  width: 100%;
+  background-color: var(--couleur-footer);
+  height: 430px;
+  margin-top: 170px;
+}
+
+.Section_Footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding-top: 100px;
+}
+
+.Section_Footer_Left img {
+  height: 190px;
+}
+
+.Section_Footer_Right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.Section_Footer_Right ul li {
+  list-style: none;
+}
+
+.Section_footer ul li {
+  line-height: 40px;
+}
+
+.Section_Footer ul li:first-child {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.demi-cercle {
+  width: 100px;
+  height: 100px;
+  background-color: var(--couleur-principale); /* Couleur du demi-cercle */
+  border-top-left-radius: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.ligne-horizontal {
+  width: 92%; /* Largeur de la ligne */
+  height: 0.5px; /* Épaisseur de la ligne */
+  background-color: var(--couleur-principale); /* Couleur de la ligne */
+  margin: 70px auto 0;
+}
+
+.Section_Footer_Left {
+  border-right: 2px solid var(--couleur-principale);
+  padding-right: 80px;
+}
+
+/*---------------Fin Section Footer-------------------*/
+
+.Inscription {
+  /* background: url("inscription.jpg"), lightgray 50%; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 600px;
+  flex-shrink: 0;
+}
+
+.Formulaire {
+  background-color: white;
+  width: 400px;
+  height: auto;
+  display: block;
+  margin: auto;
+  position: relative;
+  top: 70px;
+  padding: 2em;
+  border-radius: 20px;
+}
+
+.Formulaire h3 {
+  text-align: center;
+}
+
+.formGroup {
+  line-height: 30px;
+}
+
+.formGroup input {
+  width: 330px;
+  height: 40px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.Formulaire button {
+  width: 330px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--couleur-principale);
+  margin-top: 15px;
+  color: white;
+}
+
+#forgot,
+#Compte {
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: underline;
+  color: var(--couleur-principale);
+  cursor: pointer;
+}
