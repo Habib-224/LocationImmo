@@ -13,22 +13,20 @@ import { Proprietaire } from 'src/app/models/Proprietaire';
 export class AuthentificationComponent {
   emailLogin: string = '';
   PasswordLogin: string = '';
-
   change: boolean = false;
 
   public changeForme() {
     this.change = !this.change;
   }
 
-  nomproprio: string = 'fall';
-  prenomProprietaire: string = 'modou';
-  adresseProprietaire: string = 'ouakam';
-  emailProprietaire: string = 'fall@gmail.com';
-  passwordProprietaire: string = 'passer';
-  telephoneProprietaire: string = '774587898';
+  nomproprio: string = '';
+  prenomProprietaire: string = '';
+  adresseProprietaire: string = '';
+  emailProprietaire: string = '';
+  passwordProprietaire: string = '';
+  telephoneProprietaire: string ='';
   roleProprietaire: string = 'proprietaire';
 
-  // proprietaire = new Proprietaire()
 
   constructor(private AuthService: AuthserviceService, private route: Router) {}
 
@@ -44,15 +42,24 @@ export class AuthentificationComponent {
     newproprietaire.telephone = this.telephoneProprietaire;
     newproprietaire.role = this.roleProprietaire;
 
-    if ( this.nomproprio == '' || this.prenomProprietaire == '' || this.adresseProprietaire == '' || this.emailProprietaire == '' || this.passwordProprietaire == '' || this.telephoneProprietaire == '') {
+    if ( this.nomproprio == '' || this.prenomProprietaire == '' || this.adresseProprietaire == '' || this.emailProprietaire == '' || this.passwordProprietaire == '') {
       console.log('veuillez remplir tous les champs');
     } else {
       console.log(newproprietaire);
-      this.AuthService.register(newproprietaire, (reponse: any) => {
-        console.log(newproprietaire);
-        console.log(reponse);
-      });
+      this.AuthService.register(newproprietaire,this.onSuccessHandler,this.onErrorHandler);
     }
+  }
+
+  onSuccessHandler(response: any) {
+    console.log('Inscription réussie:', response);
+    this.changeForme();
+    // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
+  }
+
+  // Fonction appelée en cas d'erreur lors de l'inscription
+  onErrorHandler(error: any) {
+    console.error("Erreur lors de l'inscription:", error);
+    // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
   }
 
   login() {
@@ -99,6 +106,21 @@ export class AuthentificationComponent {
             );
             this.route.navigate(['/accueil']);
             console.log('vous ête etudiant');
+          } else if (reponse.user.role === 'proprietaire') {
+             Swal.fire({
+               position: 'center',
+               icon: 'success',
+               title: 'Bienvenue Connecté avec succès',
+               showConfirmButton: true,
+             });
+             // stocker notre les info de la requete dans notre localstorage
+             localStorage.setItem('userOnline', JSON.stringify(reponse));
+
+             //recuperer le userConnecter
+             const userOnline = JSON.parse(
+               localStorage.getItem('userOnline') || ''
+             );
+             this.route.navigate(['/accueil']);
           }
         }
       );

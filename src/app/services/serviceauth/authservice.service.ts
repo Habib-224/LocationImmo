@@ -6,14 +6,14 @@ import { Proprietaire } from 'src/app/models/Proprietaire';
 @Injectable({
   providedIn: 'root',
 })
-
 export class AuthserviceService {
   constructor(private http: HttpClient) {}
 
-  register(proprio: Proprietaire, onSuccess: Function) {
-    this.http
-      .post(`${url}inscriptionProprietaire`, proprio)
-      .subscribe((reponse: any) => onSuccess(reponse));
+  register(proprio: Proprietaire, onSuccess: Function, onError: Function) {
+    this.http.post(`${url}inscriptionProprietaire`, proprio).subscribe(
+      (response: any) => onSuccess(response),
+      (error: any) => onError(error)
+    );
   }
 
   login(user: any, onSuccess: Function) {
@@ -22,3 +22,8 @@ export class AuthserviceService {
       .subscribe((reponse: any) => onSuccess(reponse));
   }
 }
+ // register(proprio: Proprietaire, onSuccess: Function) {
+  //   this.http
+  //     .post(`${url}inscriptionProprietaire`, proprio)
+  //     .subscribe((reponse: any) => onSuccess(reponse));
+  // }
