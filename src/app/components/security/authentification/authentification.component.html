@@ -1,10 +1,11 @@
+<app-header></app-header>
 <div class="Container">
   <div class="Section_Contenu">
-    <div class="Inscription">
+    <div class="Inscription" *ngIf="change==false">
       <div class="Formulaire">
         <h3>Se connecter</h3>
         <p>
-          Vous n'avez pas de compte? <span id="Compte">Creer un Compte</span>
+          Vous n'avez pas de compte? <span id="Compte" (click)="changeForme()">Creer un Compte</span>
         </p>
         <form action="" (ngSubmit)="login()">
           <div class="formGroup">
@@ -22,7 +23,51 @@
         </form>
       </div>
     </div>
-
   </div>
 
+  <div class="Inscription1" *ngIf="change==true">
+    <div class="Formulaire1">
+      <h3>S'inscrire</h3>
+      <p id="connexion1">
+        Vous avez déjà un compte? <span id="Compte1" (click)="changeForme()">Se Connecter</span>
+      </p>
+      <form action="" (ngSubmit)="register()">
+        <div class="FormGoup_Container1">
+          <div class="">
+            <div class="formGroup1">
+              <label for="">Votre nom:</label><br />
+              <input type="text" name="nom" [(ngModel)]="nomproprio" />
+            </div>
+            <div class="formGroup1">
+              <label for="">Votre prenom:</label><br />
+              <input type="text" name="prenom" [(ngModel)]="prenomProprietaire"/>
+            </div>
+            <div class="formGroup1">
+              <label for="">Votre adresse:</label><br />
+              <input type="text" name="adresse" [(ngModel)]="adresseProprietaire" />
+            </div>
+          </div>
+
+          <div class="">
+            <div class="formGroup1">
+              <label for="">Votre e-mail:</label><br />
+              <input type="text" name="email" [(ngModel)]="emailProprietaire"/>
+            </div>
+            <div class="formGroup1">
+              <label for="">Votre Mot de passe:</label><br />
+              <input type="text" name="password" [(ngModel)]="passwordProprietaire"/>
+            </div>
+            <div class="formGroup1">
+              <label for="">Votre numero:</label><br />
+              <input type="text" name="telephone" [(ngModel)]="telephoneProprietaire"/>
+            </div>
+
+          </div>
+        </div>
+        <button type="submit">S'inscrire</button>
+        <p id="forgot1">Mot de passe Oublié? {{prenomProprietaire}}</p>
+
+      </form>
+    </div>
+  </div>
 </div>

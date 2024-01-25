@@ -10,6 +10,11 @@ import { AnnoncesComponent } from './components/espace_internaute/annonces/annon
 import { PolitiqueConfidentialiteComponent } from './components/espace_internaute/politique-confidentialite/politique-confidentialite.component';
 import { MentionLegaleComponent } from './components/espace_internaute/mention-legale/mention-legale.component';
 import { PlanDuSiteComponent } from './components/espace_internaute/plan-du-site/plan-du-site.component';
+import { StatistiqueComponent } from './components/admin/statistique/statistique.component';
+import { GestionUtilisateursComponent } from './components/admin/gestion-utilisateurs/gestion-utilisateurs.component';
+import { GestionAnnoncesComponent } from './components/admin/gestion-annonces/gestion-annonces.component';
+import { GestionLocalitesComponent } from './components/admin/gestion-localites/gestion-localites.component';
+import { GestionAlertsComponent } from './components/admin/gestion-alerts/gestion-alerts.component';
 
 const routes: Routes = [
   /**-----------Routes pour la partie internaute----------------- */
@@ -30,6 +35,16 @@ const routes: Routes = [
 
   // Route par défaut
   /**---------Fin Pour la definition des routes internaute-------------- */
+
+  // Route pour Administrateur
+  /**----------------Route pour la partie Administrateur-----------------*/
+  { path: 'dashboard_statistic', component: StatistiqueComponent },
+  { path: 'dashboard_utilisateurs', component: GestionUtilisateursComponent },
+  { path: 'dashboard_annonces', component: GestionAnnoncesComponent },
+  { path: 'dashboard_alerts', component: GestionAlertsComponent },
+  { path: 'dashboard_localites', component: GestionLocalitesComponent },
+
+  /**----------------Fin pour la partie Administrateur-----------------*/
 ];
 
 @NgModule({

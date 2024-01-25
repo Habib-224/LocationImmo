@@ -18,6 +18,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthserviceService } from './services/serviceauth/authservice.service';
 import { AuthInterceptor } from './interceptors/interceptor';
+import { HeaderComponent } from './components/layouts/header/header.component';
+import { FooterComponent } from './components/layouts/footer/footer.component';
+import { SidebarComponent } from './components/admin/layoutsAdmin/sidebar/sidebar.component';
+import { NavbarComponent } from './components/admin/layoutsAdmin/navbar/navbar.component';
+import { StatistiqueComponent } from './components/admin/statistique/statistique.component';
+import { GestionUtilisateursComponent } from './components/admin/gestion-utilisateurs/gestion-utilisateurs.component';
+import { GestionAnnoncesComponent } from './components/admin/gestion-annonces/gestion-annonces.component';
+import { GestionAlertsComponent } from './components/admin/gestion-alerts/gestion-alerts.component';
+import { GestionLocalitesComponent } from './components/admin/gestion-localites/gestion-localites.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +42,15 @@ import { AuthInterceptor } from './interceptors/interceptor';
     MentionLegaleComponent,
     PolitiqueConfidentialiteComponent,
     AuthentificationComponent,
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    NavbarComponent,
+    StatistiqueComponent,
+    GestionUtilisateursComponent,
+    GestionAnnoncesComponent,
+    GestionAlertsComponent,
+    GestionLocalitesComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

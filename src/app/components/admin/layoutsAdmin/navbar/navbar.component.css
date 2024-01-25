@@ -1,0 +1,57 @@
+.profil img {
+  width: 8vh;
+  height: 8vh;
+  border-radius: 100%;
+}
+
+/* Les statistics  */
+
+
+.statistiqueDashbord .card .titreChiffre {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.statistiqueDashbord .card .titreText {
+  margin-top: -3vh;
+  font-weight: bold;
+  color: #ffd100;
+}
+
+.statistiqueDashbord .card .icone {
+  margin-top: 4.5vh;
+  color: white;
+}
+
+.Card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 40px;
+}
+
+.card1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  border: none;
+  border-radius: 0;
+  border-left: 3px solid var(--base1);
+  background-color: #133e33;
+  color: white;
+  border-radius: 10px;
+  height: 150px;
+  width: 350px;
+}
+
+.card1 i {
+  font-size: 22px;
+}
+
+.navbar{
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

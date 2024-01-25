@@ -112,13 +112,16 @@
 
 /*---------------Fin Section Footer-------------------*/
 
+body{
+
+}
 .Inscription {
-  /* background: url("inscription.jpg"), lightgray 50%; */
+  background: url("../../../../assets/images/inscription.jpg"), lightgray 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  height: 600px;
+  min-height: 606px;
   flex-shrink: 0;
 }
 
@@ -167,3 +170,76 @@
   color: var(--couleur-principale);
   cursor: pointer;
 }
+
+/*  */
+
+.Inscription1{
+  background: url("../../../../assets/images/inscription.jpg"), lightgray 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 606px;
+  flex-shrink: 0;
+}
+
+.Formulaire1 {
+  background-color: white;
+  max-width: 680px;
+  height: auto;
+  display: block;
+  margin: auto;
+  position: relative;
+  top: 40px;
+  padding: 2em;
+  border-radius: 20px;
+}
+
+.Formulaire1 h3 {
+  text-align: center;
+}
+
+.formGroup1 {
+  line-height: 30px;
+}
+
+.formGroup1 input {
+  width: 270px;
+  height: 40px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.Formulaire1 button {
+  width: 330px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background-color: black;
+  margin-top: 15px;
+  color: white;
+  display: block;
+  margin: auto;
+}
+
+#forgot1,
+#Compte1 {
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: underline;
+  color: var(--couleur-principale);
+  cursor: pointer;
+}
+
+.FormGoup_Container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#connexion1 {
+  text-align: center;
+}
+
