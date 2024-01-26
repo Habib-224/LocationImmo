@@ -30,7 +30,10 @@ export class AuthentificationComponent {
 
   constructor(private AuthService: AuthserviceService, private route: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
+    console.log(userOnline.authorization.token);
+  }
 
   register() {
     const newproprietaire = new Proprietaire();

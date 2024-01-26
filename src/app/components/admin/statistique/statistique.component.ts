@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 
 @Component({
   selector: 'app-statistique',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
 })
 export class StatistiqueComponent {
   // Déclaration des variables
-  tabMessage:any [] = [
+  tabMessage: any[] = [
     {
       id: 1,
       email: 'gg@gmail.com',
@@ -38,7 +39,7 @@ export class StatistiqueComponent {
     },
   ];
 
-  tabMessageFilter:any[] = [];
+  tabMessageFilter: any[] = [];
   filterValue: string = '';
 
   // Attribut pour la pagination
@@ -46,8 +47,16 @@ export class StatistiqueComponent {
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
+  constructor(private utilisateurservice: UtilisateurserviceService) {}
   ngOnInit(): void {
     this.tabMessageFilter = this.tabMessage;
+    this.getAlluser();
+  }
+
+  getAlluser() {
+    this.utilisateurservice.getAllUsers().subscribe((response) => {
+      console.log(response);
+    });
   }
 
   // Methode de recherche automatique pour les reseaux

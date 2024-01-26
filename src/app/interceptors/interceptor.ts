@@ -1,5 +1,3 @@
-//creer un fichier interceptor.ts
-
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -15,9 +13,11 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('votre_token'); // Remplacez 'votre_token' par la clé réelle de votre token
+    const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
 
-    if (token) {
+    // Assurez-vous que userOnline et userOnline.authorization sont définis
+    if ( userOnline && userOnline.authorization && userOnline.authorization.token) {
+      const token = userOnline.authorization.token;
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
@@ -28,10 +28,3 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request);
   }
 }
-
-// //a colei au niveau du provider
-// {
-//      provide: HTTP_INTERCEPTORS,
-//      useClass: AuthInterceptor,
-//      multi: true
-// },
