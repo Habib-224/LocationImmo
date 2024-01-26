@@ -14,7 +14,7 @@
           <!-- Recherhcer une ligne  -->
           <div class="row sectionEspace search mb-3">
             <div class="col-md-7">
-              <h3 class="fw-bold mb-3">Les messages reçus</h3>
+              <h3 class="fw-bold mb-3">Listes des listeUtilisateurs</h3>
             </div>
             <div class="col-md-5">
               <div class="input-group">
@@ -46,13 +46,14 @@
               </tr>
             </thead>
 
-            <tbody *ngFor="let message of getItemsPage()">
+            <tbody *ngFor="let listeUtilisateur of listeUtilisateur">
               <tr>
-                <td>{{ message.id }}</td>
-                <td>{{ message.email }}</td>
-                <td>{{ message.sujet }}</td>
-                <td>{{ message.message }}</td>
-                <td>{{ message.createdAt }}</td>
+                <td>{{ listeUtilisateur.id }}</td>
+                <td>{{ listeUtilisateur.nom }}</td>
+                <td>{{ listeUtilisateur.prenom }}</td>
+                <td>{{ listeUtilisateur.email }}</td>
+                <td>{{ listeUtilisateur.telephone }}</td>
+                <td>{{ listeUtilisateur.role }}</td>
               </tr>
             </tbody>
           </table>

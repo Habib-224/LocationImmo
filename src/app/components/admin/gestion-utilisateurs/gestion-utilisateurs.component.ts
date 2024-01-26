@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 
 @Component({
   selector: 'app-gestion-utilisateurs',
@@ -46,8 +47,22 @@ export class GestionUtilisateursComponent {
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
+
+  listeUtilisateur: any;
+
+  // Déclaration des méhodes
+  constructor(private utilisateurservice: UtilisateurserviceService) {}
+
   ngOnInit(): void {
+    this.getAlluser();
+    console.log(this.listeUtilisateur);
     this.tabMessageFilter = this.tabMessage;
+  }
+
+  getAlluser() {
+    this.utilisateurservice.getAllUsers().subscribe((response) => {
+      this.listeUtilisateur = response.data;
+    });
   }
 
   // Methode de recherche automatique pour les reseaux
