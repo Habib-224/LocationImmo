@@ -46,13 +46,14 @@ export class AuthentificationComponent {
       console.log('veuillez remplir tous les champs');
     } else {
       console.log(newproprietaire);
-      this.AuthService.register(newproprietaire,this.onSuccessHandler,this.onErrorHandler);
+      this.AuthService.register(newproprietaire, this.onSuccessHandler, this.onErrorHandler);
     }
   }
 
   onSuccessHandler(response: any) {
     console.log('Inscription réussie:', response);
-    this.changeForme();
+    // this.changeForme();
+     this.route.navigate(['/accueil']);
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
   }
 
