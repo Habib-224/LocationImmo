@@ -9,82 +9,340 @@
 
     <!-- Liste des sections d'une ligne  -->
     <div class="containerMessage container">
-      <div class="row px-4">
-        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
-          <!-- Recherhcer une ligne  -->
-          <div class="row sectionEspace search mb-3">
-            <div class="col-md-7">
-              <h3 class="fw-bold mb-3">Listes des listeUtilisateurs</h3>
+      <div class="Utilisateur_non_Archive" *ngIf="archive">
+        <div class="row sectionEspace search mb-3" style="margin-left: 10px">
+          <h3 class="fw-bold mb-3">Listes Utilisateurs</h3>
+          <div class="col-md-5">
+            <div class="input-group">
+              <button id="archive" (click)="Archive()">voir Archive</button>
+              <input
+                type="text"
+                name="search"
+                class="form-control"
+                [(ngModel)]="filterValue"
+                (input)="onSearch()"
+                placeholder="Rechercher ......"
+              />
+              <button class="iconesearch input-group-text">
+                <i class="bi bi-search"></i>
+              </button>
             </div>
-            <div class="col-md-5">
-              <div class="input-group">
-                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
-                <input
-                  type="text"
-                  name="search"
-                  class="form-control"
-                  [(ngModel)]="filterValue"
-                  (input)="onSearch()"
-                  placeholder="Rechercher ......"
-                />
-                <button class="iconesearch input-group-text">
-                  <i class="bi bi-search"></i>
+          </div>
+
+          <div class="col-md-3">
+            <select name="" id="select_option">
+              <option value="all">Tout...</option>
+              <option value="etudiant">Etudiant</option>
+              <option value="prorietaire">Proprietaire</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="Section_Statistique" style="margin-left: 22px">
+          <div class="tableSection">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    id
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    Nom
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    prenom
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    telephone
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    role
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of getItemsPage(); let i = index">
+                <tr *ngIf="user.etat==1">
+                  <td class="text-center">{{ user.id }}</td>
+                  <td class="text-center">{{ user.nom }}</td>
+                  <td class="text-center">{{ user.prenom }}</td>
+                  <td class="text-center">{{ user.telephone }}</td>
+                  <td class="text-center">{{ user.role }}</td>
+                  <td class="text-center">
+                    <button
+                      class="btn me-2"
+                      style="background-color: #133e33"
+                      data-bs-toggle="modal"
+                      data-bs-target="#detailMentor"
+                    >
+                      <i
+                        class="bx bxs-show"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      (click)="detailUtilisateur(user.id)"></i>
+                    </button>
+
+                    <button class="btn" style="background-color: #133e33">
+                      <i class="bx bxs-archive-in" (click)="archiveUtilisateurById(user.id)"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="getItemsPage().length">
+              <div class="d-flex justify-content-end mb-2" id="pagination">
+                <button
+                  class="rounded-2 btnColor mx-2"
+                  [disabled]="pageActuelle === 1"
+                  (click)="pageActuelle = pageActuelle - 1"
+                >
+                  <i class="bi bi-caret-left-fill fs-4"></i>
+                </button>
+                <button
+                  class="mx-2 page"
+                  *ngFor="let page of pages"
+                  (click)="pageActuelle = page"
+                >
+                  <span
+                    class="pageActuelle fs-5"
+                    *ngIf="page === pageActuelle"
+                    >{{ page }}</span
+                  >
+                  <span *ngIf="page != pageActuelle">{{ page }}</span>
+                  <!-- {{ page }} -->
+                </button>
+                <button
+                  class="rounded-2 btnColor mx-2"
+                  [disabled]="pageActuelle === totalPages"
+                  (click)="pageActuelle = pageActuelle + 1"
+                >
+                  <i class="bi bi-caret-right-fill fs-4"></i>
                 </button>
               </div>
             </div>
           </div>
-
-          <!-- Le tableau des réseaux -->
-          <table class="table table-responsive mb-4">
-            <thead>
-              <tr>
-                <th scope="col">N°</th>
-                <th scope="col">Email</th>
-                <th scope="col">Sujet</th>
-                <th scope="col">Message</th>
-                <th scope="col">Date d'inscription</th>
-              </tr>
-            </thead>
-
-            <tbody *ngFor="let listeUtilisateur of listeUtilisateur">
-              <tr>
-                <td>{{ listeUtilisateur.id }}</td>
-                <td>{{ listeUtilisateur.nom }}</td>
-                <td>{{ listeUtilisateur.prenom }}</td>
-                <td>{{ listeUtilisateur.email }}</td>
-                <td>{{ listeUtilisateur.telephone }}</td>
-                <td>{{ listeUtilisateur.role }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <!-- Pagination  -->
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                <i class="bi bi-caret-left-fill fs-4"></i>
+        </div>
+      </div>
+      <div class="Utilisateur_Archive" *ngIf="!archive">
+        <div class="row sectionEspace search mb-3" style="margin-left: 10px">
+          <h3 class="fw-bold mb-3">Listes Utilisateurs Archivé</h3>
+          <div class="col-md-5">
+            <div class="input-group">
+              <button id="archive" (click)="Archive()">voir Utilisateur</button>
+              <input
+                type="text"
+                name="search"
+                class="form-control"
+                [(ngModel)]="filterValue"
+                (input)="onSearch()"
+                placeholder="Rechercher ......"
+              />
+              <button class="iconesearch input-group-text">
+                <i class="bi bi-search"></i>
               </button>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <select name="" id="select_option">
+              <option value="all">Tout...</option>
+              <option value="etudiant">Etudiant</option>
+              <option value="prorietaire">Proprietaire</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="Section_Statistique" style="margin-left: 22px">
+          <div class="tableSection">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    id
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    Nom
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    prenom
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    telephone
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    role
+                  </th>
+                  <th
+                    scope="col"
+                    class="text-center text-white"
+                    style="background-color: #133e33"
+                  >
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of listeUtilisateurBloque; let i = index">
+                <tr *ngIf="user.etat==0">
+                  <td class="text-center">{{ user.id }}</td>
+                  <td class="text-center">{{ user.nom }}</td>
+                  <td class="text-center">{{ user.prenom }}</td>
+                  <td class="text-center">{{ user.telephone }}</td>
+                  <td class="text-center">{{ user.role }}</td>
+                  <td class="text-center">
+                    <button
+                      class="btn me-2"
+                      style="background-color: #133e33"
+                      data-bs-toggle="modal"
+                      data-bs-target="#detailMentor"
+                    >
+                      <i
+                        class="bx bxs-show"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      ></i>
+                    </button>
+
+                    <button class="btn" style="background-color: #133e33">
+                      <i class="bx bxs-archive-in" (click)="desarchiveUtilisateurById(user.id)"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div *ngIf="getItemsPage().length">
+              <div class="d-flex justify-content-end mb-2" id="pagination">
+                <button
+                  class="rounded-2 btnColor mx-2"
+                  [disabled]="pageActuelle === 1"
+                  (click)="pageActuelle = pageActuelle - 1"
+                >
+                  <i class="bi bi-caret-left-fill fs-4"></i>
+                </button>
+                <button
+                  class="mx-2 page"
+                  *ngFor="let page of pages"
+                  (click)="pageActuelle = page"
+                >
+                  <span
+                    class="pageActuelle fs-5"
+                    *ngIf="page === pageActuelle"
+                    >{{ page }}</span
+                  >
+                  <span *ngIf="page != pageActuelle">{{ page }}</span>
+                  <!-- {{ page }} -->
+                </button>
+                <button
+                  class="rounded-2 btnColor mx-2"
+                  [disabled]="pageActuelle === totalPages"
+                  (click)="pageActuelle = pageActuelle + 1"
+                >
+                  <i class="bi bi-caret-right-fill fs-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Utilisateur
+              </h1>
               <button
-                class="mx-2 page"
-                *ngFor="let page of pages"
-                (click)="pageActuelle = page"
-              >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
-              </button>
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <img src="assets/images/detail.jpg" alt="">
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Nom:</p>
+                    <p>Prenom:</p>
+                    <p>Adresse:</p>
+                    <p>Email:</p>
+                    <p>Telephone</p>
+                    <p>Role</p>
+                  </div>
+                  <div class="detail_righ">
+                    <p>{{currentUtilisateur?.nom}}</p>
+                    <p>{{currentUtilisateur?.prenom}}</p>
+                    <p>{{currentUtilisateur?.adresse}}</p>
+                    <p>{{currentUtilisateur?.email}}</p>
+                    <p>{{currentUtilisateur?.telephone}}</p>
+                    <p>{{currentUtilisateur?.role}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
               <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
               >
-                <i class="bi bi-caret-right-fill fs-4"></i>
+                Fermer
               </button>
             </div>
           </div>

@@ -6,5 +6,6 @@ export class Proprietaire {
   email!: string;
   password!:string;
   telephone!: string;
-  role!:string;
+  role!: string;
+  etat!: string;
 }

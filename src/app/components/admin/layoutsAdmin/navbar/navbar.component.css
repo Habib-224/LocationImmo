@@ -16,6 +16,9 @@
 .statistiqueDashbord .card .titreText {
   margin-top: -3vh;
   font-weight: bold;
+}
+
+.titreText{
   color: #ffd100;
 }
 
@@ -49,6 +52,7 @@
 
 .card1 i {
   font-size: 22px;
+  cursor: pointer;
 }
 
 .navbar{

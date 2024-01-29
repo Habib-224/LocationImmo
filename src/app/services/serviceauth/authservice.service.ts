@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { url } from '../UrlApi';
 import { Proprietaire } from 'src/app/models/Proprietaire';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +21,10 @@ export class AuthserviceService {
     return this.http
       .post(`${url}login`, user)
       .subscribe((reponse: any) => onSuccess(reponse));
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(`${url}logout`, {});
   }
 }
  // register(proprio: Proprietaire, onSuccess: Function) {

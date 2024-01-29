@@ -4,60 +4,109 @@
   </div>
 
   <div class="section">
-    <!-- Le navbar  -->
     <app-navbar></app-navbar>
 
-    <!-- Liste des sections d'une ligne  -->
     <div class="containerMessage container">
-      <div class="row px-4">
-        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
-          <!-- Recherhcer une ligne  -->
-          <div class="row sectionEspace search mb-3">
-            <div class="col-md-7">
-              <h3 class="fw-bold mb-3">Les messages reçus</h3>
-            </div>
-            <div class="col-md-5">
-              <div class="input-group">
-                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
-                <input
-                  type="text"
-                  name="search"
-                  class="form-control"
-                  [(ngModel)]="filterValue"
-                  (input)="onSearch()"
-                  placeholder="Rechercher ......"
-                />
-                <button class="iconesearch input-group-text">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-            </div>
+      <div class="row sectionEspace search mb-3">
+        <div class="col-md-3">
+          <h3 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes Utilisateurs
+          </h3>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              [(ngModel)]="filterValue"
+              (input)="onSearch()"
+              placeholder="Rechercher ......"
+            />
+            <button class="iconesearch input-group-text">
+              <i class="bi bi-search"></i>
+            </button>
           </div>
+        </div>
+      </div>
 
-          <!-- Le tableau des réseaux -->
-          <table class="table table-responsive mb-4">
+      <div class="Section_Statistique">
+        <div class="tableSection">
+          <table class="table">
             <thead>
               <tr>
-                <th scope="col">N°</th>
-                <th scope="col">Email</th>
-                <th scope="col">Sujet</th>
-                <th scope="col">Message</th>
-                <th scope="col">Date d'inscription</th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  id
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Nom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  prenom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  telephone
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  role
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Action
+                </th>
               </tr>
             </thead>
-
-            <tbody *ngFor="let message of getItemsPage()">
+            <tbody *ngFor="let user of getItemsPage()">
               <tr>
-                <td>{{ message.id }}</td>
-                <td>{{ message.email }}</td>
-                <td>{{ message.sujet }}</td>
-                <td>{{ message.message }}</td>
-                <td>{{ message.createdAt }}</td>
+                <td class="text-center">{{user.id }}</td>
+                <td class="text-center">{{user.nom }}</td>
+                <td class="text-center">{{user.prenom }}</td>
+                <td class="text-center">{{user.telephone }}</td>
+                <td class="text-center">{{user.role }}</td>
+                <td class="text-center">
+                  <button
+                    class="btn me-2"
+                    style="background-color: #133e33"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailMentor"
+                  >
+                    <i
+                      class="bx bxs-show"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                  (click)="detailUtilisateur(user.id)" ></i>
+                  </button>
+
+                  <button class="btn" style="background-color: #133e33">
+                    <i class="bx bxs-archive-in" (click)="archiveUtilisateurById(user.id)"></i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
-
-          <!-- Pagination  -->
           <div *ngIf="getItemsPage().length">
             <div class="d-flex justify-content-end mb-2">
               <button
@@ -84,6 +133,86 @@
                 (click)="pageActuelle = pageActuelle + 1"
               >
                 <i class="bi bi-caret-right-fill fs-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="Section_Statistique_right">
+          <h5 class="text-center py-3">Statistique</h5>
+          <div class="Stat_right">
+            <div class="Section_left">
+              <h5 class="">Nombre localité</h5>
+              <h4>{{localiteLength}}</h4>
+            </div>
+            <div class="Section_right">
+              <button routerLink="/dashboard_localites">voir plus</button>
+            </div>
+          </div>
+          <hr />
+          <div class="Stat_right">
+            <div class="Section_left">
+              <h5 class="">Nombre d'alert</h5>
+              <h4>100</h4>
+            </div>
+            <div class="Section_right">
+              <button routerLink="/dashboard_alerts">voir plus</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Utilisateur
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <img src="assets/images/detail.jpg" alt="">
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Nom:</p>
+                    <p>Prenom:</p>
+                    <p>Adresse:</p>
+                    <p>Email:</p>
+                    <p>Telephone</p>
+                    <p>Role</p>
+                  </div>
+                  <div class="detail_righ">
+                    <p>{{currentUtilisateur?.nom}}</p>
+                    <p>{{currentUtilisateur?.prenom}}</p>
+                    <p>{{currentUtilisateur?.adresse}}</p>
+                    <p>{{currentUtilisateur?.email}}</p>
+                    <p>{{currentUtilisateur?.telephone}}</p>
+                    <p>{{currentUtilisateur?.role}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
               </button>
             </div>
           </div>

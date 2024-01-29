@@ -21,7 +21,7 @@ export class AuthentificationComponent {
 
   nomproprio: string = '';
   prenomProprietaire: string = '';
-  adresseProprietaire: string = '';
+  adresseProprietaire: string = ''; 
   emailProprietaire: string = '';
   passwordProprietaire: string = '';
   telephoneProprietaire: string ='';
@@ -78,7 +78,7 @@ export class AuthentificationComponent {
         (reponse: any) => {
           console.log(reponse.user);
 
-          if (reponse.user.role === 'admin') {
+          if (reponse.user.role ==='admin') {
             Swal.fire({
               position: 'center',
               icon: 'success',

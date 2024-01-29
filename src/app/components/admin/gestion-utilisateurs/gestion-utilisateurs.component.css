@@ -1,6 +1,3 @@
-*{
-  background-color: white;
-}
 .dashbord{
     min-height: 100vh;
     display: grid;
@@ -8,8 +5,7 @@
 }
 
 .container{
-    padding: 0 8vh;
-
+  padding: 0 8vh;
 }
 .container .card{
     border: none;
@@ -21,6 +17,7 @@
 .search input{
     border-right-color: white;
 }
+
 
 .search .iconesearch{
     background-color: white;
@@ -53,3 +50,75 @@ thead tr th{
     border: none;
 }
 
+.Section_Statistique_right{
+  background-color: white;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+  width: 100%;
+  height: 270px;
+  border-radius:15px;
+}
+
+.table{
+  width: 98%;
+}
+.Stat_right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.Section_right button{
+  background-color: #133e33;
+  color: white;
+  padding: 0.6em;
+  border: none;
+  border-radius: 5px;
+}
+
+.Section_left h4{
+  color: #FFD100;
+}
+
+.table i{
+  color: white;
+}
+
+
+.Detail_utilisateur{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.Detail_personelle{
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+}
+
+.personnelle_image img{
+  width: 300px;
+  border-radius: 20px;
+}
+
+#archive{
+  background-color: #133e33;
+  color: white;
+  margin-right: 20px;
+  border: none;
+}
+
+#select_option{
+  width: 250px;
+  height: 35px;
+  border: 1px solid darkgray;
+  outline: none;
+
+}
+
+#pagination{
+  margin-left: -20px;
+}

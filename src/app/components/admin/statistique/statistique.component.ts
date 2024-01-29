@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Proprietaire } from 'src/app/models/Proprietaire';
+import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-statistique',
@@ -40,37 +43,86 @@ export class StatistiqueComponent {
   ];
 
   tabMessageFilter: any[] = [];
+  listeUtilisateur: any = [];
+  tablisteuser: any = [];
   filterValue: string = '';
+  localiteLength: any;
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
-  constructor(private utilisateurservice: UtilisateurserviceService) {}
+  constructor(
+    private utilisateurservice: UtilisateurserviceService,
+    private localitetaille: LocaliteService
+  ) {}
   ngOnInit(): void {
     this.tabMessageFilter = this.tabMessage;
     this.getAlluser();
+    this.getLocaliteLength();
+  }
+
+  // detail du formateur cliqué
+  currentUtilisateur: any;
+  detailUtilisateur(paramUtilisateur: any) {
+    this.currentUtilisateur = this.tablisteuser.find(
+      (item: any) => item.id == paramUtilisateur
+    );
+    // console.log(this.currentUtilisateur);
   }
 
   getAlluser() {
     this.utilisateurservice.getAllUsers().subscribe((response) => {
-      console.log(response);
+      this.listeUtilisateur = response.data;
+      this.tabMessageFilter = this.listeUtilisateur;
+      this.tablisteuser = this.tabMessageFilter;
+    });
+  }
+
+  getLocaliteLength() {
+    this.localitetaille.getAllLocalites().subscribe((response) => {
+      this.localiteLength = response.localite.length;
+    });
+  }
+
+  archiveUtilisateurById(id: number) {
+    const user = new Proprietaire();
+    Swal.fire({
+      title: 'Etes vous sûr?',
+      text: 'de vouloir archiver',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, Je confirme',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Archiver!',
+          text: 'Ce mentor a été archiver avec succées ',
+          icon: 'success',
+        });
+
+        this.utilisateurservice.archiveUtilisateur(id, user).subscribe(
+          (response) => {
+            console.log('mentore archive', response);
+          },
+          (error) => {
+            console.error("Erreur lors de l'archivage du mentor", error);
+          }
+        );
+      }
     });
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.tabMessage.filter(
+    this.tabMessageFilter = this.tablisteuser.filter(
       (elt: any) =>
-        elt?.email.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.sujet.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.message.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.createdAt
-          .toString()
-          .toLowerCase()
-          .includes(this.filterValue.toLowerCase())
+        elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        elt?.prenom.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }
 
