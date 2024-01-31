@@ -30,6 +30,13 @@
             </button>
           </div>
         </div>
+        <div class="col-md-3">
+          <select name="" id="select_option">
+            <option value="all">Tout...</option>
+            <option value="etudiant">Prise en charge</option>
+            <option value="prorietaire">Non prise en charge</option>
+          </select>
+        </div>
       </div>
 
       <div class="Section_Statistique">
@@ -49,28 +56,21 @@
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  Nom
+                  Budget
                 </th>
                 <th
                   scope="col"
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  prenom
+                  Prise en charge
                 </th>
                 <th
                   scope="col"
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  telephone
-                </th>
-                <th
-                  scope="col"
-                  class="text-center text-white"
-                  style="background-color: #133e33"
-                >
-                  role
+                  Date de Creation
                 </th>
                 <th
                   scope="col"
@@ -81,13 +81,18 @@
                 </th>
               </tr>
             </thead>
-            <tbody *ngFor="let message of getItemsPage()">
+            <tbody *ngFor="let alert of getItemsPage()">
               <tr>
-                <td class="text-center">{{ message.id }}</td>
-                <td class="text-center">{{ message.email }}</td>
-                <td class="text-center">{{ message.sujet }}</td>
-                <td class="text-center">{{ message.message }}</td>
-                <td class="text-center">{{ message.createdAt }}</td>
+                <td class="text-center">{{ alert.id }}</td>
+                <td class="text-center">{{ alert.budget }} FCFA</td>
+                <td class="text-center">
+                  {{
+                    alert.prisEnCharge === 0
+                      ? "Non prise en charge"
+                      : "Prise en charge"
+                  }}
+                </td>
+                <td class="text-center">{{ alert.created_at }}</td>
                 <td class="text-center">
                   <button
                     class="btn me-2"
@@ -99,6 +104,7 @@
                       class="bx bxs-show"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
+                      (click)="detailAlert(alert.id)"
                     ></i>
                   </button>
 
@@ -164,24 +170,33 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <img src="assets/images/detail.jpg" alt="" />
+                  <img src="assets/images/detailLogement.jpg" alt="" />
                 </div>
                 <div class="Detail_utilisateur">
-                  <div class="detail_left">
-                    <p>Nom:</p>
-                    <p>Prenom:</p>
-                    <p>Adresse:</p>
-                    <p>Email:</p>
-                    <p>Telephone</p>
-                    <p>Role</p>
-                  </div>
-                  <div class="detail_righ">
-                    <p>Bah</p>
-                    <p>Thierno Habib</p>
-                    <p>Ouakam</p>
-                    <p>thiernohabibbah176@gmail.com</p>
-                    <p>+221-78-143-35-70</p>
-                    <p>Etudiant</p>
+                  <div class="Section_utilisateur">
+                    <div class="Section_budget_id">
+                      <div>
+                        <p>
+                          Budget: <span>{{ currentAlert?.budget }} FCFA</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p>
+                          Prise en charge:
+                          <span>{{currentAlert?.prisEnCharge }}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <p>Date de Creation: <span>{{ currentAlert?.created_at }}</span></p>
+
+                    <div class="detail">
+                      <p>Description:</p>
+                      <p>{{ currentAlert?.description }}</p>
+                    </div>
+                    <div class="detail">
+                      <p>caracteristique:</p>
+                      <p>{{ currentAlert?.caracteristiques }}</p>
+                    </div>
                   </div>
                 </div>
               </div>

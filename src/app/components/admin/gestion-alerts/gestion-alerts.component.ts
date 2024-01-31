@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlerteService } from 'src/app/services/alertes/alerte.service';
 
 @Component({
   selector: 'app-gestion-alerts',
@@ -7,38 +8,12 @@ import { Component } from '@angular/core';
 })
 export class GestionAlertsComponent {
   // Déclaration des variables
-  tabMessage: any[] = [
-    {
-      id: 1,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '10/11/2023',
-    },
-    {
-      id: 2,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '11/11/2023',
-    },
-    {
-      id: 3,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'aide",
-      message: 'Je veux un compte',
-      createdAt: '20/11/2023',
-    },
-    {
-      id: 4,
-      email: 'gg@gmail.com',
-      sujet: 'Demande de renseignement',
-      message: 'Je veux un compte',
-      createdAt: '14/11/2023',
-    },
-  ];
+
+  constructor(private AlerteService: AlerteService) {}
+
 
   tabMessageFilter: any[] = [];
+  listAlert: any = [];
   filterValue: string = '';
 
   // Attribut pour la pagination
@@ -47,21 +22,34 @@ export class GestionAlertsComponent {
 
   // Déclaration des méhodes
   ngOnInit(): void {
-    this.tabMessageFilter = this.tabMessage;
+    this.tabMessageFilter = this.listAlert;
+    this.getAllAllert();
+  }
+
+  getAllAllert() {
+    this.AlerteService.getAllAlerts().subscribe((response) => {
+      this.listAlert = response.data;
+      this.tabMessageFilter = this.listAlert;
+      console.log('Voici la liste des alerts', this.tabMessageFilter);
+    });
+  }
+
+  currentAlert: any;
+  detailAlert(paramAlert: any) {
+    this.currentAlert = this.tabMessageFilter.find(
+      (item: any) => item.id == paramAlert
+
+    );
+
+    // console.log(this.currentAlert)
+    // console.log(this.currentUtilisateur);
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.tabMessage.filter(
-      (elt: any) =>
-        elt?.email.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.sujet.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.message.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.createdAt
-          .toString()
-          .toLowerCase()
-          .includes(this.filterValue.toLowerCase())
+    this.tabMessageFilter = this.tabMessageFilter.filter((elt: any) =>
+      elt?.description.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }
 

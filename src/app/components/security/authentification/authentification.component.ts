@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, Route } from '@angular/router';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
 import { AuthserviceService } from 'src/app/services/serviceauth/authservice.service';
@@ -10,7 +10,7 @@ import { Proprietaire } from 'src/app/models/Proprietaire';
   templateUrl: './authentification.component.html',
   styleUrls: ['./authentification.component.css'],
 })
-export class AuthentificationComponent {
+export class AuthentificationComponent implements OnInit {
   emailLogin: string = '';
   PasswordLogin: string = '';
   change: boolean = false;
@@ -21,12 +21,11 @@ export class AuthentificationComponent {
 
   nomproprio: string = '';
   prenomProprietaire: string = '';
-  adresseProprietaire: string = ''; 
+  adresseProprietaire: string = '';
   emailProprietaire: string = '';
   passwordProprietaire: string = '';
-  telephoneProprietaire: string ='';
+  telephoneProprietaire: string = '';
   roleProprietaire: string = 'proprietaire';
-
 
   constructor(private AuthService: AuthserviceService, private route: Router) {}
 
@@ -45,18 +44,28 @@ export class AuthentificationComponent {
     newproprietaire.telephone = this.telephoneProprietaire;
     newproprietaire.role = this.roleProprietaire;
 
-    if ( this.nomproprio == '' || this.prenomProprietaire == '' || this.adresseProprietaire == '' || this.emailProprietaire == '' || this.passwordProprietaire == '') {
+    if (
+      this.nomproprio == '' ||
+      this.prenomProprietaire == '' ||
+      this.adresseProprietaire == '' ||
+      this.emailProprietaire == '' ||
+      this.passwordProprietaire == ''
+    ) {
       console.log('veuillez remplir tous les champs');
     } else {
       console.log(newproprietaire);
-      this.AuthService.register(newproprietaire, this.onSuccessHandler, this.onErrorHandler);
+      this.AuthService.register(
+        newproprietaire,
+        this.onSuccessHandler,
+        this.onErrorHandler
+      );
     }
   }
 
   onSuccessHandler(response: any) {
     console.log('Inscription réussie:', response);
     // this.changeForme();
-     this.route.navigate(['/accueil']);
+    this.route.navigate(['/accueil']);
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
   }
 
@@ -78,7 +87,7 @@ export class AuthentificationComponent {
         (reponse: any) => {
           console.log(reponse.user);
 
-          if (reponse.user.role ==='admin') {
+          if (reponse.user.role === 'admin') {
             Swal.fire({
               position: 'center',
               icon: 'success',
@@ -111,20 +120,20 @@ export class AuthentificationComponent {
             this.route.navigate(['/accueil']);
             console.log('vous ête etudiant');
           } else if (reponse.user.role === 'proprietaire') {
-             Swal.fire({
-               position: 'center',
-               icon: 'success',
-               title: 'Bienvenue Connecté avec succès',
-               showConfirmButton: true,
-             });
-             // stocker notre les info de la requete dans notre localstorage
-             localStorage.setItem('userOnline', JSON.stringify(reponse));
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Bienvenue Connecté avec succès',
+              showConfirmButton: true,
+            });
+            // stocker notre les info de la requete dans notre localstorage
+            localStorage.setItem('userOnline', JSON.stringify(reponse));
 
-             //recuperer le userConnecter
-             const userOnline = JSON.parse(
-               localStorage.getItem('userOnline') || ''
-             );
-             this.route.navigate(['/accueil']);
+            //recuperer le userConnecter
+            const userOnline = JSON.parse(
+              localStorage.getItem('userOnline') || ''
+            );
+            this.route.navigate(['/accueil']);
           }
         }
       );
