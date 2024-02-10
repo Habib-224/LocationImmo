@@ -2,54 +2,65 @@
 <div class="Section_Contenu_banner"></div>
 
 <div class="Section_Contenu">
-  <div class="search-form" id="cherche">
-    <div class="check">
-      <label for="type">Type de logement:</label>
-      <div class="Section_check">
-        <div>
-          <input
-            type="checkbox"
-            id="studio"
-            name="type"
-            value="studio"
-            [(ngModel)]="searchCriteria.type.studio"
-          />
-          <label for="studio">Studio</label>
+  <div class="search-form" id="Section_filtre">
+    <div id="cherche">
+      <div class="check">
+        <label for="type" style="font-weight: bold; text-decoration: underline"
+          >Type de logement:</label
+        >
+        <div class="Section_check">
+          <div>
+            <input
+              type="checkbox"
+              id="studio"
+              name="type"
+              value="studio"
+              [(ngModel)]="searchCriteria.type.studio"
+              style="padding: 0.2em"
+            />
+            <label for="studio">Studio</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="appartement"
+              name="type"
+              value="appartement"
+              [(ngModel)]="searchCriteria.type.appartement"
+            />
+            <label for="appartement">Appartement</label>
+          </div>
         </div>
-        <div>
-          <input
-            type="checkbox"
-            id="appartement"
-            name="type"
-            value="appartement"
-            [(ngModel)]="searchCriteria.type.appartement"
-          />
-          <label for="appartement">Appartement</label>
-        </div>
+      </div>
+
+      <div class="localite">
+        <label for="localite">Localité:</label>&nbsp;&nbsp;
+        <!-- <input
+          type="text"
+          id="localite"
+          name="localite"
+          [(ngModel)]="searchCriteria.localite"
+        /> -->
+        <select name="localite" id="" [(ngModel)]="searchCriteria.localite">
+          <option value="">Selection par localite</option>
+          <option value="pikine">Pikine</option>
+          <option value="ouakam">ouakam</option>
+          <option value="almadie">almadie</option>
+          <option value="sacre coeur">sare coeur</option>
+        </select>
+
+        <button (click)="search()">Rechercher</button>
       </div>
     </div>
 
-    <div>
-      <label for="localite">Localité:</label>
-      <input
-        type="text"
-        id="localite"
-        name="localite"
-        [(ngModel)]="searchCriteria.localite"
-      />
-
-      <button (click)="search()">Rechercher</button>
-    </div>
-
-    <div>
-      <button>Creer une alerte</button>
-      <select name="" id="">
-        <option value="">Selection par localite</option>
-        <option value="">Pikine</option>
-        <option value="">Pikine</option>
-        <option value="">Pikine</option>
-        <option value="">Pikine</option>
+    <div class="filtre_localite">
+      <select name="budget" id="budget">
+        <option value="filtre par budget">Filtre budget</option>
+        <option value="0-50000">0-50.000 FCFA</option>
+        <option value="50000-100000">50.000-100.000 FCFA</option>
+        <option value="100000-200000">100.000-200.000 FCFA</option>
       </select>
+      <button>Créer une alerte</button>
     </div>
   </div>
 

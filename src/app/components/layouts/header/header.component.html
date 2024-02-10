@@ -8,7 +8,7 @@
         <button
           class="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse" 
+          data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
@@ -35,13 +35,8 @@
                 >Louer</a
               >
             </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                [routerLink]="['/publier_Annonce']"
-                routerLinkActive="active"
-                >Proposer un bien</a
-              >
+            <li class="nav-item" >
+              <a class="nav-link" routerLinkActive="active" (click)="RedirectConnect()">Proposer un bien</a>
             </li>
             <li class="nav-item">
               <a
@@ -72,8 +67,7 @@
               <a
                 class="nav-link"
                 aria-disabled="true"
-                [routerLink]="['/publier_Annonce']"
-                ><button>Deposer une annonce</button></a
+                ><button (click)="RedirectConnect()">Deposer une annonce</button></a
               >
             </li>
             <li class="nav-item" *ngIf="Userconnect === true">
@@ -94,17 +88,15 @@
                     <a
                       class="nav-link"
                       aria-disabled="true"
-                      (click)="EspacePersonnelle()">Mon espace</a
+                      (click)="EspacePersonnelle()"
+                      >Mon espace</a
                     >
                   </li>
                   <li>
-                    <a
-                      class="nav-link"
-                      aria-disabled="true"
-                      (click)="logout()">Se deconnecter</a
+                    <a class="nav-link" aria-disabled="true" (click)="logout()"
+                      >Se deconnecter</a
                     >
                   </li>
-
                 </ul>
               </div>
             </li>

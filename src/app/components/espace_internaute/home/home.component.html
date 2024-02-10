@@ -10,7 +10,7 @@
         colocation ou chambre chez l’habitant, découvrez les logements Studapart
         !
       </p>
-      <button>Je trouve mon Logement</button>
+      <button routerLink="/louer">Je trouve mon Logement</button>
       <div class="Section_left_image"></div>
     </div>
     <div class="Section_content_right">
@@ -58,7 +58,12 @@
         <li>Déposez gratuitement votre annonce immobilière</li>
         <li>Déposez gratuitement votre annonce immobilière</li>
       </ul>
-      <button>Je depose mon annonce gratuitement</button>
+      <button *ngIf="proprioEtudiant" (click)="AnnonceProprio()">
+        Je depose mon annonce gratuitement
+      </button>
+      <button *ngIf="proprioEtudiant === false" (click)="AnnonceProprio()">
+        Consultez les annonces disponibles
+      </button>
     </div>
   </div>
   <!------------- Fin Section Owner ------------>
@@ -109,7 +114,7 @@
         <h6>Je crée un compte et complète mon dossier de location en ligne</h6>
       </div>
 
-      <p><button>COMMENCER MA RECHERCHE</button></p>
+      <p><button routerLink="/louer">COMMENCER MA RECHERCHE</button></p>
     </div>
   </div>
   <!------------Fin Section Students------- -->
@@ -123,9 +128,10 @@
         une alerte personnalisée et recevez immédiatement un e-mail lorsque de
         nouvelles annonces correspondant à votre recherche sont publiées.
       </p>
-      <button data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!proprioEtudiant">
         Creer une alerte
       </button>
+      <button *ngIf="proprioEtudiant">C'est quoi une alerte</button>
     </div>
     <div class="Alert_Right">
       <img src="assets/images/Alert1.jpg" alt="" />
@@ -155,7 +161,7 @@
         </li>
       </ul>
 
-      <p><button>CREER UNE ALERTE</button></p>
+      <p><button>Consulter Notre Section d'information</button></p>
     </div>
   </div>
   <!---------- Fin Section Video ---------------->
@@ -214,7 +220,7 @@
     <div class="Newsletters_form">
       <form action="">
         <div class="inscription">
-          <input type="email" placeholder="Saisissez votre Adresse mail"/>
+          <input type="email" placeholder="Saisissez votre Adresse mail" />
           <button>S'inscrire</button>
         </div>
       </form>

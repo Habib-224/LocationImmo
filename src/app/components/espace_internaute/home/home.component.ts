@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Alert } from 'src/app/models/Alert';
 import { AlerteService } from 'src/app/services/alertes/alerte.service';
+import { MessageService } from 'src/app/services/message/message.service';
 import { AuthserviceService } from 'src/app/services/serviceauth/authservice.service';
 @Component({
   selector: 'app-home',
@@ -12,17 +17,58 @@ export class HomeComponent implements OnInit {
   budget_alert: any = '';
   description_alert: string = '';
   caracteristique_alert: string = '';
+  useronline_role: any = '';
+  userStatut: any = '';
+
+  //Annonce logement
+  proprioEtudiant: boolean = true;
+
+  // public changeProprio() {
+  //   this.proprioEtudiant = !this.proprioEtudiant;
+  // }
 
   ngOnInit(): void {
-    console.log(this.AuthService.isAuthenticated);
+    // console.log(this.AuthService.isAuthenticated);
+    const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
+    const userStatut = JSON.parse(localStorage.getItem('Userconnect') || '');
+    // console.log("statut du user",userStatut);
+    this.useronline_role = userOnline.user.role;
+
+    console.log('utilisateur connecte', this.useronline_role);
+
+    this.verifechange();
   }
 
-
+  verifechange() {
+    if (this.useronline_role === 'proprietaire' || this.userStatut === false) {
+      this.proprioEtudiant = true;
+      console.log('vous etes proprietaire');
+    } else if (
+      this.useronline_role === 'etudiant' ||
+      this.userStatut === false
+    ) {
+      this.proprioEtudiant = false;
+      console.log('vous etes etudiant');
+    }
+  }
 
   constructor(
     private alerteservice: AlerteService,
     private AuthService: AuthserviceService,
+    private route: Router,
+    private message: MessageService
   ) {}
+
+  AnnonceProprio() {
+    if (this.useronline_role === 'proprietaire' || this.userStatut === true) {
+      this.route.navigate(['/publier_Annonce']);
+    }else if( this.useronline_role === 'etudiant' || this.userStatut === true){
+      this.route.navigate(['/louer']);
+    }else{
+      this.route.navigate(['/login']);
+    }
+  }
+
   RegisterAlert() {
     const alert = new Alert();
     if (
@@ -35,7 +81,7 @@ export class HomeComponent implements OnInit {
       alert.budget = this.budget_alert;
       alert.description = this.description_alert;
       alert.caracteristiques = this.caracteristique_alert;
-      console.log(alert);
+      // console.log(alert);
 
       this.alerteservice.registerAlert(
         alert,

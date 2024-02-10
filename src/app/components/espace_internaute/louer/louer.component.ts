@@ -73,16 +73,7 @@ export class LouerComponent implements OnInit {
       return typeMatch && localiteMatch;
     });
 
-    // Si le champ 'localite' est vide après la recherche, réinitialiser la liste des logements
-    if (
-      !this.searchCriteria.localite.trim() &&
-      this.tabMessageFilter1.length === 0
-    ) {
-      this.tabMessageFilter1 = this.logements.slice();
-      console.log("liste des logements",this.tabMessageFilter1)// Copie complète de la liste des logements
-    }
-
-    // console.log(this.tabMessageFilter1);
+   
   }
 
   // detail(id:any) {

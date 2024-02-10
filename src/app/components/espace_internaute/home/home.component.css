@@ -162,6 +162,13 @@
   color: black;
 }
 
+
+.Section_Content_Owner_Right button:hover {
+  width: 360px;
+  transition: 0.3s;
+  transform: scale(1.1);
+}
+
 @media screen and (max-width: 800px) {
   .Section_content_left p h1 {
     text-align: justify;

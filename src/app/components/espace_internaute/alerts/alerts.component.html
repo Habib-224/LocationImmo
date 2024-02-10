@@ -1,16 +1,39 @@
 <app-header></app-header>
 <div class="Section_Contenu">
   <div class="Section_Contenu_banner"></div>
-</div>
-<div class="card" *ngFor="let alert of listAlert">
-   <a class="card1" href="#">
-    <p>{{alert.etudiantPrenom}}</p>
-    <p class="small">{{alert.description}}</p>
-    <div class="go-corner" href="#">
-      <div class="go-arrow">
-        →
+  <div class="search-form" id="Section_filtre">
+    <div class="section_ajout">
+      <button>Ajouter une Alerte</button>
+    </div>
+    <div id="cherche">
+      <div class="Alert">
+        <label for="prix">Filtrer par prix :</label>
+        <select id="prix" [(ngModel)]="selectedPrice">
+          <option value="">Tous les prix</option>
+          <option value="50000">50 000 FCFA</option>
+          <option value="100000">100 000 FCFA</option>
+          <option value="150000">150 000 FCFA</option>
+          <option value="200000">200 000 FCFA</option>
+        </select>
+        <button (click)="filterAlerts()">Appliquer</button>
       </div>
     </div>
-  </a>
+  </div>
+
+  <div class="Section_card">
+    <div class="Card" *ngFor="let alert of filteredAlerts">
+      <a class="card1" (click)="detailAlert(alert.id)">
+        <p>
+          <span>{{ alert.etudiantPrenom }}</span
+          >&nbsp;&nbsp;{{ alert.budget }} FCFA
+        </p>
+        <p class="small">{{ alert.description }}</p>
+        <div class="go-corner">
+          <div class="go-arrow">→</div>
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
+
 <app-footer></app-footer>

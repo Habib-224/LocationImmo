@@ -7,17 +7,38 @@ import { AlerteService } from 'src/app/services/alertes/alerte.service';
   styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
-  constructor(private alertService: AlerteService) { }
+  constructor(private alertService: AlerteService) {}
+
   listAlert: any[] = [];
+  selectedPrice: any;
+  filteredAlerts: any[] = [];
+  allAlert: any[] = [];
+
   ngOnInit(): void {
     this.getAllAlert();
   }
 
   getAllAlert() {
     this.alertService.getAllAlerts().subscribe((response) => {
-      console.log(response.data);
       this.listAlert = response.data;
-    
-    })
+      console.log(this.listAlert);
+      this.allAlert = this.listAlert;
+      this.filteredAlerts = this.allAlert; // Initialisation de filteredAlerts
+    });
+  }
+
+  detailAlert(id: any) {
+    alert(id);
+  }
+  // selectedPrice: any;
+
+  filterAlerts() {
+    if (!this.selectedPrice) {
+      this.filteredAlerts = this.allAlert;
+    } else {
+      this.filteredAlerts = this.allAlert.filter(
+        (alert: any) => alert.budget <= parseInt(this.selectedPrice)
+      );
+    }
   }
 }

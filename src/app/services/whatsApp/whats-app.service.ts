@@ -7,14 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class WhatsAppService {
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) { }
 
   userconnect = JSON.parse(localStorage.getItem('userOnline') || '');
 
   redirectWhatsapp(phoneNumber: string): void {
     const whatsappLink = `https://wa.me/${phoneNumber}`;
     // Redirige l'utilisateur vers WhatsApp
-    window.location.href = whatsappLink;
+      window.open(whatsappLink, '_blank');
   }
 }
