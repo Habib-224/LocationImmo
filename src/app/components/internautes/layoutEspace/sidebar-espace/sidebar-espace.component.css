@@ -1,0 +1,135 @@
+:root {
+  --couleur-principale: #1b9476;
+  --couleur-texte: #ffd100;
+  --couleur-fond: #133e33;
+  --couleur-footer: #d9d9d9;
+}
+
+.sidebar {
+  background-color: white;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 17%;
+  color: black;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+
+.sidebar img, .separation {
+  width: 100%;
+}
+
+#admin{
+  padding: 0.6em;
+  text-align: center;
+}
+
+.separation {
+  border: 1px solid black;
+}
+
+.containerLink {
+  height: 75%;
+  width: 100%;
+  overflow: scroll;
+}
+
+/* Pour les navigateurs chrome et edge  */
+.containerLink::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar ul li {
+  list-style: none;
+  line-height: 6vh;
+  margin-left: -2em;
+  width: 100%;
+  padding:0.3em ;
+  width: 300px;
+}
+
+.sidebar ul li a{
+  padding-left: 1.5em;
+}
+
+ul li:first-child a {
+  text-decoration: none;
+  color: black;
+}
+
+
+ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+.icone {
+  fill: black;
+}
+
+.btnDeconnect {
+  background-color: var(--base2);
+  color: black;
+}
+
+.deconnection{
+  background-color: #133e33;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0.3em;
+}
+
+.deconnection button{
+  color: white;
+}
+
+ul li i{
+  color: #ffd100;
+}
+
+.active{
+  background-color: #133e33;
+  color: white;
+}
+
+.active span,i{
+  color: white;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .sidebar {
+    padding: 2vh;
+  }
+
+  .link {
+    display: none;
+  }
+
+  svg {
+    width: 45px;
+    height: 45px;
+  }
+
+  .link:hover {
+    display: block;
+  }
+
+  .sidebar img,
+  .separation {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    padding: 2%;
+  }
+}
+
+
+#dash{
+  color: black;
+}

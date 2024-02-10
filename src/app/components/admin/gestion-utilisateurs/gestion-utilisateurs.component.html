@@ -88,7 +88,7 @@
                 </tr>
               </thead>
               <tbody *ngFor="let user of getItemsPage(); let i = index">
-                <tr *ngIf="user.etat==1">
+                <tr>
                   <td class="text-center">{{ user.id }}</td>
                   <td class="text-center">{{ user.nom }}</td>
                   <td class="text-center">{{ user.prenom }}</td>
@@ -105,11 +105,15 @@
                         class="bx bxs-show"
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
-                      (click)="detailUtilisateur(user.id)"></i>
+                        (click)="detailUtilisateur(user.id)"
+                      ></i>
                     </button>
 
                     <button class="btn" style="background-color: #133e33">
-                      <i class="bx bxs-archive-in" (click)="archiveUtilisateurById(user.id)"></i>
+                      <i
+                        class="bx bxs-archive-in"
+                        (click)="archiveUtilisateurById(user.id)"
+                      ></i>
                     </button>
                   </td>
                 </tr>
@@ -228,7 +232,7 @@
                 </tr>
               </thead>
               <tbody *ngFor="let user of listeUtilisateurBloque; let i = index">
-                <tr *ngIf="user.etat==0">
+                <tr *ngIf="user.etat == 0">
                   <td class="text-center">{{ user.id }}</td>
                   <td class="text-center">{{ user.nom }}</td>
                   <td class="text-center">{{ user.prenom }}</td>
@@ -249,7 +253,10 @@
                     </button>
 
                     <button class="btn" style="background-color: #133e33">
-                      <i class="bx bxs-archive-in" (click)="desarchiveUtilisateurById(user.id)"></i>
+                      <i
+                        class="bx bxs-archive-in"
+                        (click)="desarchiveUtilisateurById(user.id)"
+                      ></i>
                     </button>
                   </td>
                 </tr>
@@ -290,7 +297,7 @@
         </div>
       </div>
 
-        <!-- Modal -->
+      <!-- Modal -->
       <div
         class="modal fade"
         id="exampleModal"
@@ -314,7 +321,7 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <img src="assets/images/detail.jpg" alt="">
+                  <img src="assets/images/detail.jpg" alt="" />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">
@@ -326,12 +333,12 @@
                     <p>Role</p>
                   </div>
                   <div class="detail_righ">
-                    <p>{{currentUtilisateur?.nom}}</p>
-                    <p>{{currentUtilisateur?.prenom}}</p>
-                    <p>{{currentUtilisateur?.adresse}}</p>
-                    <p>{{currentUtilisateur?.email}}</p>
-                    <p>{{currentUtilisateur?.telephone}}</p>
-                    <p>{{currentUtilisateur?.role}}</p>
+                    <p>{{ currentUtilisateur?.nom }}</p>
+                    <p>{{ currentUtilisateur?.prenom }}</p>
+                    <p>{{ currentUtilisateur?.adresse }}</p>
+                    <p>{{ currentUtilisateur?.email }}</p>
+                    <p>{{ currentUtilisateur?.telephone }}</p>
+                    <p>{{ currentUtilisateur?.role }}</p>
                   </div>
                 </div>
               </div>

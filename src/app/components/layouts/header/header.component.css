@@ -17,7 +17,6 @@
   position: fixed;
   width: 100%;
   z-index: 5;
-
 }
 
 .navbar-brand img {
@@ -30,22 +29,28 @@
   margin-right: 20px;
 }
 
-.navbar-brand{
+.navbar-brand {
   margin-left: 75px;
 }
 
-.navbar-brand img{
+.navbar-brand img {
   margin-right: 30px;
 }
 
 .navbar ul li:nth-child(6) {
   position: absolute;
   right: 0;
-  margin-right: 210px;
+  margin-right: 240px;
+}
+
+.navbar ul li:nth-child(7) {
+  position: absolute;
+  right: 0;
+  margin-right: 50px;
 }
 
 .navbar ul li button {
-  background-color:#1b9476;
+  background-color: #1b9476;
   border: none;
   padding: 0.7em;
   color: white;
@@ -57,13 +62,20 @@
   color: #1b9476;
 }
 
-.navbar ul li{
+.navbar ul li {
   margin-right: 5px;
 }
 
-
 .nav-link.active {
   color: #1b9476; /* Changez la couleur du texte pour le lien actif selon vos préférences */
+}
+
+.dropdown-menu ul li {
+  margin-top: 20px;
+}
+
+#espace {
+  width: 150px;
 }
 
 /*---------------Fin Section Header ------------------*/

@@ -1,0 +1,260 @@
+<div class="dashbord">
+  <div class="section sidebar">
+    <app-sidebar-espace></app-sidebar-espace>
+  </div>
+
+  <div class="section">
+    <!-- Le navbar  -->
+    <app-navbar-espace></app-navbar-espace>
+
+    <!-- Liste des sections d'une ligne  -->
+    <div class="containerMessage container">
+      <div class="row sectionEspace search mb-3">
+        <div class="col-md-3">
+          <h3 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes Localite
+          </h3>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              [(ngModel)]="filterValue"
+              (input)="onSearch()"
+              placeholder="Rechercher ......"
+            />
+            <button class="iconesearch input-group-text">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="Section_Statistique">
+        <div class="tableSection">
+          <table class="table">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  id
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Nom localite
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Commnune
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let localite of getItemsPage()">
+              <tr>
+                <td class="text-center">{{ localite.id }}</td>
+                <td class="text-center">{{ localite.nomLocalite }}</td>
+                <td class="text-center">{{ localite.commune }}</td>
+                <td class="text-center">
+                  <button
+                    class="btn me-2"
+                    style="background-color: #133e33"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailMentor"
+                  >
+                    <i
+                      class="bx bxs-show"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    ></i>
+                  </button>
+
+                  <button
+                    class="btn"
+                    style="background-color: #133e33; margin-right: 10px"
+                  >
+                    <i
+                      class="fa-regular fa-pen-to-square"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ModificationLocalite"
+
+                    ></i>
+                  </button>
+
+                  <button class="btn" style="background-color: #133e33">
+                    <i
+                      class="bx bxs-archive-in"
+
+                    ></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="getItemsPage().length">
+            <div class="d-flex justify-content-end mb-2">
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === 1"
+                (click)="pageActuelle = pageActuelle - 1"
+              >
+                <i class="bi bi-caret-left-fill fs-4"></i>
+              </button>
+              <button
+                class="mx-2 page"
+                *ngFor="let page of pages"
+                (click)="pageActuelle = page"
+              >
+                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
+                  page
+                }}</span>
+                <span *ngIf="page != pageActuelle">{{ page }}</span>
+                <!-- {{ page }} -->
+              </button>
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === totalPages"
+                (click)="pageActuelle = pageActuelle + 1"
+              >
+                <i class="bi bi-caret-right-fill fs-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Detail -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Utilisateur
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <img src="assets/images/gps.jpg" alt="" />
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Nom-Localite:</p>
+                    <p>Commune:</p>
+                  </div>
+                  <div class="detail_righ">
+                    <!-- <p>{{currentLocalite?.nomLocalite}}</p>
+                    <p>{{currentLocalite?.commune}}</p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Model Detail -->
+      <!-- Debut Modification Localite -->
+      <div
+        class="modal fade"
+        id="ModificationLocalite"
+        tabindex="-1"
+        aria-labelledby="ModificationLocaliteLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1
+                class="modal-title fs-5 text-center"
+                id="ModificationLocaliteLabel"
+              >
+                Modification Localite
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="">
+                <div class="row">
+                  <div class="mb-3 col-6">
+                    <label for="nom" class="form-label">Nom Localite</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom"
+                      name="nom"
+                      [(ngModel)]="nom_localite"
+                    />
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label for="prenom" class="form-label">Commune</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="prenom"
+                      name="prenom"
+                      [(ngModel)]="nom_commune"
+                    />
+                  </div>
+                  <p>{{ nom_commune }}</p>
+                </div>
+                <!-- <button type="submit" (click)="updateLocaliteByID(recupID)">submit</button> -->
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Localite -->
+    </div>
+  </div>
+</div>

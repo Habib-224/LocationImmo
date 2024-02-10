@@ -89,11 +89,11 @@ thead tr th {
 .Detail_personelle {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   align-items: center;
 }
 
 .personnelle_image img {
-  width: 300px;
+  width: 420px;
   border-radius: 20px;
 }

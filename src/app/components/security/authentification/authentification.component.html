@@ -1,11 +1,12 @@
 <app-header></app-header>
 <div class="Container">
   <div class="Section_Contenu">
-    <div class="Inscription" *ngIf="change==false">
+    <div class="Inscription" *ngIf="change == false">
       <div class="Formulaire">
         <h3>Se connecter</h3>
         <p>
-          Vous n'avez pas de compte? <span id="Compte" (click)="changeForme()">Creer un Compte</span>
+          Vous n'avez pas de compte?
+          <span id="Compte" (click)="changeForme()">Creer un Compte</span>
         </p>
         <form action="" (ngSubmit)="login()">
           <div class="formGroup">
@@ -25,11 +26,12 @@
     </div>
   </div>
 
-  <div class="Inscription1" *ngIf="change==true">
+  <div class="Inscription1" *ngIf="change == true">
     <div class="Formulaire1">
       <h3>S'inscrire</h3>
       <p id="connexion1">
-        Vous avez déjà un compte? <span id="Compte1" (click)="changeForme()">Se Connecter</span>
+        Vous avez déjà un compte?
+        <span id="Compte1" (click)="changeForme()">Se Connecter</span>
       </p>
       <form action="" (ngSubmit)="register()">
         <div class="FormGoup_Container1">
@@ -40,33 +42,86 @@
             </div>
             <div class="formGroup1">
               <label for="">Votre prenom:</label><br />
-              <input type="text" name="prenom" [(ngModel)]="prenomProprietaire"/>
+              <input
+                type="text"
+                name="prenom"
+                [(ngModel)]="prenomProprietaire"
+              />
             </div>
             <div class="formGroup1">
               <label for="">Votre adresse:</label><br />
-              <input type="text" name="adresse" [(ngModel)]="adresseProprietaire" />
+              <input
+                type="text"
+                name="adresse"
+                [(ngModel)]="adresseProprietaire"
+              />
             </div>
           </div>
 
           <div class="">
             <div class="formGroup1">
               <label for="">Votre e-mail:</label><br />
-              <input type="text" name="email" [(ngModel)]="emailProprietaire"/>
+              <input type="text" name="email" [(ngModel)]="emailProprietaire" />
             </div>
             <div class="formGroup1">
               <label for="">Votre Mot de passe:</label><br />
-              <input type="text" name="password" [(ngModel)]="passwordProprietaire"/>
+              <input
+                type="text"
+                name="password"
+                [(ngModel)]="passwordProprietaire"
+              />
             </div>
             <div class="formGroup1">
               <label for="">Votre numero:</label><br />
-              <input type="text" name="telephone" [(ngModel)]="telephoneProprietaire"/>
+              <input
+                type="text"
+                name="telephone"
+                [(ngModel)]="telephoneProprietaire"
+              />
             </div>
-
+          </div>
+          <div>
+            <label for="type">Votre Statut</label>
+            <div>
+              <input
+                type="checkbox"
+                id="role"
+                name="role"
+                value="etudiant"
+                id="checkbox1"
+                [checked]="checkbox1Checked"
+                (change)="checkOne($event)"
+                (click)="ChangeRole()"
+              />
+              <label for="studio">Etudiant</label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="role"
+                name="role"
+                value="proprietaire"
+                id="checkbox2"
+                [checked]="checkbox2Checked"
+                (change)="checkTwo($event)"
+                (click)="ChangeRoleProprio()"
+              />
+              <label for="appartement">Proprietaire</label>
+            </div>
+          </div>
+          <div class="" *ngIf="userRole">
+            <div class="formGroup1">
+              <label for="">Pays d'origine:</label><br />
+              <input type="text" name="paysOrigine" [(ngModel)]="paysOrigine" />
+            </div>
+            <div class="formGroup1">
+              <label for="">Universite</label><br />
+              <input type="text" name="telephone" [(ngModel)]="universite" />
+            </div>
           </div>
         </div>
         <button type="submit">S'inscrire</button>
         <p id="forgot1">Mot de passe Oublié?</p>
-
       </form>
     </div>
   </div>

@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="Section_Contenu">
+  <div class="Section_Contenu_banner"></div>
+</div>
+<div class="card" *ngFor="let alert of listAlert">
+   <a class="card1" href="#">
+    <p>{{alert.etudiantPrenom}}</p>
+    <p class="small">{{alert.description}}</p>
+    <div class="go-corner" href="#">
+      <div class="go-arrow">
+        →
+      </div>
+    </div>
+  </a>
+</div>
+<app-footer></app-footer>

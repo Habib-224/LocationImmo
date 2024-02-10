@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Localite } from 'src/app/models/Localite';
 import { LocaliteService } from 'src/app/services/localites/localite.service';
+import { MessageService } from 'src/app/services/message/message.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 import Swal from 'sweetalert2';
 
@@ -14,36 +15,6 @@ export class GestionLocalitesComponent {
 
   nom_localite = '';
   nom_commune = '';
-  tabMessage: any[] = [
-    {
-      id: 1,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '10/11/2023',
-    },
-    {
-      id: 2,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '11/11/2023',
-    },
-    {
-      id: 3,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'aide",
-      message: 'Je veux un compte',
-      createdAt: '20/11/2023',
-    },
-    {
-      id: 4,
-      email: 'gg@gmail.com',
-      sujet: 'Demande de renseignement',
-      message: 'Je veux un compte',
-      createdAt: '14/11/2023',
-    },
-  ];
 
   tabMessageFilter: any[] = [];
   filterValue: string = '';
@@ -55,11 +26,39 @@ export class GestionLocalitesComponent {
   recupID: any;
 
   // Déclaration des méhodes
-  constructor(private localiteservice: LocaliteService) {}
+  constructor(
+    private localiteservice: LocaliteService,
+    private message: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.tabMessageFilter = this.ListeLocalite;
     this.getAllLocalite();
+  }
+
+  AddLocalite() {
+    const localite = new Localite();
+    if (this.nom_localite === '' || this.nom_commune === '') {
+      this.message.MessageSucces(
+        'error',
+        'Oops...',
+        'veuillez remplir les champs',
+        'center'
+      );
+    } else {
+      localite.nomLocalite = this.nom_localite;
+      localite.commune = this.nom_commune;
+      this.localiteservice.addLocalites(localite).subscribe((response) => {
+        // console.log(response);
+        this.message.MessageSucces(
+          'success',
+          'Success',
+          'Localite ajoute avec Succes',
+          'center'
+        );
+        this.getAllLocalite();
+      });
+    }
   }
 
   getAllLocalite() {
@@ -68,6 +67,7 @@ export class GestionLocalitesComponent {
       this.tabMessageFilter = localite;
       // this.tabMessageFilter = this.ListeLocalite;
       this.ListeLocalite = this.tabMessageFilter;
+      console.log('liste des localite', this.ListeLocalite);
     });
   }
 
@@ -81,6 +81,16 @@ export class GestionLocalitesComponent {
 
   recuperationByID(id: number) {
     this.recupID = id;
+    let foundlocalite = this.ListeLocalite.find(
+      (localite: any) => localite.id === this.recupID
+    );
+    if (foundlocalite) {
+      // console.log("localite trouve ",foundlocalite)
+      this.nom_localite = foundlocalite.nomLocalite;
+      this.nom_commune = foundlocalite.commune;
+    } else {
+      console.log('Localite non trouve');
+    }
     // console.log(this.recupID);
   }
 
@@ -89,7 +99,13 @@ export class GestionLocalitesComponent {
     uplocalite.nomLocalite = this.nom_localite;
     uplocalite.commune = this.nom_commune;
     if (this.nom_localite == '' || this.nom_commune == '') {
-      console.log('veuillez remplire les champs');
+      // console.log('veuillez remplire les champs');
+       this.message.MessageSucces(
+         'error',
+         'Oops...',
+         'veuillez remplir les champs',
+         'center'
+       );
     } else {
       Swal.fire({
         title: 'Etes vous sûr?',
@@ -101,15 +117,22 @@ export class GestionLocalitesComponent {
         confirmButtonText: 'Oui, Je confirme',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: 'Modification Terminée!',
-            text: 'Cette Localite a été Modifié avec succées ',
-            icon: 'success',
-          });
+          this.message.MessageSucces(
+            'success',
+            'Success',
+            'Modification Terminée!',
+            'center'
+          );
+          // Swal.fire({
+          //   title: 'Modification Terminée!',
+          //   text: 'Cette Localite a été Modifié avec succées ',
+          //   icon: 'success',
+          // });
           this.localiteservice
             .updateLocalite(id, uplocalite)
             .subscribe((response) => {
               console.log(response);
+              this.getAllLocalite();
             });
         }
       });
@@ -141,6 +164,7 @@ export class GestionLocalitesComponent {
             console.log(response);
           });
       }
+      this.getAllLocalite();
     });
   }
 

@@ -15,7 +15,7 @@
             Listes Localite
           </h3>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-7">
           <div class="input-group">
             <input
               type="text"
@@ -25,9 +25,12 @@
               (input)="onSearch()"
               placeholder="Rechercher ......"
             />
-            <button class="iconesearch input-group-text">
-              <i class="bi bi-search"></i>
-            </button>
+
+            <div id="publication">
+              <button data-bs-toggle="modal" data-bs-target="#AjoutLocalite">
+                Ajouter une localite
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -73,7 +76,7 @@
                 <td class="text-center">{{ localite.nomLocalite }}</td>
                 <td class="text-center">{{ localite.commune }}</td>
                 <td class="text-center">
-                  <button
+                  <!-- <button
                     class="btn me-2"
                     style="background-color: #133e33"
                     data-bs-toggle="modal"
@@ -83,8 +86,9 @@
                       class="bx bxs-show"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
-                    (click)="detailLocalite(localite.id)"></i>
-                  </button>
+                      (click)="detailLocalite(localite.id)"
+                    ></i>
+                  </button> -->
 
                   <button
                     class="btn"
@@ -140,7 +144,7 @@
         </div>
       </div>
       <!-- Modal Detail -->
-      <div
+      <!-- <div
         class="modal fade"
         id="exampleModal"
         tabindex="-1"
@@ -171,24 +175,15 @@
                     <p>Commune:</p>
                   </div>
                   <div class="detail_righ">
-                    <p>{{currentLocalite?.nomLocalite}}</p>
-                    <p>{{currentLocalite?.commune}}</p>
+                    <p>{{ currentLocalite?.nomLocalite }}</p>
+                    <p>{{ currentLocalite?.commune }}</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
-            </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Fin Model Detail -->
       <!-- Debut Modification Localite -->
       <div
@@ -217,7 +212,7 @@
             <div class="modal-body">
               <form class="">
                 <div class="row">
-                  <div class="mb-3 col-6">
+                  <div class="mb-3">
                     <label for="nom" class="form-label">Nom Localite</label>
                     <input
                       type="text"
@@ -227,7 +222,7 @@
                       [(ngModel)]="nom_localite"
                     />
                   </div>
-                  <div class="mb-3 col-6">
+                  <div class="mb-3">
                     <label for="prenom" class="form-label">Commune</label>
                     <input
                       type="text"
@@ -237,24 +232,75 @@
                       [(ngModel)]="nom_commune"
                     />
                   </div>
-                  <p>{{ nom_commune }}</p>
                 </div>
-                <button type="submit" (click)="updateLocaliteByID(recupID)">submit</button>
+                <button
+                  type="submit"
+                  (click)="updateLocaliteByID(recupID)"
+                  id="validation"
+                >
+                  Modifier
+                </button>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
             </div>
           </div>
         </div>
       </div>
       <!-- Fin Localite -->
+
+      <!-- Ajout Localite -->
+      <div
+        class="modal fade"
+        id="AjoutLocalite"
+        tabindex="-1"
+        aria-labelledby="AjoutLocaliteLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-center" id="AjoutLocaliteLabel">
+                Ajout Localite
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="">
+                <div class="col">
+                  <div class="mb-3">
+                    <label for="nom" class="form-label">Nom Localite</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nom"
+                      name="nom"
+                      [(ngModel)]="nom_localite"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="prenom" class="form-label">Commune</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="prenom"
+                      name="prenom"
+                      [(ngModel)]="nom_commune"
+                    />
+                  </div>
+                </div>
+                <button type="submit" (click)="AddLocalite()" id="validation">
+                  Ajouter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Ajout Localite -->
     </div>
   </div>
 </div>

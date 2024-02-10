@@ -3,13 +3,19 @@
         "accueil",
         "adresse",
         "adresseproprio",
+        "alerteservice",
+        "Alllogment",
         "Alluser",
+        "caracteristique",
+        "etudiant",
         "listeuser",
+        "localiteservice",
         "newproprietaire",
         "nomproprio",
         "prenom",
         "Proprietaire",
         "proprio",
-        "reponse"
+        "reponse",
+        "tablisteuser"
     ]
 }

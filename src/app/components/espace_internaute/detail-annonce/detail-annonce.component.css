@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --couleur-principale: #1b9476;
+  --couleur-texte: #ffd100;
+  --couleur-fond: #133e33;
+  --couleur-footer: #d9d9d9;
+}
+
+/*-------------- Debut Section Footer-----------------*/
+
+.Section_photo {
+  margin-top: 30px;
+}
+
+.Section_photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.Section_Contenu_left img {
+  width: 780px;
+  height: 500px;
+  border-radius: 15px;
+}
+
+.Contenu_Left_Image img {
+  width: 450px;
+  height: 245px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+}
+
+.Contenu_Left_Image1 img {
+  width: 450px;
+  height: 245px;
+  border-radius: 15px;
+}
+
+.Information_right {
+  width: 450px;
+  height: auto;
+  background-color: #1b9476;
+  color: white;
+  border-radius: 15px;
+}
+
+/*  */
+.Section_Information {
+  display: flex;
+  justify-content: center;
+  gap: 45px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.Information_left {
+  width: 750px;
+  line-height: 30px;
+}
+
+.Information_Header {
+  padding: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#line {
+  width: 90%;
+  margin: auto;
+  position: relative;
+  margin-top: -20px;
+}
+
+.Disponibilite {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2em;
+  position: relative;
+  margin-top: -20px;
+}
+
+.Section_formulaire {
+  padding: 2em;
+  position: relative;
+  margin-top: -20px;
+}
+
+.Section_formulaire input {
+  width: 380px;
+  padding: 1em;
+  height: 45px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  display: block;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.Section_formulaire button {
+  width: 380px;
+  height: 45px;
+  border-radius: 30px;
+  border: none;
+  margin-bottom: 10px;
+  background: #ffd100;
+  display: block;
+  margin: auto;
+}
+/*---------------Fin Section Footer-------------------*/
+
+.whatsApp i {
+  color: #1b9476;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.Information_personnelle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

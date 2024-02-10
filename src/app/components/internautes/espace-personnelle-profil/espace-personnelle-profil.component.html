@@ -1,0 +1,165 @@
+<div class="dashbord">
+  <div class="section sidebar">
+    <app-sidebar-espace></app-sidebar-espace>
+  </div>
+
+  <div class="section">
+    <!-- Le navbar  -->
+    <app-navbar-espace></app-navbar-espace>
+
+    <!-- Liste des sections d'une ligne  -->
+    <div class="Section_Contenu">
+      <div class="Section_banner"></div>
+      <div class="Information_profil">
+        <div class="Profil">
+          <div class="Section_Image">
+            <img src="assets/images/user.png" alt="" />
+            <div class="statut">
+              <h6>{{ UserConnect.prenom }} {{ UserConnect.nom }}</h6>
+              <span>Proprietaire</span>
+              <hr />
+            </div>
+            <div class="Section_profil">
+              <div class="Section_left">
+                <p>Nom :</p>
+                <p>Prenom :</p>
+                <p>Telephone :</p>
+                <p>Adresse :</p>
+                <p>Etat :</p>
+              </div>
+              <div class="Section_right">
+                <p>{{ UserConnect.nom }}</p>
+                <p>{{ UserConnect.prenom }}</p>
+                <p>{{ UserConnect.telephone }}</p>
+                <p>{{ UserConnect.adresse }}</p>
+                <p>{{ UserConnect.etat == 1 ? "Actif" : "Non Actif" }}</p>
+              </div>
+            </div>
+            <button (click)="ChargerInformation()" (click)="showButton()">
+              Charger les informations
+            </button>
+          </div>
+        </div>
+        <div class="Formulaire">
+          <h5>Modification Profil</h5>
+          <form action="">
+            <div class="Validation_Formulaire">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Nom</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    name="nom"
+                    [(ngModel)]="nom_profil"
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Prenom</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="prenom"
+                    id="exampleFormControlInput1"
+                    [(ngModel)]="prenom_profil"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Adresse</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    name="adresse"
+                    [(ngModel)]="adresse_profil"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Telephone</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    name="telephone"
+                    id="exampleFormControlInput1"
+                    [(ngModel)]="telephone_profil"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    name="email"
+                    [(ngModel)]="email_profil"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    id="exampleFormControlInput1"
+                    [(ngModel)]="password_profil"
+                  />
+                </div>
+              </div>
+               <div class="row">
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Pays Origine</label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    name="paysOrigine"
+                    [(ngModel)]="paysOrigine"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Universite</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    name="universite"
+                    id="exampleFormControlInput1"
+                    [(ngModel)]="universite"
+                  />
+                </div>
+              </div>
+              <button (click)="UpdateProfil()">Modifier</button> &nbsp;
+              <button
+                (click)="viderChamp()"
+                (click)="showButton()"
+                *ngIf="button_show == false"
+              >
+                Annuler
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

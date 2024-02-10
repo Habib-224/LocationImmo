@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Proprietaire } from 'src/app/models/Proprietaire';
+import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 import Swal from 'sweetalert2';
@@ -51,16 +52,19 @@ export class StatistiqueComponent {
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
+  tailleAlert: any;
 
   // Déclaration des méhodes
   constructor(
     private utilisateurservice: UtilisateurserviceService,
-    private localitetaille: LocaliteService
+    private localitetaille: LocaliteService,
+    private alerservice: AlerteService
   ) {}
   ngOnInit(): void {
     this.tabMessageFilter = this.tabMessage;
     this.getAlluser();
     this.getLocaliteLength();
+    this.getAlertLength();
   }
 
   // detail du formateur cliqué
@@ -77,6 +81,13 @@ export class StatistiqueComponent {
       this.listeUtilisateur = response.data;
       this.tabMessageFilter = this.listeUtilisateur;
       this.tablisteuser = this.tabMessageFilter;
+    });
+  }
+
+  getAlertLength() {
+    this.alerservice.getAllAlerts().subscribe((response) => {
+      // console.log('taille des alerts', response.data.length);
+      this.tailleAlert = response.data.length;
     });
   }
 

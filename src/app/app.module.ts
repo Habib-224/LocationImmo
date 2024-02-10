@@ -27,6 +27,16 @@ import { GestionUtilisateursComponent } from './components/admin/gestion-utilisa
 import { GestionAnnoncesComponent } from './components/admin/gestion-annonces/gestion-annonces.component';
 import { GestionAlertsComponent } from './components/admin/gestion-alerts/gestion-alerts.component';
 import { GestionLocalitesComponent } from './components/admin/gestion-localites/gestion-localites.component';
+import { EspacePersoComponent } from './components/internautes/espace-perso/espace-perso.component';
+import { AlertsComponent } from './components/espace_internaute/alerts/alerts.component';
+import { DetailAnnonceComponent } from './components/espace_internaute/detail-annonce/detail-annonce.component';
+import { SidebarEspaceComponent } from './components/internautes/layoutEspace/sidebar-espace/sidebar-espace.component';
+import { NavbarEspaceComponent } from './components/internautes/layoutEspace/navbar-espace/navbar-espace.component';
+import { EspacePersonnelleAlertsComponent } from './components/internautes/espace-personnelle-alerts/espace-personnelle-alerts.component';
+import { EspacePersonnelleProfilComponent } from './components/internautes/espace-personnelle-profil/espace-personnelle-profil.component';
+import { EspacePersonnelleLogementsComponent } from './components/internautes/espace-personnelle-logements/espace-personnelle-logements.component';
+import { MessageComponent } from './components/internautes/message/message.component';
+import { ProprioProfilComponent } from './components/internautes/proprio-profil/proprio-profil.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +61,16 @@ import { GestionLocalitesComponent } from './components/admin/gestion-localites/
     GestionAnnoncesComponent,
     GestionAlertsComponent,
     GestionLocalitesComponent,
+    EspacePersoComponent,
+    AlertsComponent,
+    DetailAnnonceComponent,
+    SidebarEspaceComponent,
+    NavbarEspaceComponent,
+    EspacePersonnelleAlertsComponent,
+    EspacePersonnelleProfilComponent,
+    EspacePersonnelleLogementsComponent,
+    MessageComponent,
+    ProprioProfilComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

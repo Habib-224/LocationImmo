@@ -1,0 +1,390 @@
+<div class="dashbord">
+  <div class="section sidebar">
+    <app-sidebar-espace></app-sidebar-espace>
+  </div>
+
+  <div class="section">
+    <!-- Le navbar  -->
+    <app-navbar-espace></app-navbar-espace>
+
+    <!-- Liste des sections d'une ligne  -->
+    <div class="containerMessage container">
+      <div class="row sectionEspace search mb-3">
+        <div class="col-md-3">
+          <h3 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes des Alerts
+          </h3>
+        </div>
+        <div class="col-md-7">
+          <div class="input-group">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+
+              placeholder="Rechercher ......"
+            />
+            <!-- <button class="iconesearch input-group-text">
+              <i class="bi bi-search"></i>
+            </button> -->
+            <div id="publication">
+              <button data-bs-toggle="modal"
+                    data-bs-target="#AjoutAnnonce">Publier une annonce</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="Section_Statistique">
+        <div class="tableSection">
+          <table class="table">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  id
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Budget
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Prenom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Prise en charge
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let alert of getItemsPage()">
+              <tr>
+                <td class="text-center">{{ alert.id }}</td>
+                <td class="text-center">{{ alert.budget }} FCFA</td>
+                <td class="text-center">{{ alert.etudiantPrenom }}</td>
+                <td class="text-center">
+                  {{
+                    alert.prisEnCharge == 0
+                      ? "Non prise en Charge"
+                      : "Prise en charge"
+                  }}
+                </td>
+                <td class="text-center">
+                  <button
+                    class="btn me-2"
+                    style="background-color: #133e33"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailMentor"
+                    (click)="detailAlert(alert.id)"
+                  >
+                    <i
+                      class="bx bxs-show"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    ></i>
+                  </button>
+
+                  <button
+                    class="btn"
+                    style="background-color: #133e33; margin-right: 10px"
+                    (click)="recuperation(alert.id)"
+                  >
+                    <i
+                      class="fa-regular fa-pen-to-square"
+                      data-bs-toggle="modal"
+                      data-bs-target="#ModificationLocalite"
+                    ></i>
+                  </button>
+
+                  <button
+                    class="btn"
+                    style="background-color: #133e33"
+                    (click)="deleteAlertByUser(alert.id)"
+                  >
+                    <i class="bx bxs-archive-in"></i>
+                  </button>
+
+                  <button
+                    class="btn"
+                    style="background-color: #133e33; margin-left: 10px"
+                    (click)="MarquerPriseEnCharge(alert.id)"
+                  >
+                    <!-- <i class="bx bxs-archive-in"></i> -->
+                    <i class="bx bxs-bookmark-minus"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="getItemsPage().length">
+            <div class="d-flex justify-content-end mb-2">
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === 1"
+                (click)="pageActuelle = pageActuelle - 1"
+              >
+                <i class="bi bi-caret-left-fill fs-4"></i>
+              </button>
+              <button
+                class="mx-2 page"
+                *ngFor="let page of pages"
+                (click)="pageActuelle = page"
+              >
+                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
+                  page
+                }}</span>
+                <span *ngIf="page != pageActuelle">{{ page }}</span>
+                <!-- {{ page }} -->
+              </button>
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === totalPages"
+                (click)="pageActuelle = pageActuelle + 1"
+              >
+                <i class="bi bi-caret-right-fill fs-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Detail -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Alert
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <img src="assets/images/detailLogement.jpg" alt="" />
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Budget: {{ budget_alert }}</p>
+                    <p>Description:{{ description_alert }}</p>
+                    <p>Caracteristique:{{ caracteristique_alert }}</p>
+                  </div>
+                  <div class="detail_righ"></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Model Detail -->
+      <!-- Debut Modification Alert -->
+      <div
+        class="modal fade"
+        id="ModificationLocalite"
+        tabindex="-1"
+        aria-labelledby="ModificationLocaliteLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1
+                class="modal-title fs-5 text-center"
+                id="ModificationLocaliteLabel"
+              >
+                Modification Annonces
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Formulaire">
+                <form action="">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Budget</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="name@example.com"
+                      name="budget"
+                      [(ngModel)]="budget_alert"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Description</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      name="description"
+                      [(ngModel)]="description_alert"
+                    ></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Caracteristique</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      name="caracteristiques"
+                      [(ngModel)]="caracteristique_alert"
+                    ></textarea>
+                  </div>
+                  <button type="submit" (click)="UpdateAlertByUser(recupID)">
+                    Modifier
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin Modification Alert -->
+    </div>
+
+    <!-- Debut Ajout Annonces -->
+      <div
+        class="modal fade"
+        id="AjoutAnnonce"
+        tabindex="-1"
+        aria-labelledby="AjoutAnnonceLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1
+                class="modal-title fs-5 text-center"
+                id="ModificationLocaliteLabel"
+              >
+                Ajout Annonces
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Formulaire">
+                <form action="">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Budget</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="name@example.com"
+                      name="budget"
+                      [(ngModel)]="budget_alert"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Description</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      name="description"
+                      [(ngModel)]="description_alert"
+                    ></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                      >Caracteristique</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                      name="caracteristiques"
+                      [(ngModel)]="caracteristique_alert"
+                    ></textarea>
+                  </div>
+                  <button type="submit" (click)="AjoutAlertByUser()">
+                    Modifier
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Fin Ajout Annonces -->
+  </div>
+</div>

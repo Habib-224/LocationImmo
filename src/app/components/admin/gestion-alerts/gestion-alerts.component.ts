@@ -11,10 +11,10 @@ export class GestionAlertsComponent {
 
   constructor(private AlerteService: AlerteService) {}
 
-
   tabMessageFilter: any[] = [];
   listAlert: any = [];
   filterValue: string = '';
+  listeAllAlert: any = [];
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
@@ -30,7 +30,8 @@ export class GestionAlertsComponent {
     this.AlerteService.getAllAlerts().subscribe((response) => {
       this.listAlert = response.data;
       this.tabMessageFilter = this.listAlert;
-      console.log('Voici la liste des alerts', this.tabMessageFilter);
+      this.listeAllAlert = this.tabMessageFilter;
+      // console.log('Voici la liste des alerts',response);
     });
   }
 
@@ -38,17 +39,13 @@ export class GestionAlertsComponent {
   detailAlert(paramAlert: any) {
     this.currentAlert = this.tabMessageFilter.find(
       (item: any) => item.id == paramAlert
-
     );
-
-    // console.log(this.currentAlert)
-    // console.log(this.currentUtilisateur);
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.tabMessageFilter.filter((elt: any) =>
+    this.tabMessageFilter = this.listeAllAlert.filter((elt: any) =>
       elt?.description.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }

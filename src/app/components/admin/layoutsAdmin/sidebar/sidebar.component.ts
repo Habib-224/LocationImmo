@@ -9,14 +9,29 @@ import { AuthserviceService } from 'src/app/services/serviceauth/authservice.ser
   styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private authenfication: AuthserviceService, private route:Router) {}
+  Userconnect: any;
+  constructor(
+    private authenfication: AuthserviceService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {}
+
+  affichestatut() {
+    // this.usercon = localStorage.getItem('Userconnect');
+    this.Userconnect = JSON.parse(localStorage.getItem('Userconnect') || '');
+    // console.log("user status", this.usercon = localStorage.getItem('Userconnect'))
+  }
 
   logout(): void {
     this.authenfication.logout().subscribe(
       (response) => {
-
+        this.authenfication.isAuthenticated = false;
+        localStorage.setItem(
+          'Userconnect',
+          JSON.stringify(this.authenfication.isAuthenticated)
+        );
+        this.affichestatut();
         console.log(response);
         // localStorage.clear();
         this.route.navigate(['/accueil']);

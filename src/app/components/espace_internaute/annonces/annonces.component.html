@@ -1,2 +1,240 @@
 <app-header></app-header>
-<p>annonces works!</p>
+<div class="Section_Contenu">
+  <div class="Container_Section" *ngIf="changeStep1">
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle">
+          <span class="number">1</span>
+        </div>
+        <p>Localisation</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle1">
+          <span class="number">2</span>
+        </div>
+        <p>logement</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle1">
+          <span class="number">3</span>
+        </div>
+        <p>photo</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="Container_Section" *ngIf="changeStep2">
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle_etape2">
+          <span class="number">1</span>
+        </div>
+        <p>Localisation</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle_etape2_active">
+          <span class="number">2</span>
+        </div>
+        <p>logement</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle1">
+          <span class="number">3</span>
+        </div>
+        <p>photo</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="Container_Section" *ngIf="changeStep3">
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle_etape2">
+          <span class="number">1</span>
+        </div>
+        <p>Localisation</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle_etape2">
+          <span class="number">2</span>
+        </div>
+        <p>logement</p>
+        <hr class="divider" />
+      </div>
+    </div>
+    <div class="Etape">
+      <div class="Etape_location">
+        <div class="circle_etape2_active">
+          <span class="number">3</span>
+        </div>
+        <p>photo</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="Section_formulaire">
+    <form action=""  (ngSubmit)="ajouterLogement()"
+                enctype="multipart/form-data">
+      <!-- ... -->
+      <div class="etape1" *ngIf="changeStep1">
+        <div class="mb-3">
+          <label for="adresse" class="form-label">Adresse</label>
+          <input
+            type="text"
+            class="form-control"
+            id="adresse"
+            placeholder="Adresse"
+            name="adresse"
+            [(ngModel)]="logement.adresse"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="prix" class="form-label">Prix</label>
+          <input
+            type="number"
+            class="form-control"
+            id="prix"
+            placeholder="Prix"
+            name="prix"
+            [(ngModel)]="logement.prix"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="equipements" class="form-label">Équipements</label>
+          <input
+            type="text"
+            class="form-control"
+            id="equipements"
+            placeholder="Équipements"
+            name="equipements"
+            [(ngModel)]="logement.equipements"
+            required
+          />
+        </div>
+        <div class="section_next">
+          <button disabled>retour</button>
+          <button (click)="changerform('suivant')">Suivant</button>
+        </div>
+      </div>
+
+      <div class="etape1" *ngIf="changeStep2">
+        <div class="mb-3">
+          <label for="localite_id" class="form-label">Localité ID</label>
+          <input
+            type="number"
+            class="form-control"
+            id="localite_id"
+            placeholder="Localité ID"
+            name="localite_id"
+            [(ngModel)]="logement.localite_id"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <input
+            type="text"
+            class="form-control"
+            id="type"
+            placeholder="Type"
+            name="type"
+            [(ngModel)]="logement.type"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            rows="3"
+            name="description"
+            [(ngModel)]="logement.description"
+            required
+          ></textarea>
+        </div>
+        <div class="section_next">
+          <button (click)="changerform('retour')">retour</button>
+          <button (click)="changerform('suivant')">Suivant</button>
+        </div>
+      </div>
+
+      <div class="etape1" *ngIf="changeStep3">
+        <div class="mb-3">
+          <label for="nombreChambre" class="form-label"
+            >Nombre de Chambres</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="nombreChambre"
+            placeholder="Nombre de Chambres"
+            name="nombreChambre"
+            [(ngModel)]="logement.nombreChambre"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="disponibilite" class="form-label">Disponibilité</label>
+          <input
+            type="date"
+            class="form-control"
+            id="disponibilite"
+            name="disponibilite"
+            [(ngModel)]="logement.disponibilite"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="superficie" class="form-label">Superficie</label>
+          <input
+            type="number"
+            class="form-control"
+            id="superficie"
+            placeholder="Superficie"
+            name="superficie"
+            [(ngModel)]="logement.superficie"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="formFile" class="form-label"
+            >Sélectionnez une image</label
+          >
+          <input
+            class="form-control"
+            name="nomImage"
+            type="file"
+            id="formFile"
+            (change)="getFile($event)"
+            required
+          />
+        </div>
+
+        <!-- ... -->
+        <div class="section_next">
+          <button (click)="changerform('retour')">retour</button>
+          <button>Ajouter</button>
+        </div>
+      </div>
+      <!-- ... -->
+    </form>
+  </div>
+</div>

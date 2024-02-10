@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LogementService } from 'src/app/services/logement/logement.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 
 @Component({
@@ -8,69 +9,93 @@ import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisat
 })
 export class GestionAnnoncesComponent {
   // Déclaration des variables
-  tabMessage: any[] = [
-    {
-      id: 1,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '10/11/2023',
-    },
-    {
-      id: 2,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'info",
-      message: 'Je veux un compte',
-      createdAt: '11/11/2023',
-    },
-    {
-      id: 3,
-      email: 'gg@gmail.com',
-      sujet: "Demande d'aide",
-      message: 'Je veux un compte',
-      createdAt: '20/11/2023',
-    },
-    {
-      id: 4,
-      email: 'gg@gmail.com',
-      sujet: 'Demande de renseignement',
-      message: 'Je veux un compte',
-      createdAt: '14/11/2023',
-    },
-  ];
+  // tabMessage: any[] = [
+  //   {
+  //     id: 1,
+  //     email: 'gg@gmail.com',
+  //     sujet: "Demande d'info",
+  //     message: 'Je veux un compte',
+  //     createdAt: '10/11/2023',
+  //   },
+  //   {
+  //     id: 2,
+  //     email: 'gg@gmail.com',
+  //     sujet: "Demande d'info",
+  //     message: 'Je veux un compte',
+  //     createdAt: '11/11/2023',
+  //   },
+  //   {
+  //     id: 3,
+  //     email: 'gg@gmail.com',
+  //     sujet: "Demande d'aide",
+  //     message: 'Je veux un compte',
+  //     createdAt: '20/11/2023',
+  //   },
+  //   {
+  //     id: 4,
+  //     email: 'gg@gmail.com',
+  //     sujet: 'Demande de renseignement',
+  //     message: 'Je veux un compte',
+  //     createdAt: '14/11/2023',
+  //   },
+  // ];
 
   tabMessageFilter: any[] = [];
   filterValue: string = '';
+  ListeLogement: any = [];
+
+  logementFound: any;
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
+  firstImage: any;
 
   // Déclaration des méhodes
-  constructor(private utilisateurservice: UtilisateurserviceService) {}
+  constructor(
+    private utilisateurservice: UtilisateurserviceService,
+    private LogementService: LogementService
+  ) {}
   ngOnInit(): void {
-    this.tabMessageFilter = this.tabMessage;
-    this.getAlluser();
+    this.tabMessageFilter = this.ListeLogement;
+    // this.getAlluser();
+    this.getAllLogement();
   }
 
-  getAlluser() {
-    this.utilisateurservice.getAllUsers().subscribe((response) => {
-      console.log(response);
+  detailLogement(id: any) {
+    this.logementFound = this.tabMessageFilter.find((logement: any) => logement.id === id);
+    if (this.logementFound) {
+      console.log("logement trouve", this.logementFound)
+       if (this.logementFound.image.length > 0) {
+         console.log("oui c'est superieur a 0");
+         this.firstImage =
+           'http://127.0.0.1:8000/storage/' +
+           this.logementFound.image[0].nomImage;
+       }
+    }
+  }
+
+  getAllLogement() {
+    this.LogementService.getAlllogment().subscribe((response) => {
+      let allogement = response[0];
+      this.ListeLogement = allogement;
+      this.tabMessageFilter = this.ListeLogement;
+      console.log('la liste de tous les logements ', this.tabMessageFilter);
     });
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.tabMessage.filter(
+    this.tabMessageFilter = this.ListeLogement.filter(
       (elt: any) =>
-        elt?.email.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.sujet.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.message.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.createdAt
-          .toString()
+        elt?.localite.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        elt?.type.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        elt?.adresse.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        elt?.proprietairePrenom
           .toLowerCase()
-          .includes(this.filterValue.toLowerCase())
+          .includes(this.filterValue.toLowerCase()) ||
+        elt?.proprietaire.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }
 

@@ -1,0 +1,164 @@
+<app-header></app-header>
+<div class="Container">
+  <div class="Section_Contenu">
+    <div
+      class="Section_photo"
+      *ngFor="let imageLogement of tabMessageFilter1; let first = first"
+    >
+      <div *ngIf="imageLogement.image !== ''" class="Section_Contenu_left">
+        <img
+          *ngIf="imageLogement.firstImage && !first"
+          [src]="imageLogement.firstImage"
+          alt=""
+        />
+      </div>
+      <div class="Section_Contenu_right">
+        <div class="Contenu_Left_Image">
+          <img
+            *ngIf="imageLogement.firstImage && !first"
+            [src]="imageLogement.firstImage"
+            alt=""
+          />
+        </div>
+        <div class="Contenu_Left_Image1">
+          <img
+            *ngIf="imageLogement.firstImage && !first"
+            [src]="imageLogement.firstImage"
+            alt=""
+          />
+        </div>
+      </div>
+      <!-- <div *ngIf="tailleimagelogement !==0">
+          <img
+            src="assets/images/logement2.jpg"
+            alt=""
+          />
+        </div> -->
+    </div>
+
+    <div *ngIf="tailleimagelogement == 0">
+      <div class="Section_photo">
+        <div class="Section_Contenu_left">
+          <img src="assets/images/logement2.jpg" alt="" />
+        </div>
+        <div class="Section_Contenu_right">
+          <div class="Contenu_Left_Image">
+            <img src="assets/images/logement2.jpg" alt="" />
+          </div>
+          <div class="Contenu_Left_Image1">
+            <img src="assets/images/logement2.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="Section_Information">
+      <div class="Information_left">
+        <div class="Information_personnelle">
+          <div>
+            <h5>{{detail_logement.proprietaire}}</h5>
+            <p>Dakar (Ouakam)</p>
+          </div>
+          <div class="whatsApp">
+            <i
+              class="fa-brands fa-square-whatsapp"
+              (click)="redirectToWhatsapp()"
+            ></i>
+          </div>
+        </div>
+        <h2>Description</h2>
+        <p>{{ detail_logement.description }}</p>
+        <h2>equipements</h2>
+        <p>
+          {{ detail_logement.equipements }}
+        </p>
+      </div>
+      <div class="Information_right">
+        <div class="Information_Header">
+          <div class="Section_Form_Header_Left">
+            <h6>Julia</h6>
+            <p>
+              <i class="fa-solid fa-location-dot"></i
+              >{{ detail_logement.adresse }}
+            </p>
+          </div>
+          <div class="Section_Form_Header_Right">
+            <h6>{{ detail_logement.superficie }} m2</h6>
+            <p>{{ detail_logement.prix }} FCFA</p>
+          </div>
+        </div>
+        <hr id="line" />
+        <div class="Disponibilite">
+          <div>
+            <p>Disponible immédiatement</p>
+          </div>
+          <div>
+            <p>+221 78 143 35 70</p>
+          </div>
+        </div>
+
+        <h6 style="text-align: center">Désirez-vous être rappelé(e) ?</h6>
+        <div class="Section_formulaire">
+          <form action="">
+            <div>
+              <input type="text" placeholder="Nom" />
+            </div>
+            <div>
+              <input type="text" placeholder="Prenom" />
+            </div>
+            <div>
+              <input type="text" placeholder="Numéro" />
+            </div>
+            <button>Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="demi-cercle"></div>
+      <div class="footer">
+        <div class="Section_Footer">
+          <div class="Section_Footer_Left">
+            <img src="footerimage.png" alt="" />
+          </div>
+          <div class="Section_Footer_Right">
+            <div class="Section_footer">
+              <ul>
+                <li>FAQ</li>
+                <li>Qui somme nous</li>
+                <li>FAQ</li>
+                <li>Condition</li>
+              </ul>
+            </div>
+            <div class="Section_footer">
+              <ul>
+                <li>Autre</li>
+                <li>Qui somme nous</li>
+                <li>FAQ</li>
+                <li>Condition</li>
+              </ul>
+            </div>
+            <div class="Section_footer">
+              <ul>
+                <li>Autre</li>
+                <li>Qui somme nous</li>
+                <li>FAQ</li>
+                <li>Condition</li>
+              </ul>
+            </div>
+            <div class="Section_footer">
+              <ul>
+                <li>Autre</li>
+                <li>Qui somme nous</li>
+                <li>FAQ</li>
+                <li>Condition</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+       <div class="ligne-horizontal"></div>
+       <p style="text-align: center; margin-top: 15px;">Copyright 2023 SenStudentHousing</p>
+      </div> -->
+  </div>
+  <app-footer></app-footer>
+</div>

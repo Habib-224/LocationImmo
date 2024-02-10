@@ -1,130 +1,94 @@
 <app-header></app-header>
+<div class="Section_Contenu_banner"></div>
+
 <div class="Section_Contenu">
+  <div class="search-form" id="cherche">
+    <div class="check">
+      <label for="type">Type de logement:</label>
+      <div class="Section_check">
+        <div>
+          <input
+            type="checkbox"
+            id="studio"
+            name="type"
+            value="studio"
+            [(ngModel)]="searchCriteria.type.studio"
+          />
+          <label for="studio">Studio</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="appartement"
+            name="type"
+            value="appartement"
+            [(ngModel)]="searchCriteria.type.appartement"
+          />
+          <label for="appartement">Appartement</label>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="localite">Localité:</label>
+      <input
+        type="text"
+        id="localite"
+        name="localite"
+        [(ngModel)]="searchCriteria.localite"
+      />
+
+      <button (click)="search()">Rechercher</button>
+    </div>
+
+    <div>
+      <button>Creer une alerte</button>
+      <select name="" id="">
+        <option value="">Selection par localite</option>
+        <option value="">Pikine</option>
+        <option value="">Pikine</option>
+        <option value="">Pikine</option>
+        <option value="">Pikine</option>
+      </select>
+    </div>
+  </div>
+
   <div class="Section_Card">
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement4.png" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
+    <!-- Recherche Avancée Component -->
 
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement2.jpg" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
+    <!-- Fin Recherche Avancée Component -->
 
-    <div class="card1">
+    <div class="card1" *ngFor="let logement of tabMessageFilter1">
       <div class="card_image">
-        <img src="assets/images/logement3.png" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
+        <div *ngIf="logement.firstImage !== ''">
+          <img
+            *ngIf="logement.firstImage"
+            [src]="logement.firstImage"
+            alt=""
+            [routerLink]="['/detail-annonce', logement.id]"
+          />
         </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
+        <div *ngIf="logement.image == ''">
+          <img
+            src="assets/images/logement2.jpg"
+            alt=""
+            [routerLink]="['/detail-annonce', logement.id]"
+          />
         </div>
-      </div>
-    </div>
 
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement6.jpg" alt="" />
+        <!-- Utilisez la nouvelle propriété firstImage au lieu de logement.images -->
       </div>
       <div class="card_info">
         <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
+          <h6>{{ logement.proprietaire }} {{ logement.proprietairePrenom }}</h6>
+          <p>
+            {{ logement.type }}
+            <span id="surface">{{ logement.superficie }} m2</span>
+          </p>
         </div>
         <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement5.jpg" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement1.jpg" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement5.jpg" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card1">
-      <div class="card_image">
-        <img src="assets/images/logement2.jpg" alt="" />
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>Collocation</h6>
-          <p>Julia <span id="surface">75 m2</span></p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">70.000 FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> Dakar (Ouakam)</p>
+          <h6 id="prix">{{ logement.prix }} FCFA</h6>
+          <p><i class="fa-solid fa-location-dot"></i> {{ logement.adresse }}</p>
         </div>
       </div>
     </div>

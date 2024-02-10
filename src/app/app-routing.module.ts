@@ -15,12 +15,19 @@ import { GestionUtilisateursComponent } from './components/admin/gestion-utilisa
 import { GestionAnnoncesComponent } from './components/admin/gestion-annonces/gestion-annonces.component';
 import { GestionLocalitesComponent } from './components/admin/gestion-localites/gestion-localites.component';
 import { GestionAlertsComponent } from './components/admin/gestion-alerts/gestion-alerts.component';
+import { AlertsComponent } from './components/espace_internaute/alerts/alerts.component';
+import { DetailAnnonceComponent } from './components/espace_internaute/detail-annonce/detail-annonce.component';
+import { EspacePersoComponent } from './components/internautes/espace-perso/espace-perso.component';
+import { EspacePersonnelleAlertsComponent } from './components/internautes/espace-personnelle-alerts/espace-personnelle-alerts.component';
+import { EspacePersonnelleProfilComponent } from './components/internautes/espace-personnelle-profil/espace-personnelle-profil.component';
+import { EspacePersonnelleLogementsComponent } from './components/internautes/espace-personnelle-logements/espace-personnelle-logements.component';
+import { MessageComponent } from './components/internautes/message/message.component';
+import { ProprioProfilComponent } from './components/internautes/proprio-profil/proprio-profil.component';
 
 const routes: Routes = [
   /**-----------Routes pour la partie internaute----------------- */
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
   { path: 'accueil', component: HomeComponent },
-  { path: 'louer', component: LouerComponent },
+  { path: 'louer', component: LouerComponent }, 
   { path: 'contact', component: ContactComponent },
   { path: 'a-propos', component: AProposComponent },
   { path: 'login', component: AuthentificationComponent },
@@ -31,11 +38,15 @@ const routes: Routes = [
     component: PolitiqueConfidentialiteComponent,
   },
   { path: 'mention_legale', component: MentionLegaleComponent },
+  { path: 'detail-annonce/:id', component: DetailAnnonceComponent },
+
   { path: 'plan_du_site', component: PlanDuSiteComponent },
+  // { path: 'annonce', component:AnnoncesComponent},
+  { path: 'alert', component: AlertsComponent },
 
   // Route par défaut
-  /**---------Fin Pour la definition des routes internaute-------------- */
 
+  /**---------Fin Pour la definition des routes internaute-------------- */
   // Route pour Administrateur
   /**----------------Route pour la partie Administrateur-----------------*/
   { path: 'dashboard_statistic', component: StatistiqueComponent },
@@ -43,12 +54,44 @@ const routes: Routes = [
   { path: 'dashboard_annonces', component: GestionAnnoncesComponent },
   { path: 'dashboard_alerts', component: GestionAlertsComponent },
   { path: 'dashboard_localites', component: GestionLocalitesComponent },
+  // { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
+
+  // {
+  //   path: '**',
+  //   canActivate: [RedirectGuard],
+  // },
 
   /**----------------Fin pour la partie Administrateur-----------------*/
+
+  /**Pour la partie Espace Perso de l'etudiant */
+  { path: 'espace_personnelle', component: EspacePersoComponent },
+  {
+    path: 'espace_personnelle_alerts',
+    component: EspacePersonnelleAlertsComponent,
+  },
+  {
+    path: 'espace_personnelle_profil',
+    component: EspacePersonnelleProfilComponent,
+  },
+  {
+    path: 'espace_personnelle_logement',
+    component: EspacePersonnelleLogementsComponent,
+  },
+  {
+    path: 'espace_personnelle_message',
+    component: MessageComponent,
+  },
+  {
+    path: 'espace_personnelle_proprioProfil',
+    component: ProprioProfilComponent,
+  },
+
+  /**Fin pour la partie Espace Perso de l'etudiant */
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

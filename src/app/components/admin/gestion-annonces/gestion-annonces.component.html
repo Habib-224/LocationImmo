@@ -11,9 +11,9 @@
     <div class="containerMessage container">
       <div class="row sectionEspace search mb-3">
         <div class="col-md-3">
-          <h3 class="fw-bold mb-3" style="margin-left: 20px">
-            Listes Utilisateurs
-          </h3>
+          <h4 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes des logements
+          </h4>
         </div>
         <div class="col-md-5">
           <div class="input-group">
@@ -25,9 +25,9 @@
               (input)="onSearch()"
               placeholder="Rechercher ......"
             />
-            <button class="iconesearch input-group-text">
+            <!-- <button class="iconesearch input-group-text">
               <i class="bi bi-search"></i>
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -56,21 +56,21 @@
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  prenom
+                  Type
                 </th>
                 <th
                   scope="col"
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  telephone
+                  prix
                 </th>
                 <th
                   scope="col"
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
-                  role
+                  adresse
                 </th>
                 <th
                   scope="col"
@@ -81,29 +81,28 @@
                 </th>
               </tr>
             </thead>
-            <tbody *ngFor="let message of getItemsPage()">
+            <tbody *ngFor="let logement of getItemsPage()">
               <tr>
-                <td class="text-center">{{ message.id }}</td>
-                <td class="text-center">{{ message.email }}</td>
-                <td class="text-center">{{ message.sujet }}</td>
-                <td class="text-center">{{ message.message }}</td>
-                <td class="text-center">{{ message.createdAt }}</td>
+                <td class="text-center">{{ logement.id }}</td>
+                <td class="text-center">
+                  {{ logement.proprietaire }} {{ logement.proprietairePrenom }}
+                </td>
+                <td class="text-center">{{ logement.type }}</td>
+                <td class="text-center">{{ logement.prix }} FCFA</td>
+                <td class="text-center">{{ logement.adresse }}</td>
                 <td class="text-center">
                   <button
                     class="btn me-2"
                     style="background-color: #133e33"
                     data-bs-toggle="modal"
                     data-bs-target="#detailMentor"
+                    (click)="detailLogement(logement.id)"
                   >
                     <i
                       class="bx bxs-show"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     ></i>
-                  </button>
-
-                  <button class="btn" style="background-color: #133e33">
-                    <i class="bx bxs-archive-in"></i>
                   </button>
                 </td>
               </tr>
@@ -152,7 +151,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Detail Utilisateur
+                Detail Logement
               </h1>
               <button
                 type="button"
@@ -164,24 +163,33 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <img src="assets/images/detail.jpg" alt="" />
+                  <img
+                    [src]="firstImage"
+                    alt=""
+                    id="logement"
+                  />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">
                     <p>Nom:</p>
-                    <p>Prenom:</p>
+                    <p>Prix:</p>
                     <p>Adresse:</p>
-                    <p>Email:</p>
-                    <p>Telephone</p>
-                    <p>Role</p>
+                    <p>Disponibilte:</p>
+                    <p>Localite:</p>
+                    <p>Nombre Chambre:</p>
+                    <p>Type:</p>
                   </div>
                   <div class="detail_righ">
-                    <p>Bah</p>
-                    <p>Thierno Habib</p>
-                    <p>Ouakam</p>
-                    <p>thiernohabibbah176@gmail.com</p>
-                    <p>+221-78-143-35-70</p>
-                    <p>Etudiant</p>
+                    <p>
+                      {{ logementFound?.proprietaire }}
+                      {{ logementFound?.proprietairePrenom }}
+                    </p>
+                    <p>{{ logementFound?.prix }} FCFA</p>
+                    <p>{{ logementFound?.adresse }}</p>
+                    <p>{{ logementFound?.disponibilite }}</p>
+                    <p>{{ logementFound?.localite }}</p>
+                    <p>{{ logementFound?.nombreChambre }}</p>
+                    <p>{{ logementFound?.type }}</p>
                   </div>
                 </div>
               </div>

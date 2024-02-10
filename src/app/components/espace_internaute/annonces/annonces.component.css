@@ -1,0 +1,121 @@
+.Etape_location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Etape_location p {
+  margin-top: 10px;
+}
+
+.Container_Section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  /* width: 700px; */
+}
+
+.circle {
+  width: 45px;
+  height: 45px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle1 {
+  width: 45px;
+  height: 45px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.divider {
+  /* width: 20%; */
+  width: 280px;
+  height: 2px;
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.number {
+  user-select: none;
+}
+
+.etape1 {
+  width: 600px;
+  margin: auto;
+}
+
+.section_next {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ------------------------------ */
+
+.circle_etape2_active {
+  width: 45px;
+  height: 45px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle_etape2 {
+  width: 45px;
+  height: 45px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+/* ----------------------------- */
+
+
+.circle_etape3_active {
+  width: 45px;
+  height: 45px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle_etape2 {
+  width: 45px;
+  height: 45px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
