@@ -129,8 +129,8 @@
           />
         </div>
         <div class="section_next">
-          <button disabled>retour</button>
-          <button (click)="changerform('suivant')">Suivant</button>
+          <button disabled id="retour">retour</button>
+          <button (click)="changerform('suivant')" id="Add">Suivant</button>
         </div>
       </div>
 
@@ -171,8 +171,8 @@
           ></textarea>
         </div>
         <div class="section_next">
-          <button (click)="changerform('retour')">retour</button>
-          <button (click)="changerform('suivant')">Suivant</button>
+          <button (click)="changerform('retour')" id="retour">retour</button>
+          <button (click)="changerform('suivant')" id="Add">Suivant</button>
         </div>
       </div>
 
@@ -220,7 +220,7 @@
           >
           <input
             class="form-control"
-            name="nomImage"
+            name="image"
             type="file"
             id="formFile"
             (change)="getFile($event)"
@@ -230,8 +230,8 @@
 
         <!-- ... -->
         <div class="section_next">
-          <button (click)="changerform('retour')">retour</button>
-          <button>Ajouter</button>
+          <button (click)="changerform('retour')" id="retour">retour</button>
+          <button id="Add">Ajouter</button>
         </div>
       </div>
       <!-- ... -->

@@ -69,6 +69,7 @@ export class GestionUtilisateursComponent {
     this.getEtudiant();
     this.getProprietaire();
     const proprietaire = JSON.parse(localStorage.getItem('proprietaire') || '');
+    const etudiant = JSON.parse(localStorage.getItem('etudiant') || '');
   }
 
   currentUtilisateur: any;
@@ -99,6 +100,7 @@ export class GestionUtilisateursComponent {
     this.utilisateurservice.getEtudiant().subscribe((response) => {
       let ListeEtudiant = response.data;
       this.listeEtudiant = ListeEtudiant;
+      localStorage.setItem('etudiant', JSON.stringify(this.listeEtudiant));
       console.log('Voici la liste des etudiant', this.listeEtudiant);
     });
   }

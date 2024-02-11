@@ -93,7 +93,6 @@
 }
 /* ----------------------------- */
 
-
 .circle_etape3_active {
   width: 45px;
   height: 45px;
@@ -118,4 +117,19 @@
   color: white;
   font-size: 24px;
   font-weight: bold;
+}
+
+#retour {
+  padding: 0.4em;
+  width: 100px;
+  border: none;
+
+}
+
+#Add{
+  padding: 0.4em;
+  background-color: #1b9476;
+  width: 100px;
+  border: none;
+  color: white;
 }

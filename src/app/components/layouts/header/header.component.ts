@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
     this.userStatut = JSON.parse(localStorage.getItem('Userconnect') || '');
-    // console.log("statut du user",this.userStatut);
     this.useronline_role = this.userStatut;
     this.affichestatut();
   }
@@ -40,9 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   affichestatut() {
-    // this.usercon = localStorage.getItem('Userconnect');
     this.Userconnect = JSON.parse(localStorage.getItem('Userconnect') || '');
-    // console.log("user status", this.usercon = localStorage.getItem('Userconnect'))
   }
 
   EspacePersonnelle() {

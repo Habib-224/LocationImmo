@@ -63,6 +63,12 @@
   overflow: hidden;
 }
 
+.info_contact {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .card1:before {
   content: "";
   position: absolute;
@@ -264,4 +270,10 @@
 #prix {
   padding: 0.3em;
   width: 350px;
+}
+
+.info_contact i{
+  font-size: 35px;
+  color: #1b9476;
+  cursor: pointer;
 }

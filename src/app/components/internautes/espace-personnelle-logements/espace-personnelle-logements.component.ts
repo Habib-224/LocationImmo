@@ -119,7 +119,9 @@ export class EspacePersonnelleLogementsComponent {
       //   const logement = this.logementList[i];
       if (this.logementList.image.length > 0) {
         console.log("oui c'est superieur a 0");
-         this.firstImage ='http://127.0.0.1:8000/storage/' +this.logementList.image[0].nomImage;
+        this.firstImage =
+          'http://127.0.0.1:8000/storage/' +
+          this.logementList.image[0].nomImage;
       }
       // }
     } else {
@@ -187,13 +189,10 @@ export class EspacePersonnelleLogementsComponent {
     formData.append('prix', this.logement.prix);
     formData.append('equipements', this.logement.equipements);
     formData.append('localite_id', this.logement.localite_id);
-    formData.append('image', this.image as Blob);
 
-    Object.keys(this.logement).forEach((key) => {
-      formData.append(key, this.logement[key]);
-    });
-
+    // Ajout de l'image
     if (this.image) {
+      formData.append('image[]', this.image);
     }
 
     this.logementService.ajouterLogement(formData).subscribe(
@@ -224,10 +223,10 @@ export class EspacePersonnelleLogementsComponent {
     this.image = event.target.files[0] as File;
   }
 
-  // onFileSelected(event: any) {
-  //   const files = event.target.files;
-  //   if (files.length > 0) {
-  //     this.image = files[0];
-  //   }
-  // }
+  onFileSelected(event: any) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      this.image = files[0];
+    }
+  }
 }

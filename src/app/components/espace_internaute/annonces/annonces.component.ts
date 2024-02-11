@@ -159,6 +159,7 @@ export class AnnoncesComponent implements OnInit{
     equipements: '',
     localite_id: null,
     nomImage: '',
+    image:[]
   };
   image: any = [];
 
@@ -174,7 +175,7 @@ export class AnnoncesComponent implements OnInit{
     formData.append('prix', this.logement.prix);
     formData.append('equipements', this.logement.equipements);
     formData.append('localite_id', this.logement.localite_id);
-    formData.append('image', this.image as Blob);
+    formData.append('image[]', this.image['image.jpg'] as Blob);
 
     Object.keys(this.logement).forEach((key) => {
       formData.append(key, this.logement[key]);
@@ -208,7 +209,12 @@ export class AnnoncesComponent implements OnInit{
 
   getFile(event: any) {
     console.warn(event.target.files[0]);
+    let image = event.target.files[0] as File;
     this.image = event.target.files[0] as File;
+    this.logement.image = event.target.files[0] as File;
+    // this.image.push(image);
+    console.log(event.target.files[0]);
+    console.log("image du logement", image);
   }
   // dfdfd
 

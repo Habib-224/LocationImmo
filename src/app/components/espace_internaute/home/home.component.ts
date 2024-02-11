@@ -30,8 +30,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.AuthService.isAuthenticated);
     const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
-    const userStatut = JSON.parse(localStorage.getItem('Userconnect') || '');
-    // console.log("statut du user",userStatut);
+    this.userStatut = JSON.parse(localStorage.getItem('Userconnect') || '');
+    console.log('statut du user', this.userStatut);
     this.useronline_role = userOnline.user.role;
 
     console.log('utilisateur connecte', this.useronline_role);
@@ -59,12 +59,20 @@ export class HomeComponent implements OnInit {
     private message: MessageService
   ) {}
 
-  AnnonceProprio() {
-    if (this.useronline_role === 'proprietaire' || this.userStatut === true) {
+  // RedirectConnect() {
+  //   if (this.userStatut === false) {
+  //     this.route.navigate(['/login']);
+  //   } else {
+  //     this.route.navigate(['/publier_Annonce']);
+  //   }
+  // }
+
+  AnnonceProprio(){
+    if (this.useronline_role === "proprietaire" && this.userStatut === true) {
       this.route.navigate(['/publier_Annonce']);
-    }else if( this.useronline_role === 'etudiant' || this.userStatut === true){
+    }else if (this.useronline_role === "etudiant" && this.userStatut === true) {
       this.route.navigate(['/louer']);
-    }else{
+    }else {
       this.route.navigate(['/login']);
     }
   }

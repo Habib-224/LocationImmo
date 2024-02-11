@@ -7,7 +7,7 @@
     >
       <div *ngIf="imageLogement.image !== ''" class="Section_Contenu_left">
         <img
-          *ngIf="imageLogement.firstImage && !first"
+          *ngIf="imageLogement.firstImage && first"
           [src]="imageLogement.firstImage"
           alt=""
         />
@@ -15,14 +15,14 @@
       <div class="Section_Contenu_right">
         <div class="Contenu_Left_Image">
           <img
-            *ngIf="imageLogement.firstImage && !first"
+            *ngIf="imageLogement.firstImage && first"
             [src]="imageLogement.firstImage"
             alt=""
           />
         </div>
         <div class="Contenu_Left_Image1">
           <img
-            *ngIf="imageLogement.firstImage && !first"
+            *ngIf="imageLogement.firstImage && first"
             [src]="imageLogement.firstImage"
             alt=""
           />
@@ -36,7 +36,7 @@
         </div> -->
     </div>
 
-    <div *ngIf="tailleimagelogement == 0">
+    <!-- <div *ngIf="tailleimagelogement == 0">
       <div class="Section_photo">
         <div class="Section_Contenu_left">
           <img src="assets/images/logement2.jpg" alt="" />
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="Section_Information">
       <div class="Information_left">

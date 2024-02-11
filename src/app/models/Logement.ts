@@ -12,5 +12,5 @@ export class Logement {
   nombreChambre!: string;
   disponibilite!: Date;
   superficie!: number; // Modifié le type de superficie en nombre
-  photo!: File;
+  photo!: Image[];
 }

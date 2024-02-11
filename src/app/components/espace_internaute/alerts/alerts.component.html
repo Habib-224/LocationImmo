@@ -22,7 +22,12 @@
 
   <div class="Section_card">
     <div class="Card" *ngFor="let alert of filteredAlerts">
-      <a class="card1" (click)="detailAlert(alert.id)">
+      <a
+        class="card1"
+        (click)="detailAlert(alert.id)"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
         <p>
           <span>{{ alert.etudiantPrenom }}</span
           >&nbsp;&nbsp;{{ alert.budget }} FCFA
@@ -32,6 +37,49 @@
           <div class="go-arrow">→</div>
         </div>
       </a>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Alert</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="info_contact">
+            <div>
+              <p>{{ alertFound?.etudiantPrenom }} {{ alertFound?.etudiant }}</p>
+              <p>{{ alertFound?.budget }} FCFA</p>
+            </div>
+            <div>
+              <span>
+                <i
+                  class="fa-brands fa-square-whatsapp"
+                  (click)="redirectToWhatsapp()"
+                  target="_blank"
+                ></i
+              ></span>
+            </div>
+          </div>
+
+          <p>Prise en Charge: {{alertFound?.prisEnCharge==1?"Prise en charge":"Non prise en charge"}}</p>
+          <p>Description: {{ alertFound?.description }}</p>
+          <p>caracteristiques: {{ alertFound?.caracteristiques }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

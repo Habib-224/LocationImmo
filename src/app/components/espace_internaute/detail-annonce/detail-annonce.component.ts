@@ -47,6 +47,7 @@ export class DetailAnnonceComponent implements OnInit {
       .getdetailLogement(this.idLogement)
       .subscribe((response) => {
         let detaillogement = response.data[0];
+        console.log("voici les detail du logement", detaillogement)
         this.detail_logement = detaillogement;
         this.mailProprio = this.detail_logement.proprietaireEmail;
         this.tailleimagelogement = detaillogement.image.length;
@@ -72,6 +73,7 @@ export class DetailAnnonceComponent implements OnInit {
                   this.detail_logement.image[0].nomImage,
               };
             }
+            // console.log(firstImage);
             return logement;
           }
         );
