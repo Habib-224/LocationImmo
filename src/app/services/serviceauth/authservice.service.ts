@@ -13,10 +13,12 @@ export class AuthserviceService {
   constructor(private http: HttpClient) {}
 
   register(proprio: Proprietaire, onSuccess: Function, onError: Function) {
-    this.http.post(`${url}inscriptionProprietaire`, proprio).subscribe(
-      (response: any) => onSuccess(response),
-      (error: any) => onError(error)
-    );
+    this.http
+      .post<Proprietaire>(`${url}inscriptionProprietaire`, proprio)
+      .subscribe(
+        (response: any) => onSuccess(response),
+        (error: any) => onError(error)
+      );
   }
 
   registerEtudiant(etudiant: Etudiant, onSuccess: Function, onError: Function) {
@@ -28,10 +30,11 @@ export class AuthserviceService {
       );
   }
 
-  login(user: any, onSuccess: Function) {
-    return this.http
-      .post(`${url}login`, user)
-      .subscribe((reponse: any) => onSuccess(reponse));
+  login(user: any, onSuccess: Function, onError:Function) {
+    return this.http.post<any>(`${url}login`, user).subscribe(
+      (response: any) => onSuccess(response),
+      (error: any) => onError(error)
+    );
   }
 
   logout(): Observable<any> {

@@ -34,6 +34,7 @@ export class GestionLocalitesComponent {
   ngOnInit(): void {
     this.tabMessageFilter = this.ListeLocalite;
     this.getAllLocalite();
+    const localite = JSON.parse(localStorage.getItem('localite') || '');
   }
 
   AddLocalite() {
@@ -67,6 +68,7 @@ export class GestionLocalitesComponent {
       this.tabMessageFilter = localite;
       // this.tabMessageFilter = this.ListeLocalite;
       this.ListeLocalite = this.tabMessageFilter;
+        localStorage.setItem('localite', JSON.stringify(this.ListeLocalite));
       console.log('liste des localite', this.ListeLocalite);
     });
   }

@@ -67,12 +67,15 @@ export class HomeComponent implements OnInit {
   //   }
   // }
 
-  AnnonceProprio(){
-    if (this.useronline_role === "proprietaire" && this.userStatut === true) {
+  AnnonceProprio() {
+    if (this.useronline_role === 'proprietaire' && this.userStatut === true) {
       this.route.navigate(['/publier_Annonce']);
-    }else if (this.useronline_role === "etudiant" && this.userStatut === true) {
+    } else if (
+      this.useronline_role === 'etudiant' &&
+      this.userStatut === true
+    ) {
       this.route.navigate(['/louer']);
-    }else {
+    } else {
       this.route.navigate(['/login']);
     }
   }
@@ -99,12 +102,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onSuccessHandler(response: any) {
+  onSuccessHandler = (response: any) => {
     console.log('Inscription réussie:', response);
-    // this.changeForme();
-    // this.route.navigate(['/accueil']);
+     this.message.MessageSucces(
+       'success',
+       'Success',
+       'Alert ajoute avec Succes',
+       'center'
+     );
+    // this.route.navigate(['/alert']);
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
-  }
+  };
 
   // Fonction appelée en cas d'erreur lors de l'inscription
   onErrorHandler(error: any) {

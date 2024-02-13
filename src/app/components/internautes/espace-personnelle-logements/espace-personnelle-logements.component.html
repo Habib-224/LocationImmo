@@ -181,13 +181,9 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="Detail_personelle" >
+              <div class="Detail_personelle">
                 <div>
-                  <img
-                    [src]="firstImage"
-                    alt=""
-                    id="logement"
-                  />
+                  <img [src]="firstImage" alt="" id="logement" />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">
@@ -367,22 +363,34 @@
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="localite_id" class="form-label"
-                    >Localité ID</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
+                  <label for="localite_id" class="form-label">Localité </label>
+                  <select
                     id="localite_id"
-                    placeholder="Localité ID"
                     name="localite_id"
+                    class="form-control"
                     [(ngModel)]="logement.localite_id"
-                    required
-                  />
+                  >
+                    <option
+                      *ngFor="let localite of localite"
+                      [value]="localite.id"
+                    >
+                      {{ localite.nomLocalite }}
+                    </option>
+                  </select>
                 </div>
                 <div class="mb-3">
                   <label for="type" class="form-label">Type</label>
-                  <input
+                  <select
+                    class="form-control"
+                    name="type"
+                    type="text"
+                    [(ngModel)]="logement.type"
+                    id="type"
+                  >
+                    <option value="Studio">Studio</option>
+                    <option value="Appartement">Appartement</option>
+                  </select>
+                  <!-- <input
                     type="text"
                     class="form-control"
                     id="type"
@@ -390,7 +398,7 @@
                     name="type"
                     [(ngModel)]="logement.type"
                     required
-                  />
+                  /> -->
                 </div>
                 <div class="mb-3">
                   <label for="description" class="form-label"
@@ -462,7 +470,7 @@
               </form>
             </div>
           </div>
-          <div class="modal-footer">
+          <!-- <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
@@ -470,7 +478,7 @@
             >
               Fermer
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

@@ -28,29 +28,9 @@
           />
         </div>
       </div>
-      <!-- <div *ngIf="tailleimagelogement !==0">
-          <img
-            src="assets/images/logement2.jpg"
-            alt=""
-          />
-        </div> -->
     </div>
 
-    <!-- <div *ngIf="tailleimagelogement == 0">
-      <div class="Section_photo">
-        <div class="Section_Contenu_left">
-          <img src="assets/images/logement2.jpg" alt="" />
-        </div>
-        <div class="Section_Contenu_right">
-          <div class="Contenu_Left_Image">
-            <img src="assets/images/logement2.jpg" alt="" />
-          </div>
-          <div class="Contenu_Left_Image1">
-            <img src="assets/images/logement2.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </div> -->
+
 
     <div class="Section_Information">
       <div class="Information_left">
@@ -77,7 +57,7 @@
       <div class="Information_right">
         <div class="Information_Header">
           <div class="Section_Form_Header_Left">
-            <h6>Julia</h6>
+            <h6>{{ detail_logement.proprietaire }}</h6>
             <p>
               <i class="fa-solid fa-location-dot"></i
               >{{ detail_logement.adresse }}
@@ -94,7 +74,7 @@
             <p>Disponible immédiatement</p>
           </div>
           <div>
-            <p>+221 78 143 35 70</p>
+            <p>{{userfoundnumero}}</p>
           </div>
         </div>
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { WhatsAppService } from 'src/app/services/whatsApp/whats-app.service';
 
@@ -8,7 +9,13 @@ import { WhatsAppService } from 'src/app/services/whatsApp/whats-app.service';
   styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
-  constructor(private alertService: AlerteService, private WhatsApp: WhatsAppService) {}
+  constructor(
+    private alertService: AlerteService,
+    private WhatsApp: WhatsAppService,
+    private route: Router
+  ) {}
+
+  isModalOpen: boolean = false;
 
   listAlert: any[] = [];
   selectedPrice: any;
@@ -16,11 +23,46 @@ export class AlertsComponent implements OnInit {
   allAlert: any[] = [];
 
   etudiant: any;
+  userStatut: any;
+  userOnline_role: any;
 
+  proprio_etudiant: boolean = true;
   ngOnInit(): void {
     this.getAllAlert();
     this.etudiant = JSON.parse(localStorage.getItem('etudiant') || '');
-    console.log('liste des etudiants', this.etudiant[0].user.prenom);
+    // console.log('liste des etudiants', this.etudiant[0].user.prenom);
+
+    const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
+    this.userStatut = JSON.parse(localStorage.getItem('Userconnect') || '');
+    console.log('statut du user', this.userStatut);
+    this.userOnline_role = userOnline.user.role;
+
+    console.log('utilisateur connecte', this.userOnline_role);
+
+    this.verifechange();
+  }
+
+  verifechange() {
+    if (this.userOnline_role === 'proprietaire' && this.userStatut === true) {
+      this.proprio_etudiant = false;
+      // console.log('vous etes proprietaire');
+    } else if (
+      this.userOnline_role === 'etudiant' &&
+      this.userStatut === true
+    ) {
+      this.proprio_etudiant = true;
+      // console.log('vous etes etudiant');
+    }
+  }
+
+  AjouterAlert() {
+    if (this.userStatut === false) {
+      this.route.navigate(['/login']);
+    }else{
+      // document.getElementById('exampleModal').click();
+      this.isModalOpen = true;
+      console.log("true");
+    }
   }
 
   getAllAlert() {

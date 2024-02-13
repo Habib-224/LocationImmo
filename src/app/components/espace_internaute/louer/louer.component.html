@@ -43,10 +43,8 @@
         /> -->
         <select name="localite" id="" [(ngModel)]="searchCriteria.localite">
           <option value="">Selection par localite</option>
-          <option value="pikine">Pikine</option>
-          <option value="ouakam">ouakam</option>
-          <option value="almadie">almadie</option>
-          <option value="sacre coeur">sare coeur</option>
+           <option *ngFor="let localite of localite" [value]="localite.nomLocalite">{{ localite.nomLocalite }}</option>
+
         </select>
 
         <button (click)="search()">Rechercher</button>

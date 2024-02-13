@@ -86,7 +86,13 @@ export class AuthentificationComponent implements OnInit {
       this.emailProprietaire == '' ||
       this.passwordProprietaire == ''
     ) {
-      console.log('veuillez remplir tous les champs');
+      // console.log('veuillez remplir tous les champs');
+      this.message.MessageSucces(
+        'error',
+        'Oups Error',
+        'Veuillez remplir tous les champs',
+        'center'
+      );
     } else {
       if (this.etudiantStatus == 'etudiant') {
         const newEtudiant = new Etudiant();
@@ -106,9 +112,9 @@ export class AuthentificationComponent implements OnInit {
           this.onErrorHandler
         );
 
-        console.log('vous êtes etudiant');
+        // console.log('vous êtes etudiant');
       } else if (this.proprietaireStatus == 'proprietaire') {
-        console.log('vous êtes proprietaire');
+        // console.log('vous êtes proprietaire');
         const newproprietaire = new Proprietaire();
         newproprietaire.nom = this.nomproprio;
         newproprietaire.prenom = this.prenomProprietaire;
@@ -124,7 +130,12 @@ export class AuthentificationComponent implements OnInit {
           this.emailProprietaire == '' ||
           this.passwordProprietaire == ''
         ) {
-          console.log('veuillez remplir tous les champs');
+          this.message.MessageSucces(
+            'error',
+            'Oups Error',
+            'Veuillez remplir tous les champs',
+            'center'
+          );
         } else {
           // console.log(newproprietaire);
           this.AuthService.register(
@@ -137,114 +148,217 @@ export class AuthentificationComponent implements OnInit {
     }
   }
 
-  onSuccessHandler(response: any) {
-    console.log('Inscription réussie:', response);
-    // this.changeForme();
-    this.route.navigate(['/']);
-    // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
-  }
+  onSuccessHandler = (response: any) => {
+    this.message.MessageSucces(
+      'success',
+      'Success',
+      'Inscrit avec Succes',
+      'center'
+    );
+    this.changeForme();
+    // Autres actions à exécuter après une inscription réussie
+  };
 
-  // Fonction appelée en cas d'erreur lors de l'inscription
-  onErrorHandler(error: any) {
-    console.error("Erreur lors de l'inscription:", error);
-
+  onErrorHandler = (error: any) => {
+    // console.error("Erreur lors de l'inscription:", error);
+    // console.error("Erreur lors de l'inscription:", error.status);
+    // console.error("Erreur lors de l'inscription:", error.error.error);
+    this.message.MessageSucces(
+      'error',
+      'Oups',
+      'les informations que vous avez saisi sont incorrect',
+      'center'
+    );
     // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
+  };
+
+  validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const endsWithCom = /com$/;
+
+    return emailRegex.test(email) && endsWithCom.test(email);
   }
+
+  validatePassword(password: string): boolean {
+    // Exemple de règle : le mot de passe doit avoir au moins 8 caractères
+    return password.length >= 8;
+  }
+
+  // login() {
+  //   if (this.emailLogin == '' || this.PasswordLogin == '') {
+  //     this.message.MessageSucces(
+  //       'error',
+  //       'Oops...',
+  //       'veuillez remplir les champs',
+  //       'center'
+  //     );
+  //   } else {
+  //     let email = this.emailLogin;
+  //     let Password = this.PasswordLogin;
+
+  //     this.AuthService.login(
+  //       { email: email, password: Password },
+  //       (response: any) => {
+  //         console.log('Voici la reponse ', response);
+  //         if (response.user.role === 'admin') {
+  //           // Gérer la réponse en cas de succès
+  //           this.message.MessageSucces(
+  //             'success',
+  //             'Success',
+  //             'Vous êtes connecté avec succès',
+  //             'center'
+  //           );
+  //           this.AuthService.isAuthenticated = true;
+  //           localStorage.setItem('userOnline', JSON.stringify(response));
+  //           localStorage.setItem(
+  //             'Userconnect',
+  //             JSON.stringify(this.AuthService.isAuthenticated)
+  //           );
+  //           this.route.navigate(['/dashboard_statistic']);
+  //         } else if (response.user.role === 'etudiant') {
+  //           // Gérer la réponse en cas de succès
+  //           this.message.MessageSucces(
+  //             'success',
+  //             'Success',
+  //             'Vous êtes connecté avec succès',
+  //             'center'
+  //           );
+  //           this.AuthService.isAuthenticated = true;
+  //           localStorage.setItem('userOnline', JSON.stringify(response));
+  //           localStorage.setItem(
+  //             'Userconnect',
+  //             JSON.stringify(this.AuthService.isAuthenticated)
+  //           );
+  //           this.route.navigate(['/accueil']);
+  //         } else if (response.user.role === 'proprietaire') {
+  //           // Gérer la réponse en cas de succès
+  //           this.message.MessageSucces(
+  //             'success',
+  //             'Success',
+  //             'Vous êtes connecté avec succès',
+  //             'center'
+  //           );
+  //           this.AuthService.isAuthenticated = true;
+  //           localStorage.setItem('userOnline', JSON.stringify(response));
+  //           localStorage.setItem(
+  //             'Userconnect',
+  //             JSON.stringify(this.AuthService.isAuthenticated)
+  //           );
+  //           this.route.navigate(['/accueil']);
+  //         }
+  //       }
+  //     );
+  //   }
+  // }
 
   login() {
-    if (this.emailLogin == '' || this.PasswordLogin == '') {
-      // console.log('veuillez remplir les champs');
-      this.message.MessageSucces(
-        'error',
-        'Oops...',
-        'veuillez remplir les champs',
-        'center'
-      );
-    } else {
+    if (
+      this.validateEmail(this.emailLogin) &&
+      this.validatePassword(this.PasswordLogin)
+    ) {
+      // Effectuer la connexion
       let email = this.emailLogin;
       let Password = this.PasswordLogin;
 
       this.AuthService.login(
         { email: email, password: Password },
-        (reponse: any) => {
-          if (reponse.user.role === 'admin') {
+        (response: any) => {
+          console.log('Voici la reponse ', response);
+          if (response.user.role === 'admin') {
+            // Gérer la réponse en cas de succès
             this.message.MessageSucces(
               'success',
               'Success',
-              'Vous ête Connecté avec Succes',
+              'Vous êtes connecté avec succès',
               'center'
             );
-
             this.AuthService.isAuthenticated = true;
-            localStorage.setItem('userOnline', JSON.stringify(reponse));
+            localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
               'Userconnect',
               JSON.stringify(this.AuthService.isAuthenticated)
-            );
-
-            //recuperer le userConnecter
-            const userOnline = JSON.parse(
-              localStorage.getItem('userOnline') || ''
-            );
-            const userconnect1 = JSON.parse(
-              localStorage.getItem('Userconnect') || ''
             );
             this.route.navigate(['/dashboard_statistic']);
-          } else if (reponse.user.role === 'etudiant') {
+          } else if (response.user.role === 'etudiant') {
+            // Gérer la réponse en cas de succès
             this.message.MessageSucces(
               'success',
               'Success',
-              'Vous ête Connecté avec Succes',
+              'Vous êtes connecté avec succès',
               'center'
             );
             this.AuthService.isAuthenticated = true;
-
-            // stocker notre les info de la requete dans notre localstorage
-            localStorage.setItem('userOnline', JSON.stringify(reponse));
+            localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
               'Userconnect',
               JSON.stringify(this.AuthService.isAuthenticated)
             );
-
-            //recuperer le userConnecter
-            const userOnline = JSON.parse(
-              localStorage.getItem('userOnline') || ''
-            );
-
-            const userconnect1 = JSON.parse(
-              localStorage.getItem('Userconnect') || ''
-            );
-            // console.log("voici le status du user connecter",userconnect1);
             this.route.navigate(['/accueil']);
-            // console.log('vous ête etudiant');
-          } else if (reponse.user.role === 'proprietaire') {
+          } else if (response.user.role === 'proprietaire') {
+            // Gérer la réponse en cas de succès
             this.message.MessageSucces(
               'success',
               'Success',
-              'Vous ête Connecté avec Succes',
+              'Vous êtes connecté avec succès',
               'center'
             );
             this.AuthService.isAuthenticated = true;
-
-            // stocker notre les info de la requete dans notre localstorage
-            localStorage.setItem('userOnline', JSON.stringify(reponse));
+            localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
               'Userconnect',
               JSON.stringify(this.AuthService.isAuthenticated)
             );
-
-            //recuperer le userConnecter
-            const userOnline = JSON.parse(
-              localStorage.getItem('userOnline') || ''
-            );
-            const userconnect1 = JSON.parse(
-              localStorage.getItem('Userconnect') || ''
-            );
-
             this.route.navigate(['/accueil']);
           }
+        },
+        (error: any) => {
+          this.message.MessageSucces('error',"Error",error.error.message,'center')
+          // let message = error.error.message;
+          // console.log("Voici les messages d'erreur", message);
         }
       );
+    } else {
+
+
+      if (this.emailLogin == '' || this.PasswordLogin == '') {
+        this.message.MessageSucces(
+          'error',
+          'Oops...',
+          'Veuillez remplir les champs',
+          'center'
+        );
+      } else {
+        if (
+          !(
+            this.validateEmail(this.emailLogin) &&
+            this.validatePassword(this.PasswordLogin)
+          )
+        ) {
+          // Le bloc de code sera exécuté si l'email ou le mot de passe n'est pas valide
+          this.message.MessageSucces(
+            'error',
+            'Oops...',
+            "Veuillez saisir le bon format de mail et un mot de passe d'au moins 8 caractères",
+            'center'
+          );
+        }
+
+        if (!this.validateEmail(this.emailLogin)) {
+          this.message.MessageSucces(
+            'error',
+            'Oops...',
+            'Veuillez saisir le bon format de mail',
+            'center'
+          );
+        } else if (!this.validatePassword(this.PasswordLogin)) {
+          this.message.MessageSucces(
+            'error',
+            'Oops...',
+            "Veuillez saisir un mot de passe d'au moins 8 caractères",
+            'center'
+          );
+        }
+      }
     }
   }
 }

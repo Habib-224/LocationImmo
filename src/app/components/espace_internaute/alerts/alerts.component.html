@@ -3,7 +3,8 @@
   <div class="Section_Contenu_banner"></div>
   <div class="search-form" id="Section_filtre">
     <div class="section_ajout">
-      <button>Ajouter une Alerte</button>
+      <button *ngIf="proprio_etudiant" (click)="AjouterAlert()" >Ajouter une Alerte</button>
+      <button *ngIf="!proprio_etudiant">Alerte disponible</button>
     </div>
     <div id="cherche">
       <div class="Alert">
@@ -83,5 +84,83 @@
     </div>
   </div>
 </div>
+
+ <div *ngIf="isModalOpen===true"
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Detail Utilisateur
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="Formulaire">
+            <form action="">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Budget</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="name@example.com"
+                  name="budget"
+
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                  name="description"
+
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label"
+                  >Caracteristique</label
+                >
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                  name="caracteristiques"
+
+                ></textarea>
+              </div>
+              <p></p>
+              <button type="submit" >valider</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <app-footer></app-footer>

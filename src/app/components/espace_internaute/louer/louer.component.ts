@@ -27,8 +27,10 @@ export class LouerComponent implements OnInit {
   logements: any[] = [];
   constructor(private logementservice: LogementService) {}
 
+  localite: any;
   ngOnInit(): void {
     this.getAllLogement();
+    this.localite = JSON.parse(localStorage.getItem('localite') || '');
   }
   getAllLogement() {
     this.logementservice.getAlllogment().subscribe((response) => {
@@ -73,7 +75,7 @@ export class LouerComponent implements OnInit {
       return typeMatch && localiteMatch;
     });
 
-   
+
   }
 
   // detail(id:any) {

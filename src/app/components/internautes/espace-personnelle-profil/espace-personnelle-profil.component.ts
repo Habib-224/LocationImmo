@@ -100,6 +100,9 @@ export class EspacePersonnelleProfilComponent {
             (response: any) => {
               this.profilService.isAuthenticated = true;
               localStorage.setItem('userOnline', JSON.stringify(response));
+            },
+            (error: any) => {
+              console.log("Voici les messages d'erreur",error);
             }
           );
           this.message.MessageSucces(

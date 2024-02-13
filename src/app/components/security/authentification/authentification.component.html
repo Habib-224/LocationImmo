@@ -80,9 +80,9 @@
               />
             </div>
           </div>
-          <div>
+          <div class="Statut_etudiant">
             <label for="type">Votre Statut</label>
-            <div>
+            <div> 
               <input
                 type="checkbox"
                 id="role"
@@ -109,7 +109,8 @@
               <label for="appartement">Proprietaire</label>
             </div>
           </div>
-          <div class="" *ngIf="userRole">
+          <br />
+          <div class="info_Etudiant" *ngIf="userRole">
             <div class="formGroup1">
               <label for="">Pays d'origine:</label><br />
               <input type="text" name="paysOrigine" [(ngModel)]="paysOrigine" />

@@ -39,8 +39,10 @@ export class EspacePersonnelleLogementsComponent {
     private logementService: LogementService
   ) {}
 
+  localite: any;
   ngOnInit(): void {
     this.getAllLogementByOwner();
+    this.localite = JSON.parse(localStorage.getItem('localite') || '');
   }
 
   keppAllLogement: any = [];
@@ -48,7 +50,7 @@ export class EspacePersonnelleLogementsComponent {
   logementList: any = [];
 
   // pour les infos du logement
-  adresse_logement: string = '';
+  adresse_logement: string = ''; 
   type_logement: string = '';
   prix_logement: string = '';
   description_logement: string = '';
@@ -210,6 +212,8 @@ export class EspacePersonnelleLogementsComponent {
           equipements: '',
           localite_id: null,
         };
+        this.getAllLogementByOwner();
+
         // this.image = null;
       },
       (error) => {

@@ -28,7 +28,7 @@ export class ProprioProfilComponent implements OnInit {
     private profilService: AuthserviceService,
     private route: Router,
     private message: MessageService,
-    private autservice : AuthserviceService
+    private autservice: AuthserviceService
   ) {}
   UserConnect: any;
 
@@ -41,8 +41,8 @@ export class ProprioProfilComponent implements OnInit {
   }
 
   chargerinfo() {
-     let userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
-     this.UserConnect = userOnline.user;
+    let userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
+    this.UserConnect = userOnline.user;
   }
 
   ChargerInformation() {
@@ -80,7 +80,7 @@ export class ProprioProfilComponent implements OnInit {
       this.telephone_profil == '' ||
       this.email_profil == '' ||
       this.password_profil == ''
-    ) { 
+    ) {
       this.message.MessageSucces(
         'error',
         'Oops...',
@@ -97,22 +97,27 @@ export class ProprioProfilComponent implements OnInit {
             'Localite Modifier avec Succes',
             'center'
           );
-          this.autservice.login({ email: this.email_profil, password: this.password_profil }, (response:any) => {
-             this.autservice.isAuthenticated = true;
-             localStorage.setItem('userOnline', JSON.stringify(response));
-          });
-
+          this.autservice.login(
+            { email: this.email_profil, password: this.password_profil },
+            (response: any) => {
+              this.autservice.isAuthenticated = true;
+              localStorage.setItem('userOnline', JSON.stringify(response));
+            },
+            (error: any) => {
+              // this.message.MessageSucces('Error',"Error",error.error.message,'center')
+              let message = error.HttpErrorResponse .error.message
+              console.log("Voici les messages d'erreur",message);
+            }
+          );
 
           // console.log('Information modifer avec succes ');
           this.viderChamp();
           // this.route.navigate(['/login']);
-      });
+        });
     }
   }
 
   onsucessHandler() {
-    console.log("connecter avec succes")
+    console.log('connecter avec succes');
   }
-
-
 }

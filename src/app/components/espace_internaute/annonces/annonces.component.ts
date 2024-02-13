@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Logement } from 'src/app/models/Logement';
 import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { LogementService } from 'src/app/services/logement/logement.service';
+import { MessageService } from 'src/app/services/message/message.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './annonces.component.html',
   styleUrls: ['./annonces.component.css'],
 })
-export class AnnoncesComponent implements OnInit{
+export class AnnoncesComponent implements OnInit {
   // Déclarez trois variables distinctes pour représenter l'état de chaque étape
   changeStep1: boolean = true;
   changeStep2: boolean = false;
@@ -37,11 +39,15 @@ export class AnnoncesComponent implements OnInit{
   // Déclaration des méhodes
   constructor(
     private Alertservice: AlerteService,
-    private logementService: LogementService
+    private logementService: LogementService,
+    private message: MessageService,
+    private route: Router
   ) {}
 
+  localite: any;
   ngOnInit(): void {
     this.getAllLogementByOwner();
+    this.localite = JSON.parse(localStorage.getItem('localite') || '');
   }
 
   keppAllLogement: any = [];
@@ -147,7 +153,6 @@ export class AnnoncesComponent implements OnInit{
   get totalPages(): number {
     return Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
   }
-
   logement: any = {
     adresse: '',
     type: '',
@@ -159,7 +164,6 @@ export class AnnoncesComponent implements OnInit{
     equipements: '',
     localite_id: null,
     nomImage: '',
-    image:[]
   };
   image: any = [];
 
@@ -175,18 +179,23 @@ export class AnnoncesComponent implements OnInit{
     formData.append('prix', this.logement.prix);
     formData.append('equipements', this.logement.equipements);
     formData.append('localite_id', this.logement.localite_id);
-    formData.append('image[]', this.image['image.jpg'] as Blob);
 
-    Object.keys(this.logement).forEach((key) => {
-      formData.append(key, this.logement[key]);
-    });
-
+    // Ajout de l'image
     if (this.image) {
+      formData.append('image[]', this.image);
     }
 
     this.logementService.ajouterLogement(formData).subscribe(
       (response) => {
         console.log('Logement ajouté avec succès', response);
+        this.message.MessageSucces(
+          'Success',
+          'Success',
+          'Logement ajouté avec succès',
+          'center'
+        );
+        this.route.navigate(['/louer']);
+
         console.log('information saisi', formData);
         this.logement = {
           adresse: '',
@@ -199,6 +208,8 @@ export class AnnoncesComponent implements OnInit{
           equipements: '',
           localite_id: null,
         };
+        this.getAllLogementByOwner();
+
         // this.image = null;
       },
       (error) => {
@@ -209,24 +220,51 @@ export class AnnoncesComponent implements OnInit{
 
   getFile(event: any) {
     console.warn(event.target.files[0]);
-    let image = event.target.files[0] as File;
     this.image = event.target.files[0] as File;
-    this.logement.image = event.target.files[0] as File;
-    // this.image.push(image);
-    console.log(event.target.files[0]);
-    console.log("image du logement", image);
   }
-  // dfdfd
+
+  onFileSelected(event: any) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      this.image = files[0];
+    }
+  }
 
   public changerform(direction: string) {
     if (direction === 'suivant') {
       // Logique pour passer à l'étape suivante
-      if (this.changeStep1) {
+      if (
+        this.changeStep1 &&
+        this.logement.adresse != '' &&
+        this.logement.prix != null &&
+        this.logement.equipements != ''
+      ) {
         this.changeStep1 = false;
         this.changeStep2 = true;
-      } else if (this.changeStep2) {
+      } else {
+        this.message.MessageSucces(
+          'error',
+          'error',
+          "veuillez valider avant d'acceder a l'etape suivante",
+          'center'
+        );
+      }
+
+      if (
+        this.changeStep2 &&
+        this.logement.localite_id != '' &&
+        this.logement.type != '' &&
+        this.logement.description != ''
+      ) {
         this.changeStep2 = false;
         this.changeStep3 = true;
+      } else {
+        this.message.MessageSucces(
+          'error',
+          'error',
+          "veuillez valider avant d'acceder a l'etape suivante",
+          'center'
+        );
       }
     } else if (direction === 'retour') {
       // Logique pour revenir à l'étape précédente
@@ -238,6 +276,29 @@ export class AnnoncesComponent implements OnInit{
         this.changeStep1 = true;
       }
     }
+  }
+
+  private validerEtape1(): boolean {
+    return (
+      this.logement.adresse && this.logement.prix && this.logement.equipements
+    );
+  }
+
+  private validerEtape2(): boolean {
+    return (
+      this.logement.localite_id &&
+      this.logement.type &&
+      this.logement.description
+    );
+  }
+
+  private validerEtape3(): boolean {
+    return (
+      this.logement.nombreChambre &&
+      this.logement.disponibilite &&
+      this.logement.superficie &&
+      this.logement.image
+    );
   }
 
   valider() {
