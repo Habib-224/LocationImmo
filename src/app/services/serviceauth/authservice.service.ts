@@ -66,7 +66,7 @@ export class AuthserviceService {
     setTimeout(() => {
       this.refreshToken(this.onSucces, this.onError);
       alert('hello');
-    }, 10000);
+    }, 5000);
   }
 
   refreshToken(onSuccess: Function, onError: Function){
