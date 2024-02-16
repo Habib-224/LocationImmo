@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
 
     console.log('utilisateur connecte', this.useronline_role);
 
+
     this.verifechange();
   }
 
@@ -101,6 +102,7 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+
 
   onSuccessHandler = (response: any) => {
     console.log('Inscription réussie:', response);

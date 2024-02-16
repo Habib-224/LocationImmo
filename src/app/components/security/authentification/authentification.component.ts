@@ -34,6 +34,16 @@ export class AuthentificationComponent implements OnInit {
     this.change = !this.change;
   }
 
+  //-------------------------------
+  verifEmailCon: any = '';
+  verifPasswordCon: any = '';
+
+  // Variables Si les valeurs sont exactes
+  exactEmailCon: boolean = false;
+  exactPasswordCon: boolean = false;
+  //-------------------------------
+  //-------------------------------
+
   nomproprio: string = '';
   prenomProprietaire: string = '';
   adresseProprietaire: string = '';
@@ -55,6 +65,7 @@ export class AuthentificationComponent implements OnInit {
   ngOnInit(): void {
     const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
     const userconnect = JSON.parse(localStorage.getItem('Userconnect') || '');
+    const token = JSON.parse(localStorage.getItem('TokenUser') || '');
   }
 
   checkbox1Checked: boolean = false;
@@ -173,15 +184,53 @@ export class AuthentificationComponent implements OnInit {
   };
 
   validateEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const endsWithCom = /com$/;
+    const emailRegex =
+      /^[A-Za-z]+[A-Za-z0-9\._%+-]+@[A-Za-z][A-Za-z0-9\.-]+\.[A-Za-z]{2,}$/;
+    // const endsWithCom = /com$/;
 
-    return emailRegex.test(email) && endsWithCom.test(email);
+    // return emailRegex.test(email) && endsWithCom.test(email);
+    return emailRegex.test(email);
   }
 
   validatePassword(password: string): boolean {
-    // Exemple de règle : le mot de passe doit avoir au moins 8 caractères
     return password.length >= 8;
+  }
+
+  verifEmail() {
+    if (this.emailLogin == '') {
+      this.verifEmailCon = '';
+    } else {
+      if (this.validateEmail(this.emailLogin) == true) {
+        console.log('true');
+        this.exactEmailCon = true;
+        this.verifEmailCon = 'le format du mail est valide';
+        console.log(this.verifEmailCon);
+      }
+
+      if (this.validateEmail(this.emailLogin) == false) {
+        console.log('false');
+        this.exactEmailCon = false;
+        this.verifEmailCon = 'le format du mail est invalide';
+        console.log(this.verifEmailCon);
+      }
+    }
+  }
+
+  color: string = 'red';
+
+  verifPassword() {
+    if (this.PasswordLogin == '') {
+      this.verifPasswordCon = '';
+    } else {
+      if (this.PasswordLogin.length < 8) {
+        this.exactPasswordCon = false;
+        this.verifPasswordCon =
+          'Le Mot de passe doit être superieur a 8 caractere';
+      } else {
+        this.exactPasswordCon = true;
+        this.verifPasswordCon = 'Mot de Passe Correcte';
+      }
+    }
   }
 
   // login() {
@@ -263,9 +312,17 @@ export class AuthentificationComponent implements OnInit {
       this.AuthService.login(
         { email: email, password: Password },
         (response: any) => {
-          console.log('Voici la reponse ', response);
+          // console.log('Voici la reponse ', response);
+          this.AuthService.deconnexionAutomatique();
+
+          let token = response.authorization.token;
+          // console.log('le token du user est :', token);
+          localStorage.setItem('TokenUser', JSON.stringify(token));
+
+
           if (response.user.role === 'admin') {
             // Gérer la réponse en cas de succès
+
             this.message.MessageSucces(
               'success',
               'Success',
@@ -312,15 +369,22 @@ export class AuthentificationComponent implements OnInit {
           }
         },
         (error: any) => {
-          this.message.MessageSucces('error',"Error",error.error.message,'center')
+          this.message.MessageSucces(
+            'error',
+            'Error',
+            error.error.message,
+            'center'
+          );
           // let message = error.error.message;
           // console.log("Voici les messages d'erreur", message);
         }
       );
     } else {
-
-
-      if (this.emailLogin == '' || this.PasswordLogin == '') {
+      if (this.emailLogin == '' && this.PasswordLogin == '') {
+        this.exactEmailCon = false;
+        // this.exactPasswordCon = false;
+        this.verifEmailCon = 'Veuilez Saisir le mail ';
+        this.verifPasswordCon = 'Veuillez Saisir le mot de Passe';
         this.message.MessageSucces(
           'error',
           'Oops...',
@@ -361,4 +425,6 @@ export class AuthentificationComponent implements OnInit {
       }
     }
   }
+
+  // déconnexion apres 10 secondes
 }

@@ -11,16 +11,64 @@
         <form action="" (ngSubmit)="login()">
           <div class="formGroup">
             <label for="">Votre e-mail:</label><br />
-            <input type="text" name="login" [(ngModel)]="emailLogin" />
+            <input
+              type="email"
+              name="login"
+              [(ngModel)]="emailLogin"
+              (input)="verifEmail()"
+            />
+            <span
+              id="verifEmailcorrect"
+              class="text-success"
+              *ngIf="exactEmailCon == true"
+              >{{ verifEmailCon }}</span
+            >
+            <span
+              id="verifEmail"
+              class="text-danger"
+              *ngIf="exactEmailCon == false"
+              >{{ verifEmailCon }}</span
+            >
           </div>
           <div class="formGroup">
             <label for="">Votre Mot de passe:</label><br />
-            <input type="text" name="password" [(ngModel)]="PasswordLogin" />
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="PasswordLogin"
+              (input)="verifPassword()"
+            />
+            <span
+              id="verifPasswordCon"
+              class="text-danger"
+              *ngIf="exactPasswordCon == false"
+              >{{ verifPasswordCon }}</span
+            >
+            <span
+              id="verifPasswordCon"
+              class="text-success"
+              *ngIf="exactPasswordCon == true"
+              >{{ verifPasswordCon }}</span
+            >
           </div>
-          <button type="submit" style="background-color: black; color: white">
-            Se Connecter
-          </button>
-          <p id="forgot">Mot de passe Oublié?</p>
+          <div class="validation">
+            <button
+              type="submit"
+              style="background-color: black; color: white"
+              *ngIf="exactEmailCon === true && exactPasswordCon === true"
+            >
+              Se Connecter
+            </button>
+            <button
+              type="submit"
+              style="background-color: darkgray; color: white"
+              *ngIf="exactEmailCon == false || exactPasswordCon == false"
+              disabled
+            >
+              Se Connecter
+            </button>
+            <p id="forgot">Mot de passe Oublié?</p>
+          </div>
         </form>
       </div>
     </div>
@@ -82,7 +130,7 @@
           </div>
           <div class="Statut_etudiant">
             <label for="type">Votre Statut</label>
-            <div> 
+            <div>
               <input
                 type="checkbox"
                 id="role"
