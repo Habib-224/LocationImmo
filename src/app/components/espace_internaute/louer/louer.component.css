@@ -234,3 +234,22 @@
 .filtre_localite select {
   padding: 0.2em;
 }
+
+.Section_check label {
+  position: relative;
+}
+
+#appartement,
+#studio {
+  margin-right: 7px;
+  width: 15px;
+  height: 15px;
+}
+/*
+.Section_check input::-ms-check{
+  background-color: red;
+} */
+
+input[type='checkbox'] {
+    accent-color:#1b9476;
+}

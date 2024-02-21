@@ -6,7 +6,9 @@ import { Proprietaire } from 'src/app/models/Proprietaire';
 import { Observable } from 'rxjs';
 // import { Etudiant } from 'src/app/models/etudiant'
 import { Etudiant } from 'src/app/models/Etudiant';
+// import Swal from 'sweetalert2';
 import Swal from 'sweetalert2';
+
 import { MessageService } from '../message/message.service';
 @Injectable({
   providedIn: 'root',
@@ -64,44 +66,79 @@ export class AuthserviceService {
 
   deconnexionAutomatique() {
     setTimeout(() => {
-      this.refreshToken(this.onSucces, this.onError);
-      alert('hello');
-    }, 5000);
+      this.refreshToken(this.onSuccess, this.onError);
+    }, 10000); // 10 minutes
   }
 
-  refreshToken(onSuccess: Function, onError: Function){
-    return this.http.post<any>(`${url}refresh`, "").subscribe(
+  refreshToken(onSuccess: Function, onError: Function) {
+    // Vérifier si le nombre de rafraîchissements a atteint la limite de 4
+    const refreshCount = parseInt(
+      localStorage.getItem('refreshCount') || '0',
+      10
+    );
+    if (refreshCount >= 4) {
+      // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
+      this.showLogoutAlert();
+    } else {
+      // Mettre à jour le nombre de rafraîchissements dans le localStorage
+      localStorage.setItem('refreshCount', (refreshCount + 1).toString());
+      // Réinitialiser le timer de déconnexion automatique
+      this.deconnexionAutomatique();
+    }
+
+    // Effectuer le rafraîchissement du token
+    return this.http.post<any>(`${url}refresh`, '').subscribe(
       (response: any) => onSuccess(response),
       (error: any) => onError(error)
-    )
+    );
   }
 
-  onSucces = (response: any) => {
-    const useronline = JSON.parse(localStorage.getItem('userOnline') || '');
+  onSuccess = (response: any) => {
+    // Mettre à jour le token
     localStorage.setItem('userOnline', JSON.stringify(response));
     console.log('voici la reponse du changement du token', response);
-
-
-    // const usertoken = JSON.parse(localStorage.getItem('TokenUser') || '');
-    // const token = usertoken;
-    // localStorage.setItem('TokenUser', JSON.stringify(token));
-    // console.log("le token de l'ancien du user ", token);
-    // console.log('voici le nouveau token', response.authorization.token);
   };
 
-  onError=(error: any)=> {
-    console.log("Voici les erreurs du changement du token", error);
+  onError = (error: any) => {
+    console.log('Voici les erreurs du changement du token', error);
+  };
+
+  showLogoutAlert() {
+    let refresh = 0;
+    localStorage.setItem('refreshCount', JSON.stringify(refresh));
+    this.logoutuser();
+
+    // this.MessageSucces()
+    Swal.fire({
+      title: 'Votre Session a expirer',
+      text: "Deconnecter vous ou rafraichissez votre token",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui! je raffraichie',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'non!',
+          text: 'non!, je me deconnecte',
+          icon: 'success',
+        });
+      }
+    });
   }
 
-  // refreshToken() {
-  //   return this.http.post<any>(`${url}refresh`, {}).subscribe(
-  //     (response) => {
-  //       alert('Déconnexion automatique réussie:' response);
-  //     },
-  //     (error) => {
-  //       // Gérer les erreurs de l'appel API
-  //       console.error('Erreur lors de la déconnexion automatique :', error);
-  //     }
-  //   );
-  // }
+  logoutuser() {
+    this.logout().subscribe((response) => {
+      console.log(response);
+      this.isAuthenticated = false;
+      localStorage.setItem(
+        'Userconnect',
+        JSON.stringify(this.isAuthenticated)
+      );
+      // this.affichestatut();
+      this.route.navigate(['/login']);
+    });
+  }
+
 }

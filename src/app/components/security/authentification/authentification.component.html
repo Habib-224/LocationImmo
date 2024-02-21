@@ -36,7 +36,7 @@
               type="password"
               name="password"
               [(ngModel)]="PasswordLogin"
-              (input)="verifPassword()"
+              (input)="verifPasswordlogin()"
             />
             <span
               id="verifPasswordCon"
@@ -81,12 +81,96 @@
         Vous avez déjà un compte?
         <span id="Compte1" (click)="changeForme()">Se Connecter</span>
       </p>
-      <form action="" (ngSubmit)="register()">
+
+      <div class="Container_Section" *ngIf="changeStep1">
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle">
+              <span class="number">1</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle1">
+              <span class="number">2</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle1">
+              <span class="number">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Container_Section" *ngIf="changeStep2">
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle_etape2">
+              <span class="number">1</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle_etape2_active">
+              <span class="number">2</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle1">
+              <span class="number">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Container_Section" *ngIf="changeStep3">
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle_etape2">
+              <span class="number">1</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle_etape2">
+              <span class="number">2</span>
+            </div>
+            <hr class="divider" />
+          </div>
+        </div>
+        <div class="Etape">
+          <div class="Etape_location">
+            <div class="circle_etape2_active">
+              <span class="number">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- (ngSubmit)="register()" -->
+      <form action="">
         <div class="FormGoup_Container1">
-          <div class="">
+          <div class="Step1" *ngIf="changeStep1">
             <div class="formGroup1">
               <label for="">Votre nom:</label><br />
-              <input type="text" name="nom" [(ngModel)]="nomproprio" />
+              <input
+                type="text"
+                name="nom"
+                [(ngModel)]="nomproprio"
+                (input)="verifiNom()"
+              />
+              <p class="text-success" *ngIf="Exactenom">{{ verifenom }}</p>
+              <p class="text-danger" *ngIf="!Exactenom">{{ verifenom }}</p>
             </div>
             <div class="formGroup1">
               <label for="">Votre prenom:</label><br />
@@ -94,7 +178,14 @@
                 type="text"
                 name="prenom"
                 [(ngModel)]="prenomProprietaire"
+                (input)="verifiPrenom()"
               />
+              <p class="text-success" *ngIf="Exacteprenom">
+                {{ verifeprenom }}
+              </p>
+              <p class="text-danger" *ngIf="!Exacteprenom">
+                {{ verifeprenom }}
+              </p>
             </div>
             <div class="formGroup1">
               <label for="">Votre adresse:</label><br />
@@ -102,14 +193,50 @@
                 type="text"
                 name="adresse"
                 [(ngModel)]="adresseProprietaire"
+                (input)="verifiAdresse()"
               />
+              <p class="text-success" *ngIf="ExacteAdresse">
+                {{ verifeAdresse }}
+              </p>
+              <p class="text-danger" *ngIf="!ExacteAdresse">
+                {{ verifeAdresse }}
+              </p>
+            </div>
+            <div class="section_next">
+              <button disabled id="retour">Retour</button>
+              <button
+                *ngIf="Exactenom && Exacteprenom && ExacteAdresse"
+                (click)="changedirection('suivant')"
+                id="suivant"
+              >
+                Suivant
+              </button>
+              <button
+                *ngIf="
+                  Exactenom == false ||
+                  Exacteprenom == false ||
+                  ExacteAdresse == false
+                "
+                (click)="changedirection('suivant')"
+                disabled
+                id="suivant1"
+              >
+                Suivant
+              </button>
             </div>
           </div>
 
-          <div class="">
+          <div class="Step2" *ngIf="changeStep2">
             <div class="formGroup1">
               <label for="">Votre e-mail:</label><br />
-              <input type="text" name="email" [(ngModel)]="emailProprietaire" />
+              <input
+                type="text"
+                name="email"
+                [(ngModel)]="emailProprietaire"
+                (input)="verifiEmail()"
+              />
+              <p class="text-success" *ngIf="ExacteEmail">{{ verifeEmail }}</p>
+              <p class="text-danger" *ngIf="!ExacteEmail">{{ verifeEmail }}</p>
             </div>
             <div class="formGroup1">
               <label for="">Votre Mot de passe:</label><br />
@@ -117,7 +244,14 @@
                 type="text"
                 name="password"
                 [(ngModel)]="passwordProprietaire"
+                (input)="verifiPassword()"
               />
+              <p class="text-success" *ngIf="ExactePassword">
+                {{ verifePassword }}
+              </p>
+              <p class="text-danger" *ngIf="!ExactePassword">
+                {{ verifePassword }}
+              </p>
             </div>
             <div class="formGroup1">
               <label for="">Votre numero:</label><br />
@@ -125,52 +259,113 @@
                 type="text"
                 name="telephone"
                 [(ngModel)]="telephoneProprietaire"
+                (input)="verifiTelephone()"
               />
+              <p class="text-success" *ngIf="ExacteTelephone">
+                {{ verifeTelephone }}
+              </p>
+              <p class="text-danger" *ngIf="!ExacteTelephone">
+                {{ verifeTelephone }}
+              </p>
+            </div>
+
+            <div class="Statut_etudiant">
+              <label for="type">Votre Statut</label>
+              <div>
+                <input
+                  type="checkbox"
+                  id="role"
+                  name="role"
+                  value="etudiant"
+                  id="checkbox1"
+                  [checked]="checkbox1Checked"
+                  (change)="checkOne($event)"
+                  (click)="ChangeRole()"
+                />
+                <label for="studio">Etudiant</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="role"
+                  name="role"
+                  value="proprietaire"
+                  id="checkbox2"
+                  [checked]="checkbox2Checked"
+                  (change)="checkTwo($event)"
+                  (click)="ChangeRoleProprio()"
+                />
+                <label for="appartement">Proprietaire</label>
+              </div>
+            </div>
+
+            <div class="section_next">
+              <button id="retour1" (click)="changedirection('retour')">
+                Retour
+              </button>
+               <button
+                (click)="changedirection('suivant')"
+                id="suivant"
+                *ngIf="ExacteEmail && ExactePassword && ExacteTelephone && checkbox1Checked"
+              >
+                Suivant
+              </button>
+              <button
+
+                id="suivant"
+                type="submit"
+                (click)="register()"
+                *ngIf="ExacteEmail && ExactePassword && ExacteTelephone && checkbox2Checked"
+              >
+                S'insrire
+              </button>
+              <button
+                disabled
+                (click)="changedirection('suivant')"
+                id="suivant1"
+                *ngIf="ExacteEmail==false || ExactePassword==false || ExacteTelephone==false"
+              >
+                Suivant
+              </button>
+
+              <button
+                disabled
+                (click)="changedirection('suivant')"
+                id="suivant1"
+                *ngIf="ExacteEmail==true && ExactePassword==true && ExacteTelephone==true && checkbox2Checked==false && checkbox1Checked==false "
+              >
+                Suivant
+              </button>
             </div>
           </div>
-          <div class="Statut_etudiant">
-            <label for="type">Votre Statut</label>
-            <div>
-              <input
-                type="checkbox"
-                id="role"
-                name="role"
-                value="etudiant"
-                id="checkbox1"
-                [checked]="checkbox1Checked"
-                (change)="checkOne($event)"
-                (click)="ChangeRole()"
-              />
-              <label for="studio">Etudiant</label>
-            </div>
-            <div>
-              <input
-                type="checkbox"
-                id="role"
-                name="role"
-                value="proprietaire"
-                id="checkbox2"
-                [checked]="checkbox2Checked"
-                (change)="checkTwo($event)"
-                (click)="ChangeRoleProprio()"
-              />
-              <label for="appartement">Proprietaire</label>
-            </div>
-          </div>
+
           <br />
-          <div class="info_Etudiant" *ngIf="userRole">
-            <div class="formGroup1">
-              <label for="">Pays d'origine:</label><br />
-              <input type="text" name="paysOrigine" [(ngModel)]="paysOrigine" />
+          <div class="Step3" *ngIf="changeStep3">
+            <div class="info_Etudiant" *ngIf="userRole">
+              <div class="formGroup1">
+                <label for="">Pays d'origine:</label><br />
+                <input
+                  type="text"
+                  name="paysOrigine"
+                  [(ngModel)]="paysOrigine"
+                />
+              </div>
+              <div class="formGroup1">
+                <label for="">Universite</label><br />
+                <input type="text" name="telephone" [(ngModel)]="universite" />
+              </div>
             </div>
-            <div class="formGroup1">
-              <label for="">Universite</label><br />
-              <input type="text" name="telephone" [(ngModel)]="universite" />
+            <div class="soumettre">
+              <button id="retour" (click)="changedirection('retour')">
+                Retour
+              </button>
+              <button type="submit" (click)="register()" id="send">
+                S'inscrire
+              </button>
             </div>
           </div>
         </div>
-        <button type="submit">S'inscrire</button>
-        <p id="forgot1">Mot de passe Oublié?</p>
+        <p id="forgot1" hidden>Mot de passe Oublié?</p>
       </form>
     </div>
   </div>

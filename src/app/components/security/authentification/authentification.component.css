@@ -114,6 +114,7 @@
 
 body {
 }
+
 .Inscription {
   background: url("../../../../assets/images/inscription.jpg"), lightgray 50%;
   background-position: center;
@@ -126,6 +127,7 @@ body {
 }
 
 .Formulaire {
+  /* background-color: rgba(255, 255, 255, 0.139); */
   background-color: white;
   width: 400px;
   height: auto;
@@ -135,6 +137,7 @@ body {
   top: 50px;
   padding: 2em;
   border-radius: 20px;
+  /* backdrop-filter: blur(10px); */
 }
 
 .Formulaire h3 {
@@ -142,7 +145,8 @@ body {
   margin-bottom: 12px;
 }
 
-.formGroup {
+.formGroup,
+.formGroup1 {
   /* line-height: 35px; */
   padding-top: 0.9em;
 }
@@ -168,11 +172,13 @@ body {
   color: white;
 }
 
-input[type="email"],input[type="password"] {
+input[type="email"],
+input[type="password"] {
   padding-left: 10px; /* Vous pouvez ajuster la valeur selon vos besoins */
 }
 
-.Formulaire input {
+.Formulaire input,
+.Formulaire1 input {
   outline: none;
   border: 1px solid black;
 }
@@ -198,20 +204,70 @@ input[type="email"],input[type="password"] {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  min-height: 606px;
+  min-height: 610px;
   flex-shrink: 0;
+  margin-top: -3px;
+}
+
+.Formulaire1 h3 {
+  text-align: center;
+  margin-bottom: 12px;
 }
 
 .Formulaire1 {
   background-color: white;
-  max-width: 680px;
+  max-width: 400px;
   height: auto;
   display: block;
   margin: auto;
   position: relative;
-  top: 15px;
+  top: 10px;
   padding: 2em;
   border-radius: 20px;
+}
+
+.section_next {
+  display: flex;
+  justify-content: space-between;
+  gap: 140px;
+}
+
+#retour {
+  background-color: #a9a9a9;
+  margin-top: 25px;
+  width: 90px;
+  border-radius: 5px;
+}
+
+
+#retour1{
+  background-color: #1b9476;
+  margin-top: 25px;
+  width: 90px;
+  border-radius: 5px;
+}
+
+#send {
+  margin-top: 25px;
+  border-radius: 5px;
+  width: 150px;
+}
+
+#suivant {
+  background-color: #1b9476;
+  color: white;
+  margin-top: 25px;
+  width: 90px;
+  border-radius: 5px;
+}
+
+
+#suivant1 {
+  background-color: #a9a9a9;
+  color: white;
+  margin-top: 25px;
+  width: 90px;
+  border-radius: 5px;
 }
 
 .Formulaire1 h3 {
@@ -222,11 +278,22 @@ input[type="email"],input[type="password"] {
   line-height: 30px;
 }
 
+#suivant1{
+  background-color: #a9a9a9;
+   /* background-color: #1b9476; */
+  color: white;
+  margin-top: 25px;
+  width: 90px;
+  border-radius: 5px;
+}
+
 .formGroup1 input {
-  width: 270px;
-  height: 35px;
+  width: 340px;
+  height: 40px;
   border-radius: 20px;
   margin-bottom: 15px;
+  display: block;
+  margin: auto;
 }
 
 .Formulaire1 button {
@@ -240,6 +307,10 @@ input[type="email"],input[type="password"] {
   display: block;
   margin: auto;
 }
+/*
+.formGroup1 label {
+  margin-left: 8px;
+} */
 
 #forgot1,
 #Compte1 {
@@ -251,11 +322,11 @@ input[type="email"],input[type="password"] {
 }
 
 .FormGoup_Container1 {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 20px; */
 }
 
 #connexion1 {
@@ -263,8 +334,6 @@ input[type="email"],input[type="password"] {
 }
 
 .info_Etudiant {
-  display: flex;
-  gap: 20px;
   margin-top: -30px;
   margin-bottom: 15px;
 }
@@ -273,7 +342,7 @@ input[type="email"],input[type="password"] {
   display: flex;
   gap: 30px;
   justify-content: start;
-  margin-top: -25px;
+  margin-top: 25px;
 }
 
 #verifEmail {
@@ -290,3 +359,147 @@ input[type="email"],input[type="password"] {
   margin-top: -10px;
   display: block;
 }
+
+/* Multi Step */
+.Etape_location {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Etape_location p {
+  margin-top: 10px;
+}
+
+.Container_Section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  /* width: 700px; */
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle1 {
+  width: 30px;
+  height: 30px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.divider {
+  /* width: 20%; */
+  width: 120px;
+  height: 2px;
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.number {
+  user-select: none;
+}
+
+.etape1 {
+  width: 600px;
+  margin: auto;
+}
+
+.section_next {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ------------------------------ */
+
+.circle_etape2_active {
+  width: 25px;
+  height: 25px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle_etape2 {
+  width: 25px;
+  height: 25px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+/* ----------------------------- */
+
+.circle_etape3_active {
+  width: 25px;
+  height: 25px;
+  background-color: #1b9476;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.circle_etape2 {
+  width: 25px;
+  height: 25px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.soumettre {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  align-items: center;
+}
+/*
+#retour {
+  padding: 0.4em;
+  width: 100px;
+  border: none;
+
+}
+
+#Add{
+  padding: 0.4em;
+  background-color: #1b9476;
+  width: 100px;
+  border: none;
+  color: white;
+} */

@@ -6,7 +6,7 @@
         <div class="circle">
           <span class="number">1</span>
         </div>
-        <p>Localisation</p>
+        <p>Etape 1</p>
         <hr class="divider" />
       </div>
     </div>
@@ -15,7 +15,7 @@
         <div class="circle1">
           <span class="number">2</span>
         </div>
-        <p>logement</p>
+        <p>Etape 2</p>
         <hr class="divider" />
       </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="circle1">
           <span class="number">3</span>
         </div>
-        <p>photo</p>
+        <p>Etape 3</p>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
         <div class="circle_etape2">
           <span class="number">1</span>
         </div>
-        <p>Localisation</p>
+        <p>Etape 1</p>
         <hr class="divider" />
       </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="circle_etape2_active">
           <span class="number">2</span>
         </div>
-        <p>logement</p>
+        <p>Etape 2</p>
         <hr class="divider" />
       </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="circle1">
           <span class="number">3</span>
         </div>
-        <p>photo</p>
+        <p>Etape 3</p>
       </div>
     </div>
   </div>
@@ -64,7 +64,7 @@
         <div class="circle_etape2">
           <span class="number">1</span>
         </div>
-        <p>Localisation</p>
+        <p>Etape 1</p>
         <hr class="divider" />
       </div>
     </div>
@@ -73,7 +73,7 @@
         <div class="circle_etape2">
           <span class="number">2</span>
         </div>
-        <p>logement</p>
+        <p>Etape 2</p>
         <hr class="divider" />
       </div>
     </div>
@@ -82,7 +82,7 @@
         <div class="circle_etape2_active">
           <span class="number">3</span>
         </div>
-        <p>photo</p>
+        <p>Etape 3</p>
       </div>
     </div>
   </div>
@@ -96,7 +96,27 @@
       <!-- ... -->
       <div class="etape1" *ngIf="changeStep1">
         <div class="mb-3">
-          <label for="adresse" class="form-label">Adresse</label>
+          <label for="localite_id" class="form-label"
+            >Localité <span id="requis">*</span></label
+          >
+          <select
+            id="localite_id"
+            name="localite_id"
+            class="form-select"
+            [(ngModel)]="logement.localite_id"
+            (change)="validateLocalite()"
+          >
+            <!-- <option value="">liste option</option> -->
+            <option *ngFor="let localite of localite" [value]="localite.id">
+              {{ localite.nomLocalite }}
+            </option>
+          </select>
+          <!-- <p *ngIf="exacteLocalite">{{ verifeLocalite }}</p> -->
+        </div>
+        <div class="mb-3">
+          <label for="adresse" class="form-label"
+            >Adresse <span id="requis">*</span></label
+          >
           <input
             type="text"
             class="form-control"
@@ -105,86 +125,76 @@
             name="adresse"
             [(ngModel)]="logement.adresse"
             required
+            (input)="validateAdresse()"
           />
         </div>
+        <!-- <p *ngIf="exacteAdresse">{{ verifeAdresse }}</p> -->
+        <p class="text-danger" *ngIf="!exacteAdresse">{{ verifeAdresse }}</p>
+
         <div class="mb-3">
-          <label for="prix" class="form-label">Prix</label>
+          <label for="type" class="form-label"
+            >Type <span id="requis">*</span></label
+          >
+          <select
+            class="form-select"
+            name="type"
+            type="text"
+            [(ngModel)]="logement.type"
+            id="type"
+            (change)="validateType()"
+          >
+            <option value="Studio">Studio</option>
+            <option value="Appartement">Appartement</option>
+          </select>
+          <!-- <p *ngIf="exacteType">{{ verifeType }}</p> -->
+        </div>
+        <div class="mb-3">
+          <label for="superficie" class="form-label"
+            >Superficie | m2 <span id="requis">*</span></label
+          >
           <input
             type="number"
             class="form-control"
-            id="prix"
-            placeholder="Prix"
-            name="prix"
-            [(ngModel)]="logement.prix"
+            id="superficie"
+            placeholder="Superficie"
+            name="superficie"
+            [(ngModel)]="logement.superficie"
             required
+            (input)="validateSurface()"
           />
+          <!-- <p *ngIf="exacteSurface">{{ verifeSuface }}</p> -->
         </div>
-        <div class="mb-3">
-          <label for="equipements" class="form-label">Équipements</label>
-          <input
-            type="text"
-            class="form-control"
-            id="equipements" 
-            placeholder="Équipements"
-            name="equipements"
-            [(ngModel)]="logement.equipements"
-            required
-          />
-        </div>
+
         <div class="section_next">
           <button disabled id="retour">retour</button>
-          <button (click)="changerform('suivant')" id="Add">Suivant</button>
+          <button
+            (click)="changerform('suivant')"
+            id="Add"
+            *ngIf="
+              exacteSurface && exacteType && exacteAdresse && exacteLocalite
+            "
+          >
+            Suivant
+          </button>
+          <button
+            disabled
+            id="retour"
+            *ngIf="
+              exacteSurface == false ||
+              exacteType == false ||
+              exacteAdresse == false ||
+              exacteLocalite == false
+            "
+          >
+            Suivant
+          </button>
         </div>
       </div>
 
       <div class="etape1" *ngIf="changeStep2">
         <div class="mb-3">
-          <label for="localite_id" class="form-label">Nom Localite</label>
-          <select
-            id="localite_id"
-            name="localite_id"
-            class="form-control"
-            [(ngModel)]="logement.localite_id"
-          >
-            <option *ngFor="let localite of localite" [value]="localite.id">
-              {{ localite.nomLocalite }}
-            </option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="type" class="form-label">Type</label>
-          <select
-            class="form-control"
-            name="type"
-            type="text"
-            [(ngModel)]="logement.type"
-            id="type"
-          >
-            <option value="Studio">Studio</option>
-            <option value="Appartement">Appartement</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea
-            class="form-control"
-            id="description"
-            rows="3"
-            name="description"
-            [(ngModel)]="logement.description"
-            required
-          ></textarea>
-        </div>
-        <div class="section_next">
-          <button (click)="changerform('retour')" id="retour">retour</button>
-          <button (click)="changerform('suivant')" id="Add">Suivant</button>
-        </div>
-      </div>
-
-      <div class="etape1" *ngIf="changeStep3">
-        <div class="mb-3">
           <label for="nombreChambre" class="form-label"
-            >Nombre de Chambres</label
+            >Nombre de Chambres <span id="requis">*</span></label
           >
           <input
             type="number"
@@ -194,10 +204,14 @@
             name="nombreChambre"
             [(ngModel)]="logement.nombreChambre"
             required
+            (input)="validateChambre()"
           />
+          <!-- <p *ngIf="exacteChambre">{{ verifeChambre }}</p> -->
         </div>
         <div class="mb-3">
-          <label for="disponibilite" class="form-label">Disponibilité</label>
+          <label for="disponibilite" class="form-label"
+            >Disponibilité <span id="requis">*</span></label
+          >
           <input
             type="date"
             class="form-control"
@@ -205,38 +219,133 @@
             name="disponibilite"
             [(ngModel)]="logement.disponibilite"
             required
+            (input)="validateDisponibilite()"
           />
+          <!-- <p *ngIf="exacteDisponibilite">{{ verifeDisponibilite }}</p> -->
         </div>
         <div class="mb-3">
-          <label for="superficie" class="form-label">Superficie</label>
+          <label for="prix" class="form-label"
+            >Prix (FCFA)<span id="requis">*</span></label
+          >
           <input
             type="number"
             class="form-control"
-            id="superficie"
-            placeholder="Superficie"
-            name="superficie"
-            [(ngModel)]="logement.superficie"
+            id="prix"
+            placeholder="Prix"
+            name="prix"
+            [(ngModel)]="logement.prix"
             required
+            (input)="validatePrix()"
           />
+          <!-- <p *ngIf="exactePrix">{{ verifePrix }}</p> -->
         </div>
         <div class="mb-3">
-          <label for="formFile" class="form-label"
-            >Sélectionnez une image</label
+          <label for="equipements" class="form-label"
+            >Équipements <span id="requis">*</span></label
           >
           <input
+            type="text"
             class="form-control"
+            id="equipements"
+            placeholder="Équipements"
+            name="equipements"
+            [(ngModel)]="logement.equipements"
+            required
+            (input)="validateEquipement()"
+          />
+          <!-- <p *ngIf="exacteEquipement">{{ verifeEquipement }}</p> -->
+        </div>
+
+        <div class="section_next">
+          <button (click)="changerform('retour')" id="retour">retour</button>
+          <button
+            (click)="changerform('suivant')"
+            id="Add"
+            *ngIf="
+              exacteChambre &&
+              exacteDisponibilite &&
+              exactePrix &&
+              exacteEquipement
+            "
+          >
+            Suivant
+          </button>
+          <button
+            disabled
+            id="retour"
+            *ngIf="
+              exacteChambre == false ||
+              exacteDisponibilite == false ||
+              exactePrix == false ||
+              exacteEquipement == false
+            "
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+
+      <div class="etape1" *ngIf="changeStep3">
+        <div class="mb-3">
+          <label for="description" class="form-label"
+            >Description <span id="requis">*</span></label
+          >
+          <textarea
+            class="form-control"
+            id="description"
+            rows="3"
+            name="description"
+            [(ngModel)]="logement.description"
+            required
+            (input)="validateDescription()"
+          ></textarea>
+          <!-- <p *ngIf="exacteDescription">{{ verifeDescription }}</p> -->
+        </div>
+
+        <div class="mb-3">
+          <label for="file" class="custum-file-upload">
+            <div class="text">
+              <span>Cliquez pour téléverser une image</span>
+            </div>
+            <input
+              id="file"
+              type="file"
+              (change)="getFile($event)"
+              (change)="validateImage()"
+              accept="image/*"
+              ngModel="image"
+            />
+          </label>
+          <p *ngIf="exacteImage">{{verifeImage}}</p>
+
+
+          <!-- <label for="formFile" class="form-label"
+            >Sélectionnez une image <span id="requis">*</span></label
+          >
+          <input
             name="image"
             type="file"
             id="formFile"
             (change)="getFile($event)"
             required
+            (change)="validateImage()"
           />
+          <p *ngIf="exacteImage">{{verifeImage}}</p> -->
         </div>
 
         <!-- ... -->
         <div class="section_next">
           <button (click)="changerform('retour')" id="retour">retour</button>
-          <button id="Add">Ajouter</button>
+          <button id="Add" *ngIf="exacteDescription && exacteImage">
+            Ajouter
+          </button>
+          <button
+            disabled
+            id="retour"
+            *ngIf="exacteDescription == false || exacteImage == false"
+          >
+            Ajouter
+          </button>
         </div>
       </div>
       <!-- ... -->

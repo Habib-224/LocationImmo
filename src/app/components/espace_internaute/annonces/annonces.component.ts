@@ -165,7 +165,157 @@ export class AnnoncesComponent implements OnInit {
     localite_id: null,
     nomImage: '',
   };
+
   image: any = [];
+
+  validerAdresse(adresse: string): boolean {
+    const regex = /^\D.*$/; // Vérifie si l'adresse ne commence pas par un chiffre
+    return regex.test(adresse.trim());
+  }
+
+  // --------------------------
+  exacteLocalite: boolean = false;
+  exacteAdresse: boolean = false;
+  exacteType: boolean = false;
+  exacteSurface: boolean = false;
+
+  verifeLocalite: any = '';
+  verifeAdresse: any = '';
+  verifeType: any = '';
+  verifeSuface: any = '';
+
+  exacteChambre: boolean = false;
+  exacteDisponibilite: boolean = false;
+  exactePrix: boolean = false;
+  exacteEquipement: boolean = false;
+
+  verifeChambre: any = '';
+  verifeDisponibilite: any = '';
+  verifePrix: any = '';
+  verifeEquipement: any = '';
+
+  exacteDescription: boolean = false;
+  verifeDescription: any = '';
+
+  exacteImage: boolean = false;
+  verifeImage:any=""
+
+  //---------------------------
+
+  validateLocalite() {
+    if (this.logement.localite_id == '') {
+      this.verifeLocalite = '';
+      this.exacteType = false;
+    } else if (this.localite != '') {
+      this.exacteLocalite = true;
+      // this.verifeLocalite = 'Valide';
+    }
+  }
+
+  validateAdresse() {
+    const adresseTrimed = this.logement.adresse.trim(); // Appliquer trim()
+    if (this.logement.adresse == '') {
+      this.verifeAdresse = '';
+      this.exacteAdresse = false;
+    } else if (
+      this.validerAdresse(this.logement.adresse) == true &&
+      this.logement.adresse.length >= 2
+    ) {
+      this.exacteAdresse = true;
+      // this.verifeAdresse = "l'adresse est valide";
+      this.verifeAdresse = '';
+    } else {
+      this.exacteAdresse = false;
+      this.verifeAdresse = "l'adresse est invalide ";
+    }
+  }
+
+  validateType() {
+    if (this.logement.type == '') {
+      this.verifeType = '';
+      this.exacteType = false;
+    } else if (this.logement.type !== '') {
+      this.verifeType = 'valide';
+      this.exacteType = true;
+    }
+  }
+
+  validateSurface() {
+    if (this.logement.superficie == null) {
+      this.verifeSuface = '';
+      this.exacteSurface = false;
+    } else {
+      this.verifeSuface = 'valide';
+      this.exacteSurface = true;
+    }
+  }
+
+  validateChambre() {
+    if (this.logement.nombreChambre == null) {
+      this.verifeChambre = '';
+      this.exacteChambre = false;
+    } else {
+      this.verifeChambre = 'valide';
+      this.exacteChambre = true;
+    }
+  }
+
+  validatePrix() {
+    if (this.logement.prix == null) {
+      this.verifePrix = '';
+      this.exactePrix = false;
+    } else {
+      this.verifePrix = 'valide';
+      this.exactePrix = true;
+    }
+  }
+
+  validateEquipement() {
+    if (this.logement.equipements == '') {
+      this.verifeEquipement = '';
+      this.exacteEquipement = false;
+    } else {
+      this.verifeEquipement = 'valide';
+      this.exacteEquipement = true;
+    }
+  }
+
+  validateDescription() {
+    if (this.logement.description == '') {
+      this.exacteDescription = false;
+      this.verifeDescription = '';
+    } else if (this.logement.description != '') {
+      this.exacteDescription = true;
+      this.verifeDescription = 'la description est valide';
+    }
+  }
+
+  validateDisponibilite() {
+    if (this.logement.disponibilite == null) {
+      this.verifeDisponibilite = '';
+      this.exacteDisponibilite = false;
+    } else {
+      const regex =
+        /^(?:\d{4})-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1])$/;
+      if (regex.test(this.logement.disponibilite)) {
+        this.verifeDisponibilite = 'Valide';
+        this.exacteDisponibilite = true;
+      } else {
+        this.verifeDisponibilite = 'Format de date invalide';
+        this.exacteDisponibilite = false;
+      }
+    }
+  }
+
+  validateImage() {
+    if (this.image == "") {
+      this.exacteImage = false;
+      this.verifeImage = ""
+    } else if (this.image != "") {
+      this.exacteImage = true;
+      this.verifeImage ="L'image est valide"
+    }
+  }
 
   ajouterLogement() {
     const formData = new FormData();
@@ -233,38 +383,12 @@ export class AnnoncesComponent implements OnInit {
   public changerform(direction: string) {
     if (direction === 'suivant') {
       // Logique pour passer à l'étape suivante
-      if (
-        this.changeStep1 &&
-        this.logement.adresse != '' &&
-        this.logement.prix != null &&
-        this.logement.equipements != ''
-      ) {
+      if (this.changeStep1) {
         this.changeStep1 = false;
         this.changeStep2 = true;
-      } else {
-        this.message.MessageSucces(
-          'error',
-          'error',
-          "veuillez valider avant d'acceder a l'etape suivante",
-          'center'
-        );
-      }
-
-      if (
-        this.changeStep2 &&
-        this.logement.localite_id != '' &&
-        this.logement.type != '' &&
-        this.logement.description != ''
-      ) {
+      } else if (this.changeStep2) {
         this.changeStep2 = false;
         this.changeStep3 = true;
-      } else {
-        this.message.MessageSucces(
-          'error',
-          'error',
-          "veuillez valider avant d'acceder a l'etape suivante",
-          'center'
-        );
       }
     } else if (direction === 'retour') {
       // Logique pour revenir à l'étape précédente

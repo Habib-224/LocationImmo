@@ -13,6 +13,11 @@ import { MessageService } from 'src/app/services/message/message.service';
   styleUrls: ['./authentification.component.css'],
 })
 export class AuthentificationComponent implements OnInit {
+  // Déclarez trois variables distinctes pour représenter l'état de chaque étape
+  changeStep1: boolean = true;
+  changeStep2: boolean = false;
+  changeStep3: boolean = false;
+
   emailLogin: string = '';
   PasswordLogin: string = '';
   change: boolean = false;
@@ -34,14 +39,105 @@ export class AuthentificationComponent implements OnInit {
     this.change = !this.change;
   }
 
-  //-------------------------------
+  //------------------Variable Verification Inscription------------------------------
+
+  Exactenom: boolean = false;
+  Exacteprenom: boolean = false;
+  ExacteAdresse: boolean = false;
+  ExacteEmail: boolean = false;
+  ExactePassword: boolean = false;
+  ExacteTelephone: boolean = false;
+  ExacteUniversite: boolean = false;
+  ExactePaysOrigine: boolean = false;
+
+  verifenom: string = '';
+  verifeprenom: string = '';
+  verifeAdresse: string = '';
+  verifeEmail: string = '';
+  verifePassword: string = '';
+  verifeTelephone: string = '';
+  verifeUniversite: string = '';
+  verifePaysOrigine: string = '';
+
+  //------------------Fin Verification Inscription ----------------------------------
+
+  //------------------ Function de verification du formulaire d'inscription---------------
+  validerNom(nom: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/; // Permet uniquement des lettres et des espaces
+    return regex.test(nom);
+  }
+
+  validerPrenom(prenom: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/; // Permet uniquement des lettres et des espaces
+    return regex.test(prenom);
+  }
+
+  validerAdresse(adresse: string): boolean {
+    const regex = /^\D.*$/; // Vérifie si l'adresse ne commence pas par un chiffre
+    return regex.test(adresse.trim());
+  }
+
+  validerTelephone(telephone: string): boolean {
+    const phoneRegex = /^\+221\s?(77|78|76|70|75|33)[0-9]{7}$/;
+
+    // return telephone.length >= 10;
+    return phoneRegex.test(telephone);
+  }
+
+  validerUniversite(universite: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/; // Permet uniquement des lettres et des espaces
+    return regex.test(universite);
+  }
+
+  validerPaysOrigine(pays: string): boolean {
+    const regex = /^[a-zA-Z\s]+$/; // Permet uniquement des lettres et des espaces
+    return regex.test(pays);
+  }
+
+  validateEmail(email: string): boolean {
+    const emailRegex =
+      /^[A-Za-z]+[A-Za-z0-9\._%+-]+@[A-Za-z][A-Za-z0-9\.-]+\.[A-Za-z]{2,}$/;
+
+    return emailRegex.test(email);
+  }
+
+  validatePassword(password: string): boolean {
+    return password.length >= 8;
+  }
+
+  //------------------ Fin de verification du formulaire d'inscription--------------------
+
+  changedirection(direction: string) {
+    if (direction === 'suivant') {
+      if (this.changeStep1) {
+        this.changeStep1 = false;
+        this.changeStep2 = true;
+        // this.changeStep3 = false;
+      } else if (this.changeStep2) {
+        this.changeStep2 = false;
+        this.changeStep3 = true;
+      }
+    }
+
+    if (direction === 'retour') {
+      if (this.changeStep2) {
+        this.changeStep2 = false;
+        this.changeStep1 = true;
+      } else if (this.changeStep3) {
+        this.changeStep3 = false;
+        this.changeStep2 = true;
+      }
+    }
+  }
+
+  //------------Debut Validation Connexion-------------------
   verifEmailCon: any = '';
   verifPasswordCon: any = '';
 
   // Variables Si les valeurs sont exactes
   exactEmailCon: boolean = false;
   exactPasswordCon: boolean = false;
-  //-------------------------------
+  //-------------Fin Validation Connexion------------------------
   //-------------------------------
 
   nomproprio: string = '';
@@ -66,6 +162,157 @@ export class AuthentificationComponent implements OnInit {
     const userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
     const userconnect = JSON.parse(localStorage.getItem('Userconnect') || '');
     const token = JSON.parse(localStorage.getItem('TokenUser') || '');
+  }
+
+  verifiNom() {
+    const nomproprioTrime = this.nomproprio.trim(); // Appliquer trim()
+
+    if (nomproprioTrime === '') {
+      this.verifenom = '';
+      this.Exactenom = false;
+    } else if (
+      this.validerNom(nomproprioTrime) &&
+      nomproprioTrime.length >= 2
+    ) {
+      this.Exactenom = true;
+      this.verifenom = '';
+    } else if (nomproprioTrime.length < 2) {
+      this.Exactenom = false;
+      this.verifenom = 'au minimum avoir deux caractères ';
+    } else {
+      this.Exactenom = false;
+      this.verifenom = 'le nom est invalide ';
+    }
+  }
+
+  verifiPrenom() {
+    const prenomProprietaireTrime = this.prenomProprietaire.trim(); // Appliquer trim()
+
+    if (prenomProprietaireTrime == '') {
+      this.verifeprenom = '';
+      this.Exacteprenom = false;
+    } else if (
+      this.validerPrenom(prenomProprietaireTrime) == true &&
+      prenomProprietaireTrime.length >= 2
+    ) {
+      this.Exacteprenom = true;
+      // this.verifeprenom = 'le prenom est valide';
+      this.verifeprenom = '';
+    } else if (this.nomproprio.length < 2) {
+      this.Exacteprenom = false;
+      this.verifeprenom = 'au mininum deux caractères alphabétiques';
+      // console.log('le nom est invalide');
+    } else {
+      this.Exacteprenom = false;
+      this.verifeprenom = 'le prenom est invalide ';
+    }
+  }
+
+  verifiAdresse() {
+    const adresseProprietaireTrim = this.adresseProprietaire.trim(); // Appliquer trim()
+    if (adresseProprietaireTrim == '') {
+      this.verifeAdresse = '';
+      this.ExacteAdresse = false;
+    } else if (
+      this.validerAdresse(adresseProprietaireTrim) == true &&
+      adresseProprietaireTrim.length >= 2
+    ) {
+      this.ExacteAdresse = true;
+      // this.verifeAdresse = "l'adresse est valide";
+      this.verifeAdresse = '';
+    } else {
+      this.ExacteAdresse = false;
+      this.verifeAdresse = "l'adresse est invalide ";
+    }
+  }
+
+  verifiEmail() {
+    if (this.emailProprietaire == '') {
+      this.verifEmailCon = '';
+    } else {
+      if (this.validateEmail(this.emailProprietaire) == true) {
+        this.ExacteEmail = true;
+        this.verifeEmail = '';
+      }
+
+      if (this.validateEmail(this.emailProprietaire) == false) {
+        this.ExacteEmail = false;
+        this.verifeEmail = 'le format du mail est invalide';
+      }
+    }
+  }
+
+  verifiPassword() {
+    if (this.passwordProprietaire == '') {
+      this.verifePassword = '';
+    } else {
+      if (this.passwordProprietaire.length < 8) {
+        this.ExactePassword = false;
+        this.verifePassword =
+          'Le Mot de passe doit être superieur a 8 caractere';
+      } else {
+        this.ExactePassword = true;
+        this.verifePassword = '';
+      }
+    }
+  }
+
+  verifiTelephone() {
+    const telephoneProprietaireTrim = this.telephoneProprietaire.trim(); // Appliquer trim()
+
+    if (telephoneProprietaireTrim == '') {
+      this.verifeTelephone = '';
+      this.ExacteTelephone = false;
+    } else if (
+      this.validerTelephone(telephoneProprietaireTrim) == true &&
+      telephoneProprietaireTrim.length >= 2
+    ) {
+      this.ExacteTelephone = true;
+      // this.verifeprenom = 'le prenom est valide';
+      this.verifeTelephone = '';
+    } else if (this.nomproprio.length < 2) {
+      this.ExacteTelephone = false;
+      this.verifeTelephone = 'au mininum 9 chiffres';
+      // console.log('le nom est invalide');
+    } else {
+      this.ExacteTelephone = false;
+      this.verifeTelephone = 'le Numéro de telephone est invalide ';
+    }
+  }
+
+  verifEmail() {
+    if (this.emailLogin == '') {
+      this.verifEmailCon = '';
+    } else {
+      if (this.validateEmail(this.emailLogin) == true) {
+        console.log('true');
+        this.exactEmailCon = true;
+        this.verifEmailCon = 'le format du mail est valide';
+        console.log(this.verifEmailCon);
+      }
+
+      if (this.validateEmail(this.emailLogin) == false) {
+        console.log('false');
+        this.exactEmailCon = false;
+        this.verifEmailCon = 'le format du mail est invalide';
+        console.log(this.verifEmailCon);
+      }
+    }
+  }
+
+  verifPasswordlogin() {
+    if (this.PasswordLogin == '') {
+      this.verifPasswordCon = '';
+    } else {
+      if (this.PasswordLogin.length < 8) {
+        this.exactPasswordCon = false;
+        this.verifPasswordCon =
+          'Le Mot de passe doit être superieur a 8 caractere';
+      } else {
+        this.exactPasswordCon = true;
+        this.verifPasswordCon = 'Mot de Passe Correcte';
+      }
+    }
   }
 
   checkbox1Checked: boolean = false;
@@ -180,58 +427,11 @@ export class AuthentificationComponent implements OnInit {
       'les informations que vous avez saisi sont incorrect',
       'center'
     );
+    console.log("non valide ", error);
     // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
   };
 
-  validateEmail(email: string): boolean {
-    const emailRegex =
-      /^[A-Za-z]+[A-Za-z0-9\._%+-]+@[A-Za-z][A-Za-z0-9\.-]+\.[A-Za-z]{2,}$/;
-    // const endsWithCom = /com$/;
-
-    // return emailRegex.test(email) && endsWithCom.test(email);
-    return emailRegex.test(email);
-  }
-
-  validatePassword(password: string): boolean {
-    return password.length >= 8;
-  }
-
-  verifEmail() {
-    if (this.emailLogin == '') {
-      this.verifEmailCon = '';
-    } else {
-      if (this.validateEmail(this.emailLogin) == true) {
-        console.log('true');
-        this.exactEmailCon = true;
-        this.verifEmailCon = 'le format du mail est valide';
-        console.log(this.verifEmailCon);
-      }
-
-      if (this.validateEmail(this.emailLogin) == false) {
-        console.log('false');
-        this.exactEmailCon = false;
-        this.verifEmailCon = 'le format du mail est invalide';
-        console.log(this.verifEmailCon);
-      }
-    }
-  }
-
   color: string = 'red';
-
-  verifPassword() {
-    if (this.PasswordLogin == '') {
-      this.verifPasswordCon = '';
-    } else {
-      if (this.PasswordLogin.length < 8) {
-        this.exactPasswordCon = false;
-        this.verifPasswordCon =
-          'Le Mot de passe doit être superieur a 8 caractere';
-      } else {
-        this.exactPasswordCon = true;
-        this.verifPasswordCon = 'Mot de Passe Correcte';
-      }
-    }
-  }
 
   // login() {
   //   if (this.emailLogin == '' || this.PasswordLogin == '') {
@@ -313,12 +513,11 @@ export class AuthentificationComponent implements OnInit {
         { email: email, password: Password },
         (response: any) => {
           // console.log('Voici la reponse ', response);
-          this.AuthService.deconnexionAutomatique();
+          // this.AuthService.deconnexionAutomatique();
 
           let token = response.authorization.token;
           // console.log('le token du user est :', token);
           localStorage.setItem('TokenUser', JSON.stringify(token));
-
 
           if (response.user.role === 'admin') {
             // Gérer la réponse en cas de succès

@@ -5,7 +5,13 @@
   <div class="search-form" id="Section_filtre">
     <div id="cherche">
       <div class="check">
-        <label for="type" style="font-weight: bold; text-decoration: underline"
+        <label
+          for="type"
+          style="
+            font-weight: bold;
+            text-decoration: underline;
+            margin-top: -4px;
+          "
           >Type de logement:</label
         >
         <div class="Section_check">
@@ -43,8 +49,12 @@
         /> -->
         <select name="localite" id="" [(ngModel)]="searchCriteria.localite">
           <option value="">Selection par localite</option>
-           <option *ngFor="let localite of localite" [value]="localite.nomLocalite">{{ localite.nomLocalite }}</option>
-
+          <option
+            *ngFor="let localite of localite"
+            [value]="localite.nomLocalite"
+          >
+            {{ localite.nomLocalite }}
+          </option>
         </select>
 
         <button (click)="search()">Rechercher</button>
@@ -92,7 +102,6 @@
           <h6>{{ logement.proprietaire }} {{ logement.proprietairePrenom }}</h6>
           <p>
             {{ logement.type }}
-            <span id="surface">{{ logement.superficie }} m2</span>
           </p>
         </div>
         <div class="card_info_right">
