@@ -23,11 +23,16 @@ import { EspacePersonnelleProfilComponent } from './components/internautes/espac
 import { EspacePersonnelleLogementsComponent } from './components/internautes/espace-personnelle-logements/espace-personnelle-logements.component';
 import { MessageComponent } from './components/internautes/message/message.component';
 import { ProprioProfilComponent } from './components/internautes/proprio-profil/proprio-profil.component';
+import { ErrorComponent } from './components/espace_internaute/error/error.component';
+import { adminGuard } from './guards/admin.guard';
+import { etudiantGuard } from './guards/etudiant.guard';
+import { proprietaireGuard } from './guards/proprietaire.guard';
 
 const routes: Routes = [
   /**-----------Routes pour la partie internaute----------------- */
+
   { path: 'accueil', component: HomeComponent },
-  { path: 'louer', component: LouerComponent }, 
+  { path: 'louer', component: LouerComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'a-propos', component: AProposComponent },
   { path: 'login', component: AuthentificationComponent },
@@ -39,55 +44,80 @@ const routes: Routes = [
   },
   { path: 'mention_legale', component: MentionLegaleComponent },
   { path: 'detail-annonce/:id', component: DetailAnnonceComponent },
-
   { path: 'plan_du_site', component: PlanDuSiteComponent },
-  // { path: 'annonce', component:AnnoncesComponent},
   { path: 'alert', component: AlertsComponent },
 
-  // Route par défaut
-
   /**---------Fin Pour la definition des routes internaute-------------- */
-  // Route pour Administrateur
-  /**----------------Route pour la partie Administrateur-----------------*/
-  { path: 'dashboard_statistic', component: StatistiqueComponent },
-  { path: 'dashboard_utilisateurs', component: GestionUtilisateursComponent },
-  { path: 'dashboard_annonces', component: GestionAnnoncesComponent },
-  { path: 'dashboard_alerts', component: GestionAlertsComponent },
-  { path: 'dashboard_localites', component: GestionLocalitesComponent },
-  // { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
 
-  // {
-  //   path: '**',
-  //   canActivate: [RedirectGuard],
-  // },
+  /**----------------Route pour la partie Administrateur-----------------*/
+  {
+    path: 'dashboard_statistic',
+    component: StatistiqueComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_utilisateurs',
+    component: GestionUtilisateursComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_annonces',
+    component: GestionAnnoncesComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_alerts',
+    component: GestionAlertsComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_localites',
+    component: GestionLocalitesComponent,
+    canActivate: [adminGuard],
+  },
 
   /**----------------Fin pour la partie Administrateur-----------------*/
 
-  /**Pour la partie Espace Perso de l'etudiant */
-  { path: 'espace_personnelle', component: EspacePersoComponent },
+  //--------Pour la partie Espace Perso de l'etudiant */
+  {
+    path: 'espace_personnelle',
+    component: EspacePersoComponent,
+    canActivate: [etudiantGuard],
+  },
   {
     path: 'espace_personnelle_alerts',
     component: EspacePersonnelleAlertsComponent,
+    canActivate: [etudiantGuard],
   },
   {
     path: 'espace_personnelle_profil',
     component: EspacePersonnelleProfilComponent,
+    canActivate: [etudiantGuard],
   },
+  //--------Fin pour la partie Espace Perso de l'etudiant--------------*/
+
+  //-----------Debut proprietaire-------------------
   {
     path: 'espace_personnelle_logement',
     component: EspacePersonnelleLogementsComponent,
+    canActivate: [proprietaireGuard],
   },
   {
     path: 'espace_personnelle_message',
     component: MessageComponent,
+    canActivate: [proprietaireGuard],
   },
+
   {
     path: 'espace_personnelle_proprioProfil',
     component: ProprioProfilComponent,
+    canActivate: [proprietaireGuard],
   },
-
+  //---------Fin route Proprietaire-----------------
   /**Fin pour la partie Espace Perso de l'etudiant */
+
+  { path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Route par défaut
+  { path: '**', component: ErrorComponent }, // Cette route doit être définie à la fin
 ];
 
 @NgModule({

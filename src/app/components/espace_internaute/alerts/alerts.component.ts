@@ -58,10 +58,10 @@ export class AlertsComponent implements OnInit {
   AjouterAlert() {
     if (this.userStatut === false) {
       this.route.navigate(['/login']);
-    }else{
+    } else {
       // document.getElementById('exampleModal').click();
       this.isModalOpen = true;
-      console.log("true");
+      console.log('true');
     }
   }
 
@@ -79,7 +79,6 @@ export class AlertsComponent implements OnInit {
   userNumberfound: any;
   alertFound: any;
   detailAlert(id: any) {
-    // alert(id);
     const foundAlert = this.listAlert.find((alert) => alert.id === id);
     if (foundAlert) {
       console.log(foundAlert);
@@ -90,7 +89,6 @@ export class AlertsComponent implements OnInit {
         (user: any) => user.user.prenom == this.userNom
       );
       if (utilisateurfound) {
-        // console.log('utilisateur trouve', utilisateurfound);
         this.userNumberfound = utilisateurfound.user.telephone;
         console.log('le user numero trouve est le :', this.userNumberfound);
       }
@@ -101,7 +99,6 @@ export class AlertsComponent implements OnInit {
     const phoneNumber = this.userNumberfound;
     this.WhatsApp.redirectWhatsapp(phoneNumber);
   }
-  // selectedPrice: any;
 
   filterAlerts() {
     if (!this.selectedPrice) {
@@ -111,5 +108,32 @@ export class AlertsComponent implements OnInit {
         (alert: any) => alert.budget <= parseInt(this.selectedPrice)
       );
     }
+  }
+
+  articlesParPage: number = 3; // Nombre d'articles par page
+  pageActuelle: number = 1; // Pag
+  getArticlesPage(): any[] {
+    const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;
+    const indexFin = indexDebut + this.articlesParPage;
+    return this.filteredAlerts.slice(indexDebut, indexFin);
+  }
+
+  changePage(page: number) {
+    this.pageActuelle = page;
+  }
+
+  // Méthode pour générer la liste des numéros de page
+  get pages(): number[] {
+    const totalPages = Math.ceil(
+      this.filteredAlerts.length / this.articlesParPage
+    );
+    return Array(totalPages)
+      .fill(0)
+      .map((_, index) => index + 1);
+  }
+
+  // // Méthode pour obtenir le nombre total de pages
+  get totalPages(): number {
+    return Math.ceil(this.filteredAlerts.length / this.articlesParPage);
   }
 }

@@ -3,26 +3,28 @@
   <div class="Section_Contenu_banner"></div>
   <div class="search-form" id="Section_filtre">
     <div class="section_ajout">
-      <button *ngIf="proprio_etudiant" (click)="AjouterAlert()" >Ajouter une Alerte</button>
+      <button *ngIf="proprio_etudiant" (click)="AjouterAlert()" id="alerte1">
+        Creer une Alerte
+      </button>
       <button *ngIf="!proprio_etudiant">Alerte disponible</button>
     </div>
     <div id="cherche">
+      <label for="prix">Filtrer par prix :</label>
       <div class="Alert">
-        <label for="prix">Filtrer par prix :</label>
         <select id="prix" [(ngModel)]="selectedPrice">
-          <option value="">Tous les prix</option>
+          <option value="" selected>Tous les prix</option>
           <option value="50000">50 000 FCFA</option>
           <option value="100000">100 000 FCFA</option>
           <option value="150000">150 000 FCFA</option>
           <option value="200000">200 000 FCFA</option>
         </select>
-        <button (click)="filterAlerts()">Appliquer</button>
+        <button (click)="filterAlerts()">Chercher</button>
       </div>
     </div>
   </div>
 
   <div class="Section_card">
-    <div class="Card" *ngFor="let alert of filteredAlerts">
+    <div class="Card" *ngFor="let alert of getArticlesPage()">
       <a
         class="card1"
         (click)="detailAlert(alert.id)"
@@ -39,6 +41,31 @@
         </div>
       </a>
     </div>
+  </div>
+
+  <div class="d-flex flex-wrap justify-content-center my-5" id="pagination">
+    <button
+      class="btn pagiColor me-2"
+      [disabled]="pageActuelle === 1"
+      (click)="pageActuelle = pageActuelle - 1"
+    >
+      Précédent
+    </button>
+    <button
+      class="btn pagiColore ms-2"
+      *ngFor="let page of pages"
+      [class.current]="page === pageActuelle"
+      (click)="pageActuelle = page"
+    >
+      {{ page }}
+    </button>
+    <button
+      class="btn pagiColor ms-2"
+      [disabled]="pageActuelle === totalPages"
+      (click)="pageActuelle = pageActuelle + 1"
+    >
+      Suivant
+    </button>
   </div>
 
   <div
@@ -76,7 +103,14 @@
             </div>
           </div>
 
-          <p>Prise en Charge: {{alertFound?.prisEnCharge==1?"Prise en charge":"Non prise en charge"}}</p>
+          <p>
+            Prise en Charge:
+            {{
+              alertFound?.prisEnCharge == 1
+                ? "Prise en charge"
+                : "Non prise en charge"
+            }}
+          </p>
           <p>Description: {{ alertFound?.description }}</p>
           <p>caracteristiques: {{ alertFound?.caracteristiques }}</p>
         </div>
@@ -85,82 +119,76 @@
   </div>
 </div>
 
- <div *ngIf="isModalOpen===true"
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            Detail Utilisateur
-          </h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+<div
+  *ngIf="isModalOpen === true"
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Detail Utilisateur
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="Formulaire">
+          <form action="">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label"
+                >Budget</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="name@example.com"
+                name="budget"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Description</label
+              >
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                name="description"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Caracteristique</label
+              >
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                name="caracteristiques"
+              ></textarea>
+            </div>
+            <p></p>
+            <button type="submit">valider</button>
+          </form>
         </div>
-        <div class="modal-body">
-          <div class="Formulaire">
-            <form action="">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Budget</label
-                >
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="name@example.com"
-                  name="budget"
-
-                />
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label"
-                  >Description</label
-                >
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                  name="description"
-
-                ></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label"
-                  >Caracteristique</label
-                >
-                <textarea
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                  name="caracteristiques"
-
-                ></textarea>
-              </div>
-              <p></p>
-              <button type="submit" >valider</button>
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Fermer
-          </button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
       </div>
     </div>
   </div>
+</div>
 
 <app-footer></app-footer>

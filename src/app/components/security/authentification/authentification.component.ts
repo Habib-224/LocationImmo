@@ -285,7 +285,7 @@ export class AuthentificationComponent implements OnInit {
       this.verifEmailCon = '';
     } else {
       if (this.validateEmail(this.emailLogin) == true) {
-        console.log('true');
+        // console.log('true');
         this.exactEmailCon = true;
         this.verifEmailCon = 'le format du mail est valide';
         console.log(this.verifEmailCon);

@@ -35,8 +35,13 @@
                 >Louer</a
               >
             </li>
-            <li class="nav-item" >
-              <a class="nav-link" routerLinkActive="active" (click)="RedirectConnect()">Proposer un bien</a>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLinkActive="active"
+                (click)="RedirectConnect()"
+                >Proposer un bien</a
+              >
             </li>
             <li class="nav-item">
               <a
@@ -59,19 +64,19 @@
 
             <li class="nav-item" *ngIf="Userconnect === false">
               <a class="nav-link" aria-disabled="true" [routerLink]="['/login']"
-                ><button>Se connecter</button></a
+                ><button id="connexion">Se connecter</button></a
               >
             </li>
 
             <li class="nav-item">
-              <a
-                class="nav-link"
-                aria-disabled="true"
-                ><button (click)="RedirectConnect()">Deposer une annonce</button></a
+              <a class="nav-link" aria-disabled="true"
+                ><button (click)="RedirectConnect()" id="deposer">
+                  Deposer une annonce
+                </button></a
               >
             </li>
             <li class="nav-item" *ngIf="Userconnect === true">
-              <div class="dropdown">
+              <!-- <div class="dropdown">
                 <a
                   class="nav-link"
                   aria-disabled="true"
@@ -97,7 +102,24 @@
                       >Se deconnecter</a
                     >
                   </li>
+
                 </ul>
+              </div> -->
+              <div class="dropdown">
+                <button class="dropbtn">
+                  Espace personnel <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a
+                    class="nav-link"
+                    aria-disabled="true"
+                    (click)="EspacePersonnelle()"
+                    >Mon espace</a
+                  >
+                  <a class="nav-link" aria-disabled="true" (click)="logout()"
+                    >Se deconnecter</a
+                  >
+                </div>
               </div>
             </li>
           </ul>

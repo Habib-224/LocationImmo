@@ -37,6 +37,7 @@ import { EspacePersonnelleProfilComponent } from './components/internautes/espac
 import { EspacePersonnelleLogementsComponent } from './components/internautes/espace-personnelle-logements/espace-personnelle-logements.component';
 import { MessageComponent } from './components/internautes/message/message.component';
 import { ProprioProfilComponent } from './components/internautes/proprio-profil/proprio-profil.component';
+import { ErrorComponent } from './components/espace_internaute/error/error.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ProprioProfilComponent } from './components/internautes/proprio-profil/
     EspacePersonnelleLogementsComponent,
     MessageComponent,
     ProprioProfilComponent,
+    ErrorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

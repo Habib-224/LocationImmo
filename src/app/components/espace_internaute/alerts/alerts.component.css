@@ -51,7 +51,7 @@
 .card1 {
   display: block;
   position: relative;
-  width: 390px;
+  width: 380px;
   height: 200px;
   overflow-y: scroll;
   background-color: #f2f8f9;
@@ -238,7 +238,7 @@
 #Section_filtre {
   display: flex;
   justify-content: space-around;
-  gap: 200px;
+  gap: 280px;
   align-items: center;
 }
 
@@ -272,8 +272,103 @@
   width: 350px;
 }
 
-.info_contact i{
+@media screen and (max-width: 900px) {
+  #Section_filtre {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    align-items: center;
+  }
+
+  #prix {
+    padding: 0.3em;
+    max-width: 220px;
+  }
+
+  #cherche {
+    margin-left: -70px;
+  }
+
+  /* #alerte1 {
+    display: none;
+  } */
+
+  .card1 {
+    display: block;
+    position: relative;
+    width: 350px;
+    height: 200px;
+    overflow-y: scroll;
+    background-color: #f2f8f9;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  #Section_filtre {
+    display: flex;
+    justify-content: space-around;
+    gap: 200px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #Section_filtre {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    align-items: center;
+  }
+
+  #prix {
+    padding: 0.3em;
+    max-width: 220px;
+  }
+
+  #cherche {
+    margin-left: -70px;
+  }
+
+  #alerte1 {
+    display: none;
+  }
+
+  .card1 {
+    display: block;
+    position: relative;
+    width: 350px;
+    height: 200px;
+    overflow-y: scroll;
+    background-color: #f2f8f9;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+}
+
+.info_contact i {
   font-size: 35px;
   color: #1b9476;
   cursor: pointer;
+}
+
+.pagiColor {
+  background-color: #1b9476;
+  color: white;
+}
+.pagiColore.current {
+  background-color: #1b9476;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
 }
