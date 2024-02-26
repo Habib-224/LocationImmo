@@ -314,10 +314,10 @@
               (change)="validateImage()"
               accept="image/*"
               ngModel="image"
+              multiple
             />
           </label>
-          <p *ngIf="exacteImage">{{verifeImage}}</p>
-
+          <p *ngIf="exacteImage">{{ verifeImage }}</p>
 
           <!-- <label for="formFile" class="form-label"
             >Sélectionnez une image <span id="requis">*</span></label
@@ -336,14 +336,7 @@
         <!-- ... -->
         <div class="section_next">
           <button (click)="changerform('retour')" id="retour">retour</button>
-          <button id="Add" *ngIf="exacteDescription && exacteImage">
-            Ajouter
-          </button>
-          <button
-            disabled
-            id="retour"
-            *ngIf="exacteDescription == false || exacteImage == false"
-          >
+          <button id="Add" *ngIf="exacteDescription || exacteImage">
             Ajouter
           </button>
         </div>

@@ -372,3 +372,12 @@
   border: 1px solid var(--kergui-blue);
   color: var(--kergui-blue);
 }
+
+
+#validerAlert {
+  background-color: #1b9476;
+  color: white;
+  padding: 0.3em;
+  border: none;
+  width: 100px;
+}

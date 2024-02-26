@@ -3,7 +3,12 @@
   <div class="Section_Contenu_banner"></div>
   <div class="search-form" id="Section_filtre">
     <div class="section_ajout">
-      <button *ngIf="proprio_etudiant" (click)="AjouterAlert()" id="alerte1">
+      <button
+        *ngIf="userOnline_role == 'etudiant' && userStatut == true"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal1"
+        id="alerte1"
+      >
         Creer une Alerte
       </button>
       <button *ngIf="!proprio_etudiant">Alerte disponible</button>
@@ -120,9 +125,8 @@
 </div>
 
 <div
-  *ngIf="isModalOpen === true"
   class="modal fade"
-  id="exampleModal"
+  id="exampleModal1"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
@@ -151,8 +155,8 @@
                 type="email"
                 class="form-control"
                 id="exampleFormControlInput1"
-                placeholder="name@example.com"
                 name="budget"
+                [(ngModel)]="budget_alert"
               />
             </div>
             <div class="mb-3">
@@ -164,6 +168,7 @@
                 id="exampleFormControlTextarea1"
                 rows="3"
                 name="description"
+                [(ngModel)]="description_alert"
               ></textarea>
             </div>
             <div class="mb-3">
@@ -175,17 +180,15 @@
                 id="exampleFormControlTextarea1"
                 rows="3"
                 name="caracteristiques"
+                [(ngModel)]="caracteristique_alert"
               ></textarea>
             </div>
-            <p></p>
-            <button type="submit">valider</button>
+            <p>{{ caracteristique_alert }}</p>
+            <button type="submit" (click)="RegisterAlert()" id="validerAlert">
+              valider
+            </button>
           </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Fermer
-        </button>
       </div>
     </div>
   </div>

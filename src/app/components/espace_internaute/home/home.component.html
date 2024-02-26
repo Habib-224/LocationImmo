@@ -128,7 +128,11 @@
         une alerte personnalisée et recevez immédiatement un e-mail lorsque de
         nouvelles annonces correspondant à votre recherche sont publiées.
       </p>
-      <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!proprioEtudiant">
+      <button
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        *ngIf="!proprioEtudiant"
+      >
         Creer une alerte
       </button>
       <button *ngIf="proprioEtudiant">C'est quoi une alerte</button>
@@ -220,8 +224,34 @@
     <div class="Newsletters_form">
       <form action="">
         <div class="inscription">
-          <input type="email" placeholder="Saisissez votre Adresse mail" />
-          <button>S'inscrire</button>
+          <input
+            type="email"
+            placeholder="Saisissez votre Adresse mail"
+            name="email"
+            [(ngModel)]="emailProprietaire"
+            (input)="verifiEmail()"
+          />
+          <button *ngIf="exacteEmail" (click)="InscriptionNewsletter()">
+            S'inscrire
+          </button>
+          <button
+            *ngIf="!exacteEmail"
+            (click)="InscriptionNewsletter()"
+            style="background-color: darkgray; color: white"
+            disabled
+          >
+            S'inscrire
+          </button>
+        </div>
+        <div class="emailverify">
+          <p *ngIf="exacteEmail">{{ verifyEmail }}</p>
+          <p class="text-danger" *ngIf="exacteEmail == false">
+            {{ verifyEmail }}
+          </p>
+
+           <p class="text-danger" *ngIf="messageError!== '' && exacteEmail ">
+            {{ messageError }}
+           </p>
         </div>
       </form>
     </div>
@@ -237,9 +267,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">
-            Detail Utilisateur
-          </h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajout Alert</h1>
           <button
             type="button"
             class="btn-close"
@@ -288,11 +316,13 @@
                 ></textarea>
               </div>
               <p>{{ caracteristique_alert }}</p>
-              <button type="submit" (click)="RegisterAlert()">valider</button>
+              <button type="submit" (click)="RegisterAlert()" id="validerAlert">
+                valider
+              </button>
             </form>
           </div>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button
             type="button"
             class="btn btn-secondary"
@@ -300,7 +330,7 @@
           >
             Fermer
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

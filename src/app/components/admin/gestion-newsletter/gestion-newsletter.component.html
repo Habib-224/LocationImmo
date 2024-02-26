@@ -1,0 +1,211 @@
+<div class="dashbord">
+  <div class="section sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="section">
+    <!-- Le navbar  -->
+    <app-navbar></app-navbar>
+
+    <!-- Liste des sections d'une ligne  -->
+    <div class="containerMessage container">
+      <div class="row sectionEspace search mb-3">
+        <div class="col-md-3">
+          <h4 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes des logements
+          </h4>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              [(ngModel)]="filterValue"
+              (input)="onSearch()"
+              placeholder="Rechercher ......"
+            />
+            <!-- <button class="iconesearch input-group-text">
+              <i class="bi bi-search"></i>
+            </button> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="Section_Statistique">
+        <div class="tableSection">
+          <table class="table">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  id
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Nom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Type
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  prix
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  adresse
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let logement of getItemsPage()">
+              <tr>
+                <td class="text-center">{{ logement.id }}</td>
+                <td class="text-center">
+                  {{ logement.proprietaire }} {{ logement.proprietairePrenom }}
+                </td>
+                <td class="text-center">{{ logement.type }}</td>
+                <td class="text-center">{{ logement.prix }} FCFA</td>
+                <td class="text-center">{{ logement.adresse }}</td>
+                <td class="text-center">
+                  <button
+                    class="btn me-2"
+                    style="background-color: #133e33"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailMentor"
+                    (click)="detailLogement(logement.id)"
+                  >
+                    <i
+                      class="bx bxs-show"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    ></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="getItemsPage().length">
+            <div class="d-flex justify-content-end mb-2">
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === 1"
+                (click)="pageActuelle = pageActuelle - 1"
+              >
+                <i class="bi bi-caret-left-fill fs-4"></i>
+              </button>
+              <button
+                class="mx-2 page"
+                *ngFor="let page of pages"
+                (click)="pageActuelle = page"
+              >
+                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
+                  page
+                }}</span>
+                <span *ngIf="page != pageActuelle">{{ page }}</span>
+                <!-- {{ page }} -->
+              </button>
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === totalPages"
+                (click)="pageActuelle = pageActuelle + 1"
+              >
+                <i class="bi bi-caret-right-fill fs-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Logement
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <img
+                    [src]="firstImage"
+                    alt=""
+                    id="logement"
+                  />
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Nom:</p>
+                    <p>Prix:</p>
+                    <p>Adresse:</p>
+                    <p>Disponibilte:</p>
+                    <p>Localite:</p>
+                    <p>Nombre Chambre:</p>
+                    <p>Type:</p>
+                  </div>
+                  <div class="detail_righ">
+                    <p>
+                      {{ logementFound?.proprietaire }}
+                      {{ logementFound?.proprietairePrenom }}
+                    </p>
+                    <p>{{ logementFound?.prix }} FCFA</p>
+                    <p>{{ logementFound?.adresse }}</p>
+                    <p>{{ logementFound?.disponibilite }}</p>
+                    <p>{{ logementFound?.localite }}</p>
+                    <p>{{ logementFound?.nombreChambre }}</p>
+                    <p>{{ logementFound?.type }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

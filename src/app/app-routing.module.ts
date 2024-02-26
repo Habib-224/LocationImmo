@@ -27,6 +27,8 @@ import { ErrorComponent } from './components/espace_internaute/error/error.compo
 import { adminGuard } from './guards/admin.guard';
 import { etudiantGuard } from './guards/etudiant.guard';
 import { proprietaireGuard } from './guards/proprietaire.guard';
+import { GestionNewsletterComponent } from './components/admin/gestion-newsletter/gestion-newsletter.component';
+import { GestionDemandesComponent } from './components/admin/gestion-demandes/gestion-demandes.component';
 
 const routes: Routes = [
   /**-----------Routes pour la partie internaute----------------- */
@@ -37,7 +39,11 @@ const routes: Routes = [
   { path: 'a-propos', component: AProposComponent },
   { path: 'login', component: AuthentificationComponent },
   { path: 'communaute', component: CommunauteComponent },
-  { path: 'publier_Annonce', component: AnnoncesComponent },
+  {
+    path: 'publier_Annonce',
+    component: AnnoncesComponent,
+    canActivate: [proprietaireGuard],
+  },
   {
     path: 'politique_confidentialite',
     component: PolitiqueConfidentialiteComponent,
@@ -73,6 +79,16 @@ const routes: Routes = [
   {
     path: 'dashboard_localites',
     component: GestionLocalitesComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_newsletter',
+    component: GestionNewsletterComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'dashboard_demande',
+    component: GestionDemandesComponent,
     canActivate: [adminGuard],
   },
 

@@ -131,3 +131,17 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.formulaire input {
+  width: 480px;
+  margin-right: 20px;
+  padding: 0.3em;
+}
+
+.formulaire button {
+  background-color: #1b9476;
+  color: white;
+  border: none;
+  width: 150px;
+  padding: 0.3em;
+}

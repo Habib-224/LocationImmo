@@ -162,7 +162,6 @@
   color: black;
 }
 
-
 .Section_Content_Owner_Right button:hover {
   width: 360px;
   transition: 0.3s;
@@ -910,6 +909,19 @@
     background-color: transparent; /* Rend le fond transparent */
     caret-color: white;
   }
+}
+
+#validerAlert {
+  background-color: #1b9476;
+  color: white;
+  padding: 0.3em;
+  border: none;
+  width: 100px;
+}
+
+.emailverify p {
+  text-align: center;
+  margin-top: 10px;
 }
 
 /* ------------------- Fin Section Newsletters ----------------*/

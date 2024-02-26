@@ -38,6 +38,8 @@ import { EspacePersonnelleLogementsComponent } from './components/internautes/es
 import { MessageComponent } from './components/internautes/message/message.component';
 import { ProprioProfilComponent } from './components/internautes/proprio-profil/proprio-profil.component';
 import { ErrorComponent } from './components/espace_internaute/error/error.component';
+import { GestionDemandesComponent } from './components/admin/gestion-demandes/gestion-demandes.component';
+import { GestionNewsletterComponent } from './components/admin/gestion-newsletter/gestion-newsletter.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,8 @@ import { ErrorComponent } from './components/espace_internaute/error/error.compo
     MessageComponent,
     ProprioProfilComponent,
     ErrorComponent,
+    GestionDemandesComponent,
+    GestionNewsletterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

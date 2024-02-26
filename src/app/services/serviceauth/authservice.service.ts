@@ -25,18 +25,18 @@ export class AuthserviceService {
   // useronline: any = JSON.parse(localStorage.getItem('TokenUser') || '');
   // token: any = this.useronline.authorization.token;
 
-  register(proprio: Proprietaire, onSuccess: Function, onError: Function) {
+  register(formData: FormData, onSuccess: Function, onError: Function) {
     this.http
-      .post<Proprietaire>(`${url}inscriptionProprietaire`, proprio)
+      .post<Proprietaire>(`${url}inscriptionProprietaire`, formData)
       .subscribe(
         (response: any) => onSuccess(response),
         (error: any) => onError(error)
       );
   }
 
-  registerEtudiant(etudiant: Etudiant, onSuccess: Function, onError: Function) {
+  registerEtudiant(formData: FormData, onSuccess: Function, onError: Function) {
     return this.http
-      .post<Etudiant>(`${url}inscriptionEtudiant`, etudiant)
+      .post<Etudiant>(`${url}inscriptionEtudiant`, formData)
       .subscribe(
         (response: any) => onSuccess(response),
         (error: any) => onError(error)
@@ -111,7 +111,7 @@ export class AuthserviceService {
     // this.MessageSucces()
     Swal.fire({
       title: 'Votre Session a expirer',
-      text: "Deconnecter vous ou rafraichissez votre token",
+      text: 'Deconnecter vous ou rafraichissez votre token',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -132,13 +132,9 @@ export class AuthserviceService {
     this.logout().subscribe((response) => {
       console.log(response);
       this.isAuthenticated = false;
-      localStorage.setItem(
-        'Userconnect',
-        JSON.stringify(this.isAuthenticated)
-      );
+      localStorage.setItem('Userconnect', JSON.stringify(this.isAuthenticated));
       // this.affichestatut();
       this.route.navigate(['/login']);
     });
   }
-
 }

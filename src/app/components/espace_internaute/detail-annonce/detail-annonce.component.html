@@ -1,31 +1,93 @@
 <app-header></app-header>
 <div class="Container">
   <div class="Section_Contenu">
-    <div
-      class="Section_photo"
-      *ngFor="let imageLogement of tabMessageFilter1; let first = first"
-    >
-      <div *ngIf="imageLogement.image !== ''" class="Section_Contenu_left">
-        <img
-          *ngIf="imageLogement.firstImage && first"
-          [src]="imageLogement.firstImage"
-          alt=""
-        />
-      </div>
-      <div class="Section_Contenu_right">
-        <div class="Contenu_Left_Image">
+    <div *ngIf="tailleimagelogement == 1">
+      <div
+        class="Section_photo"
+        *ngFor="let imageLogement of image; let index = index"
+      >
+        <div class="Section_Contenu_left">
           <img
-            *ngIf="imageLogement.firstImage && first"
+            *ngIf="index == 0"
+            src="http://127.0.0.1:8000/storage/{{ imageLogement.nomImage }}"
+            alt=""
+          />
+        </div>
+        <div class="Section_Contenu_right">
+          <div class="Contenu_Left_Image">
+            <img
+              *ngIf="index == 0"
+              src="http://127.0.0.1:8000/storage/{{ imageLogement.nomImage }}"
+              alt=""
+            />
+          </div>
+          <div class="Contenu_Left_Image1">
+            <img
+              *ngIf="index == 0"
+              src="http://127.0.0.1:8000/storage/{{ imageLogement.nomImage }}"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tailleimagelogement == 2">
+      <div
+        class="Section_photo"
+        *ngFor="let imageLogement of tabMessageFilter1; let first = first"
+      >
+        <div class="Section_Contenu_left" *ngIf="first">
+          <img
+            *ngIf="imageLogement.firstImage"
             [src]="imageLogement.firstImage"
             alt=""
           />
         </div>
-        <div class="Contenu_Left_Image1">
+        <div class="Section_Contenu_right">
+          <div class="Contenu_Left_Image">
+            <img
+              *ngIf="first"
+              [src]="imageLogement.secondImage"
+              alt=""
+            />
+          </div>
+          <div class="Contenu_Left_Image1">
+            <img
+              *ngIf="first"
+              [src]="imageLogement.firstImage"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+     <div *ngIf="tailleimagelogement == 3">
+      <div
+        class="Section_photo"
+        *ngFor="let imageLogement of tabMessageFilter1; let first = first"
+      >
+        <div class="Section_Contenu_left" *ngIf="first">
           <img
-            *ngIf="imageLogement.firstImage && first"
+            *ngIf="imageLogement.firstImage"
             [src]="imageLogement.firstImage"
             alt=""
           />
+        </div>
+        <div class="Section_Contenu_right">
+          <div class="Contenu_Left_Image">
+            <img
+              *ngIf="first"
+              [src]="imageLogement.secondImage"
+              alt=""
+            />
+          </div>
+          <div class="Contenu_Left_Image1">
+            <img
+              *ngIf="first"
+              [src]="imageLogement.thirdImage"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -43,7 +105,7 @@
             <i
               class="fa-brands fa-square-whatsapp"
               (click)="redirectToWhatsapp()"
-             target="_blank"
+              target="_blank"
             ></i>
           </div>
         </div>
@@ -53,6 +115,21 @@
         <p>
           {{ detail_logement.equipements }}
         </p>
+
+        <div class="formulaire">
+          <form action="">
+            <div class="mb-3 mt-5">
+              <input
+                type="text"
+                id=""
+                name="text"
+                placeholder="Laisser un Commentaire"
+                [(ngModel)]="commentaireText"
+              />
+              <button (click)="CommentaireUser()">Commenter</button>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="Information_right">
         <div class="Information_Header">
@@ -74,7 +151,7 @@
             <p>Disponible immédiatement</p>
           </div>
           <div>
-            <p>{{userfoundnumero}}</p>
+            <p>{{ userfoundnumero }}</p>
           </div>
         </div>
 

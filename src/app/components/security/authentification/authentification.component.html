@@ -72,7 +72,7 @@
         </form>
       </div>
     </div>
-  </div> 
+  </div>
 
   <div class="Inscription1" *ngIf="change == true">
     <div class="Formulaire1">
@@ -158,7 +158,7 @@
         </div>
       </div>
       <!-- (ngSubmit)="register()" -->
-      <form action="">
+      <form action="" enctype="multipart/form-data">
         <div class="FormGoup_Container1">
           <div class="Step1" *ngIf="changeStep1">
             <div class="formGroup1">
@@ -303,27 +303,41 @@
               <button id="retour1" (click)="changedirection('retour')">
                 Retour
               </button>
-               <button
+              <button
                 (click)="changedirection('suivant')"
                 id="suivant"
-                *ngIf="ExacteEmail && ExactePassword && ExacteTelephone && checkbox1Checked"
+                *ngIf="
+                  ExacteEmail &&
+                  ExactePassword &&
+                  ExacteTelephone &&
+                  checkbox1Checked
+                "
               >
                 Suivant
               </button>
               <button
-
                 id="suivant"
                 type="submit"
-                (click)="register()"
-                *ngIf="ExacteEmail && ExactePassword && ExacteTelephone && checkbox2Checked"
+                *ngIf="
+                  ExacteEmail &&
+                  ExactePassword &&
+                  ExacteTelephone &&
+                  checkbox2Checked
+                "
+                (click)="changedirection('suivant')"
+                id="suivant"
               >
-                S'insrire
+                Suivant
               </button>
               <button
                 disabled
                 (click)="changedirection('suivant')"
                 id="suivant1"
-                *ngIf="ExacteEmail==false || ExactePassword==false || ExacteTelephone==false"
+                *ngIf="
+                  ExacteEmail == false ||
+                  ExactePassword == false ||
+                  ExacteTelephone == false
+                "
               >
                 Suivant
               </button>
@@ -332,7 +346,13 @@
                 disabled
                 (click)="changedirection('suivant')"
                 id="suivant1"
-                *ngIf="ExacteEmail==true && ExactePassword==true && ExacteTelephone==true && checkbox2Checked==false && checkbox1Checked==false "
+                *ngIf="
+                  ExacteEmail == true &&
+                  ExactePassword == true &&
+                  ExacteTelephone == true &&
+                  checkbox2Checked == false &&
+                  checkbox1Checked == false
+                "
               >
                 Suivant
               </button>
@@ -353,6 +373,35 @@
               <div class="formGroup1">
                 <label for="">Universite</label><br />
                 <input type="text" name="telephone" [(ngModel)]="universite" />
+              </div>
+              <div class="mb-3 input-container" style="margin-top: 15px;">
+                <label for="formFile" class="form-label"
+                  id="justificatif">Téléverser un justificatif</label
+                >
+                <input
+                  class="form-control"
+                  name="nomImage"
+                  type="file"
+                  id="formFile"
+                  (change)="getFile($event)"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="info_Proprietaire" *ngIf="proprietaireStatus=='proprietaire'">
+              <div class="mb-3">
+                <label for="formFile" class="form-label"
+                  id="justificatif">Téléverser un justificatif</label
+                >
+                <input
+                  class="form-control"
+                  name="nomImage"
+                  type="file"
+                  id="formFile"
+                  (change)="getFile($event)"
+                  required
+                />
               </div>
             </div>
             <div class="soumettre">

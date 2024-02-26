@@ -198,7 +198,7 @@ export class AnnoncesComponent implements OnInit {
   verifeDescription: any = '';
 
   exacteImage: boolean = false;
-  verifeImage:any=""
+  verifeImage: any = '';
 
   //---------------------------
 
@@ -308,14 +308,16 @@ export class AnnoncesComponent implements OnInit {
   }
 
   validateImage() {
-    if (this.image == "") {
+    if (this.image == '') {
       this.exacteImage = false;
-      this.verifeImage = ""
-    } else if (this.image != "") {
+      this.verifeImage = '';
+    } else if (this.image != '') {
       this.exacteImage = true;
-      this.verifeImage ="L'image est valide"
+      this.verifeImage = "L'image est valide";
     }
   }
+
+  image1: File[] = [];
 
   ajouterLogement() {
     const formData = new FormData();
@@ -331,9 +333,11 @@ export class AnnoncesComponent implements OnInit {
     formData.append('localite_id', this.logement.localite_id);
 
     // Ajout de l'image
-    if (this.image) {
-      formData.append('image[]', this.image);
-    }
+   if (this.image1 && this.image1.length > 0) {
+     for (let i = 0; i < this.image1.length; i++) {
+       formData.append('image[]', this.image1[i]);
+     }
+   }
 
     this.logementService.ajouterLogement(formData).subscribe(
       (response) => {
@@ -368,17 +372,27 @@ export class AnnoncesComponent implements OnInit {
     );
   }
 
+  // getFile(event: any) {
+  //   console.warn(event.target.files[0]);
+  //   this.image = event.target.files[0] as File;
+  // }
+
   getFile(event: any) {
-    console.warn(event.target.files[0]);
-    this.image = event.target.files[0] as File;
+    // Assurez-vous que le tableau est initialisé vide à chaque fois que vous sélectionnez de nouveaux fichiers
+    this.image = [];
+
+    // Récupérez la liste des fichiers
+    const files = event.target.files as FileList;
+
+    // Parcourez chaque fichier dans la liste et ajoutez-le à votre tableau d'images
+    for (let i = 0; i < files.length; i++) {
+      this.image1.push(files[i]);
+    }
+
+    console.warn('La liste des images :', this.image1);
   }
 
-  onFileSelected(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      this.image = files[0];
-    }
-  }
+ 
 
   public changerform(direction: string) {
     if (direction === 'suivant') {

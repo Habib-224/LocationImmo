@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Alert } from 'src/app/models/Alert';
 import { AlerteService } from 'src/app/services/alertes/alerte.service';
+import { MessageService } from 'src/app/services/message/message.service';
 import { WhatsAppService } from 'src/app/services/whatsApp/whats-app.service';
 
 @Component({
@@ -9,10 +11,15 @@ import { WhatsAppService } from 'src/app/services/whatsApp/whats-app.service';
   styleUrls: ['./alerts.component.css'],
 })
 export class AlertsComponent implements OnInit {
+  budget_alert: any = '';
+  description_alert: string = '';
+  caracteristique_alert: string = '';
+
   constructor(
     private alertService: AlerteService,
     private WhatsApp: WhatsAppService,
-    private route: Router
+    private route: Router,
+    private message:MessageService
   ) {}
 
   isModalOpen: boolean = false;
@@ -26,7 +33,7 @@ export class AlertsComponent implements OnInit {
   userStatut: any;
   userOnline_role: any;
 
-  proprio_etudiant: boolean = true;
+  proprio_etudiant: boolean = false;
   ngOnInit(): void {
     this.getAllAlert();
     this.etudiant = JSON.parse(localStorage.getItem('etudiant') || '');
@@ -95,6 +102,60 @@ export class AlertsComponent implements OnInit {
     }
   }
 
+  RegisterAlert() {
+    const alert = new Alert();
+    if (
+      this.budget_alert === '' ||
+      this.description_alert === '' ||
+      this.caracteristique_alert === ''
+    ) {
+      console.log('les champs sont vides');
+    } else {
+      alert.budget = this.budget_alert;
+      alert.description = this.description_alert;
+      alert.caracteristiques = this.caracteristique_alert;
+      // console.log(alert);
+
+      this.alertService.registerAlert(
+        alert,
+        this.onSuccessHandler,
+        this.onErrorHandler
+      );
+      this.getAllAlert();
+    }
+  }
+
+  onSuccessHandler = (response: any) => {
+    console.log('Inscription réussie:', response);
+    this.message.MessageSucces(
+      'success',
+      'Success',
+      'Alert ajoute avec Succes',
+      'center'
+    );
+    // this.route.navigate(['/alert']);
+    // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
+  };
+
+  // Fonction appelée en cas d'erreur lors de l'inscription
+  messageError: any = '';
+  onErrorHandler = (error: any) => {
+    // console.log("Erreur lors de l'inscription:", error);
+    let message1 = error.error.error.email[0];
+    this.messageError = message1;
+    // this.message.MessageSucces(
+    //   'error',
+    //   'Oups',
+    //   `${message1}`,
+    //   'center'
+    // );
+    // console.log(message);
+    // this.messageError = message
+    // console.log(this.messageError);
+
+    // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
+  };
+
   redirectToWhatsapp(): void {
     const phoneNumber = this.userNumberfound;
     this.WhatsApp.redirectWhatsapp(phoneNumber);
@@ -110,7 +171,7 @@ export class AlertsComponent implements OnInit {
     }
   }
 
-  articlesParPage: number = 3; // Nombre d'articles par page
+  articlesParPage: number = 10; // Nombre d'articles par page
   pageActuelle: number = 1; // Pag
   getArticlesPage(): any[] {
     const indexDebut = (this.pageActuelle - 1) * this.articlesParPage;

@@ -255,3 +255,26 @@
 input[type="checkbox"] {
   accent-color: #1b9476;
 }
+
+.pagiColor {
+  background-color: #1b9476;
+  color: white;
+  margin-right: 10px;
+  width: 120px;
+}
+.pagiColore.current {
+  background-color: #1b9476;
+  color: white;
+}
+
+.pagiColore {
+  background-color: #1b9476;
+  color: white;
+  padding: 0.4em;
+  margin-right: 10px;
+  width: 30px;
+}
+
+.btnpagi {
+  padding: 1em;
+}

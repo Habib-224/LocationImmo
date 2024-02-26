@@ -1,0 +1,219 @@
+<div class="dashbord">
+  <div class="section sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="section">
+    <!-- Le navbar  -->
+    <app-navbar></app-navbar>
+
+    <!-- Liste des sections d'une ligne  -->
+    <div class="containerMessage container">
+      <div class="row sectionEspace search mb-3">
+        <div class="col-md-3">
+          <h4 class="fw-bold mb-3" style="margin-left: 20px">
+            Listes des Demandes
+          </h4>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input
+              type="text"
+              name="search"
+              class="form-control"
+              [(ngModel)]="filterValue"
+              (input)="onSearch()"
+              placeholder="Rechercher ......"
+            />
+            <!-- <button class="iconesearch input-group-text">
+              <i class="bi bi-search"></i>
+            </button> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="Section_Statistique">
+        <div class="tableSection">
+          <table class="table">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  id
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Nom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  email
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  role
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Approbation
+                </th>
+
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let utilisateur of getItemsPage()">
+              <tr *ngIf="utilisateur.inscriptionValidee == 'enAttente'">
+                <td class="text-center">{{ utilisateur.id }}</td>
+                <td class="text-center">
+                  {{ utilisateur.nom }} {{ utilisateur.prenom }}
+                </td>
+                <td class="text-center">{{ utilisateur.email }}</td>
+                <td class="text-center">{{ utilisateur.role }}</td>
+
+                <td class="text-center" id="acceptation">
+                  <button
+                    class="btn me-2"
+                    (click)="accepterDemande(utilisateur.id)"
+                  >
+                    Accepter
+                  </button>
+                  <button
+                    class="btn me-2"
+                    (click)="refuserDemande(utilisateur.id)"
+                  >
+                    Rejeter
+                  </button>
+                </td>
+
+                <td class="text-center">
+                  <button
+                    class="btn me-2"
+                    style="background-color: #133e33"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailMentor"
+                    (click)="detailUtilisateur(utilisateur.id)"
+                  >
+                    <i
+                      class="bx bxs-show"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                    ></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="getItemsPage().length">
+            <div class="d-flex justify-content-end mb-2">
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === 1"
+                (click)="pageActuelle = pageActuelle - 1"
+              >
+                <i class="bi bi-caret-left-fill fs-4"></i>
+              </button>
+              <button
+                class="mx-2 page"
+                *ngFor="let page of pages"
+                (click)="pageActuelle = page"
+              >
+                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
+                  page
+                }}</span>
+                <span *ngIf="page != pageActuelle">{{ page }}</span>
+                <!-- {{ page }} -->
+              </button>
+              <button
+                class="rounded-2 btnColor mx-2"
+                [disabled]="pageActuelle === totalPages"
+                (click)="pageActuelle = pageActuelle + 1"
+              >
+                <i class="bi bi-caret-right-fill fs-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Detail Logement
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="Detail_personelle">
+                <div class="personnelle_image">
+                  <!-- <img
+                    [src]="firstImage"
+                    alt=""
+                    id="logement"
+                  /> -->
+                </div>
+                <div class="Detail_utilisateur">
+                  <div class="detail_left">
+                    <p>Nom:</p>
+                    <p>Prix:</p>
+                    <p>Adresse:</p>
+                    <p>Disponibilte:</p>
+                    <p>Localite:</p>
+                    <p>Nombre Chambre:</p>
+                    <p>Type:</p>
+                  </div>
+                  <div class="detail_righ">
+                    <p>bah</p>
+                    <p>bah</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

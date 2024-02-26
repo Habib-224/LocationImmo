@@ -112,16 +112,13 @@
 
 /*---------------Fin Section Footer-------------------*/
 
-body {
-}
-
 .Inscription {
   background: url("../../../../assets/images/inscription.jpg"), lightgray 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  min-height: 606px;
+  min-height: 610px;
   flex-shrink: 0;
   margin-top: -3px;
 }
@@ -173,8 +170,9 @@ body {
 }
 
 input[type="email"],
-input[type="password"] {
-  padding-left: 10px; /* Vous pouvez ajuster la valeur selon vos besoins */
+input[type="password"],
+input[type="text"] {
+  padding-left: 13px; /* Vous pouvez ajuster la valeur selon vos besoins */
 }
 
 .Formulaire input,
@@ -211,7 +209,7 @@ input[type="password"] {
 
 .Formulaire1 h3 {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
 }
 
 .Formulaire1 {
@@ -234,21 +232,20 @@ input[type="password"] {
 
 #retour {
   background-color: #a9a9a9;
-  margin-top: 25px;
+  margin-top: 20px;
   width: 90px;
   border-radius: 5px;
 }
 
-
-#retour1{
+#retour1 {
   background-color: #1b9476;
-  margin-top: 25px;
+  margin-top: 20px;
   width: 90px;
   border-radius: 5px;
 }
 
 #send {
-  margin-top: 25px;
+  margin-top: 20px;
   border-radius: 5px;
   width: 150px;
 }
@@ -256,16 +253,15 @@ input[type="password"] {
 #suivant {
   background-color: #1b9476;
   color: white;
-  margin-top: 25px;
+  margin-top: 20px;
   width: 90px;
   border-radius: 5px;
 }
 
-
 #suivant1 {
   background-color: #a9a9a9;
   color: white;
-  margin-top: 25px;
+  margin-top: 20px;
   width: 90px;
   border-radius: 5px;
 }
@@ -278,20 +274,11 @@ input[type="password"] {
   line-height: 30px;
 }
 
-#suivant1{
-  background-color: #a9a9a9;
-   /* background-color: #1b9476; */
-  color: white;
-  margin-top: 25px;
-  width: 90px;
-  border-radius: 5px;
-}
-
 .formGroup1 input {
   width: 340px;
   height: 40px;
   border-radius: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   display: block;
   margin: auto;
 }
@@ -488,18 +475,34 @@ input[type="password"] {
   gap: 100px;
   align-items: center;
 }
-/*
-#retour {
-  padding: 0.4em;
-  width: 100px;
-  border: none;
 
+/* .input-container {
+  display: inline-block;
 }
 
-#Add{
-  padding: 0.4em;
-  background-color: #1b9476;
-  width: 100px;
-  border: none;
-  color: white;
+.form-control {
+  border-radius: 20px;
+  height: 40px;
 } */
+
+.input-container {
+  position: relative;
+  display: inline-block; /* Assurez-vous que le conteneur ne prend que la largeur nécessaire */
+}
+
+.form-label {
+  display: inline-block; /* Permet de positionner le label à côté de l'input */
+  vertical-align: middle; /* Aligne verticalement le label avec l'élément input */
+}
+
+.form-control {
+  width: 340px;
+  height: 40px;
+  border-radius: 20px;
+  vertical-align: middle; /* Aligne verticalement l'élément input avec le label */
+  padding: 8px; /* Ajustez selon vos besoins */
+}
+
+#justificatif{
+  margin-bottom: 2px;
+}

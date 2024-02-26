@@ -78,7 +78,7 @@ export class AuthentificationComponent implements OnInit {
   }
 
   validerTelephone(telephone: string): boolean {
-    const phoneRegex = /^\+221\s?(77|78|76|70|75|33)[0-9]{7}$/;
+    const phoneRegex = /^(77|78|76|70|75|33)[0-9]{7}$/;
 
     // return telephone.length >= 10;
     return phoneRegex.test(telephone);
@@ -151,6 +151,7 @@ export class AuthentificationComponent implements OnInit {
   roleProprietaire: string = '';
   etudiantStatus: any = '';
   proprietaireStatus: any = '';
+  papierJustificatif: any;
 
   constructor(
     private AuthService: AuthserviceService,
@@ -249,7 +250,7 @@ export class AuthentificationComponent implements OnInit {
       if (this.passwordProprietaire.length < 8) {
         this.ExactePassword = false;
         this.verifePassword =
-          'Le Mot de passe doit être superieur a 8 caractere';
+          'au minimum 8 caracteres';
       } else {
         this.ExactePassword = true;
         this.verifePassword = '';
@@ -307,7 +308,7 @@ export class AuthentificationComponent implements OnInit {
       if (this.PasswordLogin.length < 8) {
         this.exactPasswordCon = false;
         this.verifPasswordCon =
-          'Le Mot de passe doit être superieur a 8 caractere';
+          'au minimum 8 caracteres';
       } else {
         this.exactPasswordCon = true;
         this.verifPasswordCon = 'Mot de Passe Correcte';
@@ -353,19 +354,37 @@ export class AuthentificationComponent implements OnInit {
       );
     } else {
       if (this.etudiantStatus == 'etudiant') {
-        const newEtudiant = new Etudiant();
-        newEtudiant.nom = this.nomproprio;
-        newEtudiant.prenom = this.prenomProprietaire;
-        newEtudiant.adresse = this.adresseProprietaire;
-        newEtudiant.email = this.emailProprietaire;
-        newEtudiant.password = this.passwordProprietaire;
-        newEtudiant.telephone = this.telephoneProprietaire;
-        newEtudiant.role = this.etudiantStatus;
-        newEtudiant.universite = this.universite;
-        newEtudiant.paysOrigine = this.paysOrigine;
+        const formData = new FormData();
+
+        formData.append('nom', this.nomproprio);
+        formData.append('prenom', this.prenomProprietaire);
+        formData.append('adresse', this.adresseProprietaire);
+        formData.append('email', this.emailProprietaire);
+        formData.append('password', this.passwordProprietaire);
+        formData.append('telephone', this.telephoneProprietaire);
+        formData.append('role', this.etudiantStatus);
+        formData.append('universite', this.universite);
+        formData.append('paysOrigine', this.paysOrigine);
+        // formData.append('papierJustificatif',this.);
+
+        // Ajout de l'image
+        if (this.papierJustificatif) {
+          formData.append('papierJustificatif', this.papierJustificatif);
+        }
+
+        // const newEtudiant = new Etudiant();
+        // newEtudiant.nom = this.nomproprio;
+        // newEtudiant.prenom = this.prenomProprietaire;
+        // newEtudiant.adresse = this.adresseProprietaire;
+        // newEtudiant.email = this.emailProprietaire;
+        // newEtudiant.password = this.passwordProprietaire;
+        // newEtudiant.telephone = this.telephoneProprietaire;
+        // newEtudiant.role = this.etudiantStatus;
+        // newEtudiant.universite = this.universite;
+        // newEtudiant.paysOrigine = this.paysOrigine;
 
         this.AuthService.registerEtudiant(
-          newEtudiant,
+          formData,
           this.onSuccessHandler,
           this.onErrorHandler
         );
@@ -381,6 +400,22 @@ export class AuthentificationComponent implements OnInit {
         newproprietaire.password = this.passwordProprietaire;
         newproprietaire.telephone = this.telephoneProprietaire;
         newproprietaire.role = this.proprietaireStatus;
+
+         const formData = new FormData();
+
+         formData.append('nom', this.nomproprio);
+         formData.append('prenom', this.prenomProprietaire);
+         formData.append('adresse', this.adresseProprietaire);
+         formData.append('email', this.emailProprietaire);
+         formData.append('password', this.passwordProprietaire);
+         formData.append('telephone', this.telephoneProprietaire);
+         formData.append('role', this.proprietaireStatus);
+         // formData.append('papierJustificatif',this.);
+
+         // Ajout de l'image
+         if (this.papierJustificatif) {
+           formData.append('papierJustificatif', this.papierJustificatif);
+         }
         if (
           this.nomproprio == '' ||
           this.prenomProprietaire == '' ||
@@ -397,7 +432,7 @@ export class AuthentificationComponent implements OnInit {
         } else {
           // console.log(newproprietaire);
           this.AuthService.register(
-            newproprietaire,
+            formData,
             this.onSuccessHandler,
             this.onErrorHandler
           );
@@ -414,6 +449,7 @@ export class AuthentificationComponent implements OnInit {
       'center'
     );
     this.changeForme();
+    console.log('la reponse', response);
     // Autres actions à exécuter après une inscription réussie
   };
 
@@ -427,7 +463,7 @@ export class AuthentificationComponent implements OnInit {
       'les informations que vous avez saisi sont incorrect',
       'center'
     );
-    console.log("non valide ", error);
+    console.log('non valide ', error);
     // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
   };
 
@@ -623,6 +659,13 @@ export class AuthentificationComponent implements OnInit {
         }
       }
     }
+  }
+
+  // papierJustificatif: any = [];
+
+  getFile(event: any) {
+    console.warn(event.target.files[0]);
+    this.papierJustificatif = event.target.files[0] as File;
   }
 
   // déconnexion apres 10 secondes
