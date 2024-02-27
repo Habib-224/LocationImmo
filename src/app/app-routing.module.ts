@@ -29,6 +29,7 @@ import { etudiantGuard } from './guards/etudiant.guard';
 import { proprietaireGuard } from './guards/proprietaire.guard';
 import { GestionNewsletterComponent } from './components/admin/gestion-newsletter/gestion-newsletter.component';
 import { GestionDemandesComponent } from './components/admin/gestion-demandes/gestion-demandes.component';
+import { userConnectGuard } from './guards/user-connect.guard';
 
 const routes: Routes = [
   /**-----------Routes pour la partie internaute----------------- */
@@ -49,7 +50,11 @@ const routes: Routes = [
     component: PolitiqueConfidentialiteComponent,
   },
   { path: 'mention_legale', component: MentionLegaleComponent },
-  { path: 'detail-annonce/:id', component: DetailAnnonceComponent },
+  {
+    path: 'detail-annonce/:id',
+    component: DetailAnnonceComponent,
+    canActivate: [userConnectGuard],
+  },
   { path: 'plan_du_site', component: PlanDuSiteComponent },
   { path: 'alert', component: AlertsComponent },
 

@@ -45,7 +45,7 @@
 
 .Information_right {
   width: 450px;
-  height: auto;
+  height: 500px;
   background-color: #1b9476;
   color: white;
   border-radius: 15px;
@@ -145,3 +145,4 @@
   width: 150px;
   padding: 0.3em;
 }
+

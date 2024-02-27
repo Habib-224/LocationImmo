@@ -57,4 +57,8 @@ export class UtilisateurserviceService {
       (error:any)=>onError(error)
     );
   }
+
+  getAllUserNewsletter(): Observable<any>{
+    return this.http.get<any>(`${url}listeNewsletter`);
+  }
 }

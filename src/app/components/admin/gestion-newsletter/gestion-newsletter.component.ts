@@ -8,10 +8,8 @@ import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisat
 })
 export class GestionNewsletterComponent {
   tabMessageFilter: any[] = [];
-  filterValue: string = '';
-  ListeLogement: any = [];
-
-  logementFound: any;
+  ListeInscrit: any;
+  filterValue:any=""
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
@@ -19,52 +17,26 @@ export class GestionNewsletterComponent {
   firstImage: any;
 
   // Déclaration des méhodes
-  constructor(
-    private utilisateurservice: UtilisateurserviceService,
-    private LogementService: LogementService
-  ) {}
+  constructor(private utilisateurservice: UtilisateurserviceService) {}
   ngOnInit(): void {
-    this.tabMessageFilter = this.ListeLogement;
+    this.tabMessageFilter = this.ListeInscrit;
     // this.getAlluser();
-    this.getAllLogement();
+    this.getAllUserNewsletter();
   }
 
-  detailLogement(id: any) {
-    this.logementFound = this.tabMessageFilter.find(
-      (logement: any) => logement.id === id
-    );
-    if (this.logementFound) {
-      console.log('logement trouve', this.logementFound);
-      if (this.logementFound.image.length > 0) {
-        console.log("oui c'est superieur a 0");
-        this.firstImage =
-          'http://127.0.0.1:8000/storage/' +
-          this.logementFound.image[0].nomImage;
-      }
-    }
-  }
-
-  getAllLogement() {
-    this.LogementService.getAlllogment().subscribe((response) => {
-      let allogement = response[0];
-      this.ListeLogement = allogement;
-      this.tabMessageFilter = this.ListeLogement;
-      console.log('la liste de tous les logements ', this.tabMessageFilter);
+  getAllUserNewsletter() {
+    this.utilisateurservice.getAllUserNewsletter().subscribe((response) => {
+      let allInscrit = response.subscribers;
+      this.ListeInscrit = allInscrit;
+      this.tabMessageFilter = this.ListeInscrit
+      // console.log('la liste de tous les logements ', this.ListeInscrit);
     });
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch() {
-    // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.ListeLogement.filter(
-      (elt: any) =>
-        elt?.localite.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.type.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.adresse.toLowerCase().includes(this.filterValue.toLowerCase()) ||
-        elt?.proprietairePrenom
-          .toLowerCase()
-          .includes(this.filterValue.toLowerCase()) ||
-        elt?.proprietaire.toLowerCase().includes(this.filterValue.toLowerCase())
+    this.tabMessageFilter = this.ListeInscrit.filter((elt: any) =>
+      elt?.email.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }
 

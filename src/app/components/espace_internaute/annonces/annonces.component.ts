@@ -378,11 +378,9 @@ export class AnnoncesComponent implements OnInit {
   // }
 
   getFile(event: any) {
-    // Assurez-vous que le tableau est initialisé vide à chaque fois que vous sélectionnez de nouveaux fichiers
+   
     this.image = [];
-
-    // Récupérez la liste des fichiers
-    const files = event.target.files as FileList;
+    const files = event.target.files as FileList; //au lieu de File vous mettez fileList pour specifier que c'est une liste de fichier
 
     // Parcourez chaque fichier dans la liste et ajoutez-le à votre tableau d'images
     for (let i = 0; i < files.length; i++) {
@@ -392,7 +390,7 @@ export class AnnoncesComponent implements OnInit {
     console.warn('La liste des images :', this.image1);
   }
 
- 
+
 
   public changerform(direction: string) {
     if (direction === 'suivant') {

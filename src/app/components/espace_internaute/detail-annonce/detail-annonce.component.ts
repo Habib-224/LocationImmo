@@ -27,6 +27,8 @@ export class DetailAnnonceComponent implements OnInit {
 
   commentaireText: any = '';
 
+  userOnline: any;
+
   constructor(
     private route: ActivatedRoute,
     private logementService: LogementService,
@@ -44,12 +46,17 @@ export class DetailAnnonceComponent implements OnInit {
 
     this.getAllLogement();
 
+    const user = JSON.parse(localStorage.getItem('userOnline') || '');
+    this.userOnline = user.user;
+    console.log(this.userOnline);
+
     const proprietaire = JSON.parse(localStorage.getItem('proprietaire') || '');
     this.listeProprio = proprietaire;
   }
 
   image: any = [];
-
+  commentaireLogement: any = [];
+  tailleCommentaire: any;
   getAllLogement() {
     this.logementService
       .getdetailLogement(this.idLogement)
@@ -59,8 +66,12 @@ export class DetailAnnonceComponent implements OnInit {
         this.detail_logement = detaillogement;
         this.mailProprio = this.detail_logement.proprietaireEmail;
         this.tailleimagelogement = detaillogement.image.length;
+        this.commentaireLogement = this.detail_logement.commentaire;
+        this.tailleCommentaire = this.detail_logement.commentaire.length;
+        console.log('taille logement', this.tailleCommentaire);
         this.image = detaillogement.image;
-        console.log('voici les detail du image seulement', this.image);
+        // console.log('voici les detail du image seulement', this.image);
+        // console.log('voici les commentaires seulement', this.commentaireLogement);
 
         let founduser = this.listeProprio.find(
           (utilisateur: any) => utilisateur.user.email === this.mailProprio
@@ -157,6 +168,7 @@ export class DetailAnnonceComponent implements OnInit {
           'Votre Commentaire a ete ajouté avec succès',
           'center'
         );
+        this.getAllLogement();
       },
       (error: any) => {
         console.log('la reponse ', error);

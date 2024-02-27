@@ -45,23 +45,15 @@
         </div>
         <div class="Section_Contenu_right">
           <div class="Contenu_Left_Image">
-            <img
-              *ngIf="first"
-              [src]="imageLogement.secondImage"
-              alt=""
-            />
+            <img *ngIf="first" [src]="imageLogement.secondImage" alt="" />
           </div>
           <div class="Contenu_Left_Image1">
-            <img
-              *ngIf="first"
-              [src]="imageLogement.firstImage"
-              alt=""
-            />
+            <img *ngIf="first" [src]="imageLogement.firstImage" alt="" />
           </div>
         </div>
       </div>
     </div>
-     <div *ngIf="tailleimagelogement == 3">
+    <div *ngIf="tailleimagelogement == 3">
       <div
         class="Section_photo"
         *ngFor="let imageLogement of tabMessageFilter1; let first = first"
@@ -75,24 +67,14 @@
         </div>
         <div class="Section_Contenu_right">
           <div class="Contenu_Left_Image">
-            <img
-              *ngIf="first"
-              [src]="imageLogement.secondImage"
-              alt=""
-            />
+            <img *ngIf="first" [src]="imageLogement.secondImage" alt="" />
           </div>
           <div class="Contenu_Left_Image1">
-            <img
-              *ngIf="first"
-              [src]="imageLogement.thirdImage"
-              alt=""
-            />
+            <img *ngIf="first" [src]="imageLogement.thirdImage" alt="" />
           </div>
         </div>
       </div>
     </div>
-
-
 
     <div class="Section_Information">
       <div class="Information_left">
@@ -109,14 +91,14 @@
             ></i>
           </div>
         </div>
-        <h2>Description</h2>
-        <p>{{ detail_logement.description }}</p>
-        <h2>equipements</h2>
-        <p>
+        <h4 style="">Description</h4>
+        <p style="text-align: justify">{{ detail_logement.description }}</p>
+        <h4 style="">equipements</h4>
+        <p style="text-align: justify">
           {{ detail_logement.equipements }}
         </p>
 
-        <div class="formulaire">
+        <div class="formulaire" *ngIf="userOnline.role == 'etudiant'">
           <form action="">
             <div class="mb-3 mt-5">
               <input
@@ -129,6 +111,35 @@
               <button (click)="CommentaireUser()">Commenter</button>
             </div>
           </form>
+        </div>
+
+        <div class="Section_Commentaire">
+          <h4 style="margin-bottom: 10px; margin-top: 40px">
+            Liste des Commentaires
+          </h4>
+
+          <div
+            class="Commentaire"
+            *ngFor="let commentaire of commentaireLogement"
+          >
+            <div *ngIf="tailleCommentaire > 0">
+              <div class="User_Commentaire">
+                <span
+                  >{{ commentaire.etudiant }}
+                  {{ commentaire.etudiantPrenom }}</span
+                >
+              </div>
+              <span style="margin-left: 10px; margin-bottom: 10px">
+                {{ commentaire.texte }}
+              </span>
+              <span><i class="fa-regular fa-clock"></i>22/03/2024</span>
+            </div>
+          <hr />
+
+          </div>
+          <div *ngIf="tailleCommentaire == 0">
+            <p>Aucun Commentaire</p>
+          </div>
         </div>
       </div>
       <div class="Information_right">

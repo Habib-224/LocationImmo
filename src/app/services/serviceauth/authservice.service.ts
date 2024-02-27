@@ -67,7 +67,7 @@ export class AuthserviceService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 10000); // 10 secondes
+    }, 900000); // 15 minutes
   }
 
   refreshToken(onSuccess: Function, onError: Function) {
@@ -129,6 +129,8 @@ export class AuthserviceService {
   }
 
   logoutuser() {
+    this.isAuthenticated = false;
+    localStorage.setItem('Userconnect', JSON.stringify(this.isAuthenticated));
     this.logout().subscribe((response) => {
       console.log(response);
       this.isAuthenticated = false;

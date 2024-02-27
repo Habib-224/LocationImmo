@@ -21,7 +21,8 @@
               id="studio"
               name="type"
               value="studio"
-              [(ngModel)]="searchCriteria.type.studio"
+              [checked]="checkbox1Checked"
+              (change)="checkOne($event)"
               style="padding: 0.2em"
             />
             <label for="studio">Studio</label>
@@ -32,7 +33,8 @@
               id="appartement"
               name="type"
               value="appartement"
-              [(ngModel)]="searchCriteria.type.appartement"
+              [checked]="checkbox2Checked"
+              (change)="checkTwo($event)"
             />
             <label for="appartement">Appartement</label>
           </div>
@@ -41,12 +43,7 @@
 
       <div class="localite">
         <label for="localite">Localité:</label>&nbsp;&nbsp;
-        <!-- <input
-          type="text"
-          id="localite"
-          name="localite"
-          [(ngModel)]="searchCriteria.localite"
-        /> -->
+
         <select name="localite" id="" [(ngModel)]="searchCriteria.localite">
           <option value="">Selection par localite</option>
           <option
@@ -78,43 +75,48 @@
     <!-- Fin Recherche Avancée Component -->
 
     <div class="card1" *ngFor="let logement of tabMessageFilter1">
-      <div class="card_image">
-        <div *ngIf="logement.firstImage !== ''">
-          <img
-            *ngIf="logement.firstImage"
-            [src]="logement.firstImage"
-            alt=""
-            [routerLink]="['/detail-annonce', logement.id]"
-          />
+      <div *ngIf="tabMessageFilter1.length > 0">
+        <div class="card_image">
+          <div>
+            <img
+              src="http://127.0.0.1:8000/storage/{{
+                logement.image[0].nomImage
+              }}"
+              alt=""
+              [routerLink]="['/detail-annonce', logement.id]"
+            />
+          </div>
+          <!-- Utilisez la nouvelle propriété firstImage au lieu de logement.images -->
         </div>
-        <div *ngIf="logement.image == ''">
-          <img
-            src="assets/images/logement2.jpg"
-            alt=""
-            [routerLink]="['/detail-annonce', logement.id]"
-          />
-        </div>
-
-        <!-- Utilisez la nouvelle propriété firstImage au lieu de logement.images -->
-      </div>
-      <div class="card_info">
-        <div class="card_info_left">
-          <h6>{{ logement.proprietaire }} {{ logement.proprietairePrenom }}</h6>
-          <p>
-            {{ logement.type }}
-          </p>
-        </div>
-        <div class="card_info_right">
-          <h6 id="prix">{{ logement.prix }} FCFA</h6>
-          <p><i class="fa-solid fa-location-dot"></i> {{ logement.adresse }}</p>
+        <div class="card_info">
+          <div class="card_info_left">
+            <h6>
+              {{ logement.proprietaire }} {{ logement.proprietairePrenom }}
+            </h6>
+            <p>
+              {{ logement.type }}
+            </p>
+          </div>
+          <div class="card_info_right">
+            <h6 id="prix">{{ logement.prix }} FCFA</h6>
+            <p>
+              <i class="fa-solid fa-location-dot"></i> {{ logement.adresse }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="d-flex flex-wrap justify-content-center my-5" id="pagination">
-      <button class="btn pagiColor" disabled>Précédent</button>
-      <button class="btn pagiColore">1</button>
-      <button class="btn pagiColor" disabled>Suivant</button>
+    <div *ngIf="tabMessageFilter1.length == 0">
+      <h4 style="margin-top: 20px; margin-bottom: 20px">
+        Désolé aucun logement ne correspond a votre recherche
+      </h4>
+      <h1 style="text-align: center">😒</h1>
     </div>
+  </div>
+  <div class="d-flex flex-wrap justify-content-center my-5" id="pagination">
+    <button class="btn pagiColor" disabled>Précédent</button>
+    <button class="btn pagiColore">1</button>
+    <button class="btn pagiColor" disabled>Suivant</button>
   </div>
 </div>
 
