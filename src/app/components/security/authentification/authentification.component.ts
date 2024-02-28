@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Proprietaire } from 'src/app/models/Proprietaire';
 import { Etudiant } from 'src/app/models/Etudiant';
 import { MessageService } from 'src/app/services/message/message.service';
+import iziToast from 'izitoast';
 
 @Component({
   selector: 'app-authentification',
@@ -249,8 +250,7 @@ export class AuthentificationComponent implements OnInit {
     } else {
       if (this.passwordProprietaire.length < 8) {
         this.ExactePassword = false;
-        this.verifePassword =
-          'au minimum 8 caracteres';
+        this.verifePassword = 'au minimum 8 caracteres';
       } else {
         this.ExactePassword = true;
         this.verifePassword = '';
@@ -307,8 +307,7 @@ export class AuthentificationComponent implements OnInit {
     } else {
       if (this.PasswordLogin.length < 8) {
         this.exactPasswordCon = false;
-        this.verifPasswordCon =
-          'au minimum 8 caracteres';
+        this.verifPasswordCon = 'au minimum 8 caracteres';
       } else {
         this.exactPasswordCon = true;
         this.verifPasswordCon = 'Mot de Passe Correcte';
@@ -401,21 +400,21 @@ export class AuthentificationComponent implements OnInit {
         newproprietaire.telephone = this.telephoneProprietaire;
         newproprietaire.role = this.proprietaireStatus;
 
-         const formData = new FormData();
+        const formData = new FormData();
 
-         formData.append('nom', this.nomproprio);
-         formData.append('prenom', this.prenomProprietaire);
-         formData.append('adresse', this.adresseProprietaire);
-         formData.append('email', this.emailProprietaire);
-         formData.append('password', this.passwordProprietaire);
-         formData.append('telephone', this.telephoneProprietaire);
-         formData.append('role', this.proprietaireStatus);
-         // formData.append('papierJustificatif',this.);
+        formData.append('nom', this.nomproprio);
+        formData.append('prenom', this.prenomProprietaire);
+        formData.append('adresse', this.adresseProprietaire);
+        formData.append('email', this.emailProprietaire);
+        formData.append('password', this.passwordProprietaire);
+        formData.append('telephone', this.telephoneProprietaire);
+        formData.append('role', this.proprietaireStatus);
+        // formData.append('papierJustificatif',this.);
 
-         // Ajout de l'image
-         if (this.papierJustificatif) {
-           formData.append('papierJustificatif', this.papierJustificatif);
-         }
+        // Ajout de l'image
+        if (this.papierJustificatif) {
+          formData.append('papierJustificatif', this.papierJustificatif);
+        }
         if (
           this.nomproprio == '' ||
           this.prenomProprietaire == '' ||
@@ -549,7 +548,7 @@ export class AuthentificationComponent implements OnInit {
         { email: email, password: Password },
         (response: any) => {
           // console.log('Voici la reponse ', response);
-          // this.AuthService.deconnexionAutomatique();
+          this.AuthService.deconnexionAutomatique();
 
           let token = response.authorization.token;
           // console.log('le token du user est :', token);
@@ -557,6 +556,11 @@ export class AuthentificationComponent implements OnInit {
 
           if (response.user.role === 'admin') {
             // Gérer la réponse en cas de succès
+            // iziToast.success({
+            //   title: 'OK',
+            //   message: 'Connecté avec Succès!',
+            // });
+            // console.log("succes connexion")
 
             this.message.MessageSucces(
               'success',

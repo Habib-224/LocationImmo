@@ -67,7 +67,7 @@ export class AuthserviceService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 900000); // 15 minutes
+    },900000); // 15 minutes 900000
   }
 
   refreshToken(onSuccess: Function, onError: Function) {
