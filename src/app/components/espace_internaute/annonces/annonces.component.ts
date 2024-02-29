@@ -5,6 +5,7 @@ import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { LogementService } from 'src/app/services/logement/logement.service';
 import { MessageService } from 'src/app/services/message/message.service';
 import Swal from 'sweetalert2';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-annonces',
@@ -320,6 +321,8 @@ export class AnnoncesComponent implements OnInit {
   image1: File[] = [];
 
   ajouterLogement() {
+    Loading.pulse();
+
     const formData = new FormData();
 
     formData.append('adresse', this.logement.adresse);
@@ -333,24 +336,25 @@ export class AnnoncesComponent implements OnInit {
     formData.append('localite_id', this.logement.localite_id);
 
     // Ajout de l'image
-   if (this.image1 && this.image1.length > 0) {
-     for (let i = 0; i < this.image1.length; i++) {
-       formData.append('image[]', this.image1[i]);
-     }
-   }
+    if (this.image1 && this.image1.length > 0) {
+      for (let i = 0; i < this.image1.length; i++) {
+        formData.append('image[]', this.image1[i]);
+      }
+    }
 
     this.logementService.ajouterLogement(formData).subscribe(
       (response) => {
-        console.log('Logement ajouté avec succès', response);
-        this.message.MessageSucces(
-          'Success',
-          'Success',
-          'Logement ajouté avec succès',
-          'center'
-        );
-        this.route.navigate(['/louer']);
+        Notify.success('Logement ajouté avec succès');
 
-        console.log('information saisi', formData);
+        // console.log('Logement ajouté avec succès', response);
+        // this.message.MessageSucces(
+        //   'Success',
+        //   'Success',
+        //   'Logement ajouté avec succès',
+        //   'center'
+        // );
+        this.route.navigate(['/louer']);
+        // console.log('information saisi', formData);
         this.logement = {
           adresse: '',
           type: '',
@@ -363,6 +367,7 @@ export class AnnoncesComponent implements OnInit {
           localite_id: null,
         };
         this.getAllLogementByOwner();
+        Loading.remove();
 
         // this.image = null;
       },
@@ -378,7 +383,6 @@ export class AnnoncesComponent implements OnInit {
   // }
 
   getFile(event: any) {
-   
     this.image = [];
     const files = event.target.files as FileList; //au lieu de File vous mettez fileList pour specifier que c'est une liste de fichier
 
@@ -389,8 +393,6 @@ export class AnnoncesComponent implements OnInit {
 
     console.warn('La liste des images :', this.image1);
   }
-
-
 
   public changerform(direction: string) {
     if (direction === 'suivant') {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthserviceService } from 'src/app/services/serviceauth/authservice.service';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-header',
@@ -54,8 +55,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    Loading.pulse();
     this.authservice.logout().subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       this.authservice.isAuthenticated = false;
       localStorage.setItem(
         'Userconnect',
@@ -63,7 +65,8 @@ export class HeaderComponent implements OnInit {
       );
       this.affichestatut();
       this.route.navigate(['/accueil']);
+      Loading.remove();
+      // Notify.success('Deconnecter avec Success');
     });
   }
 }
- 

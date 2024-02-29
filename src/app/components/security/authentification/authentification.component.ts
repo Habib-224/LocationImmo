@@ -6,8 +6,8 @@ import Swal from 'sweetalert2';
 import { Proprietaire } from 'src/app/models/Proprietaire';
 import { Etudiant } from 'src/app/models/Etudiant';
 import { MessageService } from 'src/app/services/message/message.service';
-import iziToast from 'izitoast';
-
+import { Loading, Notify } from 'notiflix';
+import iziToast, { IziToast } from 'izitoast';
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
@@ -257,7 +257,6 @@ export class AuthentificationComponent implements OnInit {
       }
     }
   }
-
   verifiTelephone() {
     const telephoneProprietaireTrim = this.telephoneProprietaire.trim(); // Appliquer trim()
 
@@ -280,7 +279,6 @@ export class AuthentificationComponent implements OnInit {
       this.verifeTelephone = 'le Numéro de telephone est invalide ';
     }
   }
-
   verifEmail() {
     if (this.emailLogin == '') {
       this.verifEmailCon = '';
@@ -466,75 +464,6 @@ export class AuthentificationComponent implements OnInit {
     // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
   };
 
-  color: string = 'red';
-
-  // login() {
-  //   if (this.emailLogin == '' || this.PasswordLogin == '') {
-  //     this.message.MessageSucces(
-  //       'error',
-  //       'Oops...',
-  //       'veuillez remplir les champs',
-  //       'center'
-  //     );
-  //   } else {
-  //     let email = this.emailLogin;
-  //     let Password = this.PasswordLogin;
-
-  //     this.AuthService.login(
-  //       { email: email, password: Password },
-  //       (response: any) => {
-  //         console.log('Voici la reponse ', response);
-  //         if (response.user.role === 'admin') {
-  //           // Gérer la réponse en cas de succès
-  //           this.message.MessageSucces(
-  //             'success',
-  //             'Success',
-  //             'Vous êtes connecté avec succès',
-  //             'center'
-  //           );
-  //           this.AuthService.isAuthenticated = true;
-  //           localStorage.setItem('userOnline', JSON.stringify(response));
-  //           localStorage.setItem(
-  //             'Userconnect',
-  //             JSON.stringify(this.AuthService.isAuthenticated)
-  //           );
-  //           this.route.navigate(['/dashboard_statistic']);
-  //         } else if (response.user.role === 'etudiant') {
-  //           // Gérer la réponse en cas de succès
-  //           this.message.MessageSucces(
-  //             'success',
-  //             'Success',
-  //             'Vous êtes connecté avec succès',
-  //             'center'
-  //           );
-  //           this.AuthService.isAuthenticated = true;
-  //           localStorage.setItem('userOnline', JSON.stringify(response));
-  //           localStorage.setItem(
-  //             'Userconnect',
-  //             JSON.stringify(this.AuthService.isAuthenticated)
-  //           );
-  //           this.route.navigate(['/accueil']);
-  //         } else if (response.user.role === 'proprietaire') {
-  //           // Gérer la réponse en cas de succès
-  //           this.message.MessageSucces(
-  //             'success',
-  //             'Success',
-  //             'Vous êtes connecté avec succès',
-  //             'center'
-  //           );
-  //           this.AuthService.isAuthenticated = true;
-  //           localStorage.setItem('userOnline', JSON.stringify(response));
-  //           localStorage.setItem(
-  //             'Userconnect',
-  //             JSON.stringify(this.AuthService.isAuthenticated)
-  //           );
-  //           this.route.navigate(['/accueil']);
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
-
   login() {
     if (
       this.validateEmail(this.emailLogin) &&
@@ -543,31 +472,18 @@ export class AuthentificationComponent implements OnInit {
       // Effectuer la connexion
       let email = this.emailLogin;
       let Password = this.PasswordLogin;
+      Loading.pulse();
 
       this.AuthService.login(
         { email: email, password: Password },
         (response: any) => {
-          // console.log('Voici la reponse ', response);
           this.AuthService.deconnexionAutomatique();
 
           let token = response.authorization.token;
-          // console.log('le token du user est :', token);
           localStorage.setItem('TokenUser', JSON.stringify(token));
 
           if (response.user.role === 'admin') {
-            // Gérer la réponse en cas de succès
-            // iziToast.success({
-            //   title: 'OK',
-            //   message: 'Connecté avec Succès!',
-            // });
-            // console.log("succes connexion")
-
-            this.message.MessageSucces(
-              'success',
-              'Success',
-              'Vous êtes connecté avec succès',
-              'center'
-            );
+            Notify.success('Connecter avec Success');
             this.AuthService.isAuthenticated = true;
             localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
@@ -575,14 +491,16 @@ export class AuthentificationComponent implements OnInit {
               JSON.stringify(this.AuthService.isAuthenticated)
             );
             this.route.navigate(['/dashboard_statistic']);
+            Loading.remove();
           } else if (response.user.role === 'etudiant') {
+            Notify.success('Connecter avec Success');
             // Gérer la réponse en cas de succès
-            this.message.MessageSucces(
-              'success',
-              'Success',
-              'Vous êtes connecté avec succès',
-              'center'
-            );
+            // this.message.MessageSucces(
+            //   'success',
+            //   'Success',
+            //   'Vous êtes connecté avec succès',
+            //   'center'
+            // );
             this.AuthService.isAuthenticated = true;
             localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
@@ -590,14 +508,17 @@ export class AuthentificationComponent implements OnInit {
               JSON.stringify(this.AuthService.isAuthenticated)
             );
             this.route.navigate(['/accueil']);
+            Loading.remove();
           } else if (response.user.role === 'proprietaire') {
             // Gérer la réponse en cas de succès
-            this.message.MessageSucces(
-              'success',
-              'Success',
-              'Vous êtes connecté avec succès',
-              'center'
-            );
+            Notify.success('Connecter avec Success');
+
+            // this.message.MessageSucces(
+            //   'success',
+            //   'Success',
+            //   'Vous êtes connecté avec succès',
+            //   'center'
+            // );
             this.AuthService.isAuthenticated = true;
             localStorage.setItem('userOnline', JSON.stringify(response));
             localStorage.setItem(
@@ -605,9 +526,12 @@ export class AuthentificationComponent implements OnInit {
               JSON.stringify(this.AuthService.isAuthenticated)
             );
             this.route.navigate(['/accueil']);
+            Loading.remove();
           }
         },
         (error: any) => {
+          Loading.remove();
+
           this.message.MessageSucces(
             'error',
             'Error',

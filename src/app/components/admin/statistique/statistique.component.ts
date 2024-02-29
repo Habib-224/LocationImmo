@@ -4,6 +4,8 @@ import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 import Swal from 'sweetalert2';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-statistique',

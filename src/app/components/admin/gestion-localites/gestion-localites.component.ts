@@ -4,6 +4,8 @@ import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { MessageService } from 'src/app/services/message/message.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 import Swal from 'sweetalert2';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-gestion-localites',
@@ -125,11 +127,7 @@ export class GestionLocalitesComponent {
             'Modification Terminée!',
             'center'
           );
-          // Swal.fire({
-          //   title: 'Modification Terminée!',
-          //   text: 'Cette Localite a été Modifié avec succées ',
-          //   icon: 'success',
-          // });
+          
           this.localiteservice
             .updateLocalite(id, uplocalite)
             .subscribe((response) => {
