@@ -67,16 +67,13 @@ export class AuthserviceService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    },900000); // 15 minutes 900000
+    }, 10000); // 10 minutes
   }
 
   refreshToken(onSuccess: Function, onError: Function) {
-    // Vérifier si le nombre de rafraîchissements a atteint la limite de 4
-    const refreshCount = parseInt(
-      localStorage.getItem('refreshCount') || '0',
-      10
-    );
-    if (refreshCount >= 4) {
+    const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
+
+    if (refreshCount >= 6){
       // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
       this.showLogoutAlert();
     } else {
@@ -107,35 +104,20 @@ export class AuthserviceService {
     let refresh = 0;
     localStorage.setItem('refreshCount', JSON.stringify(refresh));
     this.logoutuser();
-
-    // this.MessageSucces()
-    Swal.fire({
-      title: 'Votre Session a expirer',
-      text: 'Deconnecter vous ou rafraichissez votre token',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui! je raffraichie',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: 'non!',
-          text: 'non!, je me deconnecte',
-          icon: 'success',
-        });
-      }
-    });
   }
 
+  initialize() {
+    let refresh = 0;
+    localStorage.setItem('refreshCount', JSON.stringify(refresh));
+  }
+
+  refreshCounter: any = 0;
+
   logoutuser() {
-    this.isAuthenticated = false;
-    localStorage.setItem('Userconnect', JSON.stringify(this.isAuthenticated));
     this.logout().subscribe((response) => {
-      console.log(response);
       this.isAuthenticated = false;
       localStorage.setItem('Userconnect', JSON.stringify(this.isAuthenticated));
-      // this.affichestatut();
+      this.initialize();
       this.route.navigate(['/login']);
     });
   }

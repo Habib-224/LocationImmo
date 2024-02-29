@@ -299,44 +299,52 @@
             required
             (input)="validateDescription()"
           ></textarea>
-          <!-- <p *ngIf="exacteDescription">{{ verifeDescription }}</p> -->
+        </div>
+
+        <div *ngIf="image1.length > 0" class="imageUpload">
+          <div id="imagefile" *ngFor="let images of image1; let i = index">
+            <img src="../../../../assets/images/imagefile.png" alt="" />
+            <p>{{images.name}}</p>
+            <p style="text-align: center;" (click)="retirer(i)"><i class="fa-solid fa-x"></i></p>
+          </div>
+          <p *ngIf="image1.length>3" class="text-danger">Vous ne pouvez pas uploader plus de 3 Images</p>
         </div>
 
         <div class="mb-3">
           <label for="file" class="custum-file-upload">
             <div class="text">
-              <span>Cliquez pour téléverser une image</span>
+              <span>Ajouter des fichiers (PNG,JPG) ici</span><br />
+              <span>Maximum 3 photos</span>
             </div>
             <input
               id="file"
               type="file"
+              name="image"
               (change)="getFile($event)"
               (change)="validateImage()"
               accept="image/*"
-              ngModel="image"
+              [(ngModel)]="image"
               multiple
             />
           </label>
           <p *ngIf="exacteImage">{{ verifeImage }}</p>
-
-          <!-- <label for="formFile" class="form-label"
-            >Sélectionnez une image <span id="requis">*</span></label
-          >
-          <input
-            name="image"
-            type="file"
-            id="formFile"
-            (change)="getFile($event)"
-            required
-            (change)="validateImage()"
-          />
-          <p *ngIf="exacteImage">{{verifeImage}}</p> -->
+          <p *ngIf="!exacteImage">{{ verifeImage }}</p>
         </div>
 
         <!-- ... -->
         <div class="section_next">
           <button (click)="changerform('retour')" id="retour">retour</button>
-          <button id="Add" *ngIf="exacteDescription || exacteImage">
+          <button
+            id="retour"
+            *ngIf="!exacteDescription || !exacteImage || image1.length > 3 || image1.length<1"
+            disabled
+          >
+            Ajouter
+          </button>
+          <button
+            id="Add"
+            *ngIf="exacteDescription && exacteImage && image1.length <= 3 && image1.length>0"
+          >
             Ajouter
           </button>
         </div>

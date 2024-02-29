@@ -307,19 +307,42 @@ export class AnnoncesComponent implements OnInit {
       }
     }
   }
+  image1: File[] = [];
 
   validateImage() {
-    if (this.image == '') {
+    if (this.image1.length === 0) {
       this.exacteImage = false;
-      this.verifeImage = '';
-    } else if (this.image != '') {
+      this.verifeImage = "l'image n'est pas valide";
+      console.log('vide', this.image1.length);
+    } else {
       this.exacteImage = true;
-      this.verifeImage = "L'image est valide";
+      this.verifeImage = '';
+      console.log('pas vide', this.image1.length);
     }
   }
 
-  image1: File[] = [];
+  retirer(id: number) {
+    console.log('retirer', id);
+    for (let i = 0; i <this.image1.length; i++) {
+      if (id == i) {
+          this.image1.splice(i, 1);
+          console.log("l'element supprimer est le ",);
+          console.log('la liste de toutes les images ', this.image1);
+      }
+    }
+  }
 
+  // validateImage() {
+  //   if (this.image1.length === 0) {
+  //     this.exacteImage = false;
+  //     this.verifeImage = "L'image n'est pas valide";
+  //     console.log('vide', this.image1);
+  //   } else {
+  //     this.exacteImage = true;
+  //     this.verifeImage = "L'image est valide";
+  //     console.log('pas vide', this.image1);
+  //   }
+  // }
   ajouterLogement() {
     Loading.pulse();
 
@@ -376,11 +399,6 @@ export class AnnoncesComponent implements OnInit {
       }
     );
   }
-
-  // getFile(event: any) {
-  //   console.warn(event.target.files[0]);
-  //   this.image = event.target.files[0] as File;
-  // }
 
   getFile(event: any) {
     this.image = [];
