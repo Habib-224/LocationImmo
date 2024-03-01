@@ -18,6 +18,21 @@
     border-right-color: white;
 }
 
+.pagiColor {
+  background-color: #133e33;
+  color: white;
+}
+.pagiColore.current {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
+}
+
+
 
 .search .iconesearch{
     background-color: white;

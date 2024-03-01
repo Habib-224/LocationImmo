@@ -9,9 +9,9 @@
     <div class="containerMessage container">
       <div class="row sectionEspace search mb-3">
         <div class="col-md-3">
-          <h3 class="fw-bold mb-3" style="margin-left: 20px">
+          <h4 class="fw-bold mb-3" style="margin-left: 20px">
             Listes Utilisateurs
-          </h3>
+          </h4>
         </div>
         <div class="col-md-5">
           <div class="input-group">
@@ -23,9 +23,6 @@
               (input)="onSearch()"
               placeholder="Rechercher ......"
             />
-            <button class="iconesearch input-group-text">
-              <i class="bi bi-search"></i>
-            </button>
           </div>
         </div>
       </div>
@@ -81,11 +78,11 @@
             </thead>
             <tbody *ngFor="let user of getItemsPage()">
               <tr>
-                <td class="text-center">{{user.id }}</td>
-                <td class="text-center">{{user.nom }}</td>
-                <td class="text-center">{{user.prenom }}</td>
-                <td class="text-center">{{user.telephone }}</td>
-                <td class="text-center">{{user.role }}</td>
+                <td class="text-center">{{ user.id }}</td>
+                <td class="text-center">{{ user.nom }}</td>
+                <td class="text-center">{{ user.prenom }}</td>
+                <td class="text-center">{{ user.telephone }}</td>
+                <td class="text-center">{{ user.role }}</td>
                 <td class="text-center">
                   <button
                     class="btn me-2"
@@ -97,44 +94,46 @@
                       class="bx bxs-show"
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
-                  (click)="detailUtilisateur(user.id)" ></i>
+                      (click)="detailUtilisateur(user.id)"
+                    ></i>
                   </button>
 
                   <button class="btn" style="background-color: #133e33">
-                    <i class="bx bxs-archive-in" (click)="archiveUtilisateurById(user.id)"></i>
+                    <i
+                      class="bx bxs-archive-in"
+                      (click)="archiveUtilisateurById(user.id)"
+                    ></i>
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                <i class="bi bi-caret-left-fill fs-4"></i>
-              </button>
-              <button
-                class="mx-2 page"
-                *ngFor="let page of pages"
-                (click)="pageActuelle = page"
-              >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
-              </button>
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
-              >
-                <i class="bi bi-caret-right-fill fs-4"></i>
-              </button>
-            </div>
+          <div
+            class="d-flex flex-wrap justify-content-center my-5"
+            id="pagination"
+          >
+            <button
+              class="btn pagiColor me-2"
+              [disabled]="pageActuelle === 1"
+              (click)="pageActuelle = pageActuelle - 1"
+            >
+              Précédent
+            </button>
+            <button
+              class="btn pagiColore ms-2"
+              *ngFor="let page of pages"
+              [class.current]="page === pageActuelle"
+              (click)="pageActuelle = page"
+            >
+              {{ page }}
+            </button>
+            <button
+              class="btn pagiColor ms-2"
+              [disabled]="pageActuelle === totalPages"
+              (click)="pageActuelle = pageActuelle + 1"
+            >
+              Suivant
+            </button>
           </div>
         </div>
         <div class="Section_Statistique_right">
@@ -142,7 +141,7 @@
           <div class="Stat_right">
             <div class="Section_left">
               <h5 class="">Nombre localité</h5>
-              <h4>{{localiteLength}}</h4>
+              <h4>{{ localiteLength }}</h4>
             </div>
             <div class="Section_right">
               <button routerLink="/dashboard_localites">voir plus</button>
@@ -152,7 +151,7 @@
           <div class="Stat_right">
             <div class="Section_left">
               <h5 class="">Nombre d'alert</h5>
-              <h4>{{tailleAlert}}</h4>
+              <h4>{{ tailleAlert }}</h4>
             </div>
             <div class="Section_right">
               <button routerLink="/dashboard_alerts">voir plus</button>
@@ -184,7 +183,7 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <img src="assets/images/detail.jpg" alt="">
+                  <img src="assets/images/detail.jpg" alt="" />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">
@@ -196,12 +195,12 @@
                     <p>Role</p>
                   </div>
                   <div class="detail_righ">
-                    <p>{{currentUtilisateur?.nom}}</p>
-                    <p>{{currentUtilisateur?.prenom}}</p>
-                    <p>{{currentUtilisateur?.adresse}}</p>
-                    <p>{{currentUtilisateur?.email}}</p>
-                    <p>{{currentUtilisateur?.telephone}}</p>
-                    <p>{{currentUtilisateur?.role}}</p>
+                    <p>{{ currentUtilisateur?.nom }}</p>
+                    <p>{{ currentUtilisateur?.prenom }}</p>
+                    <p>{{ currentUtilisateur?.adresse }}</p>
+                    <p>{{ currentUtilisateur?.email }}</p>
+                    <p>{{ currentUtilisateur?.telephone }}</p>
+                    <p>{{ currentUtilisateur?.role }}</p>
                   </div>
                 </div>
               </div>

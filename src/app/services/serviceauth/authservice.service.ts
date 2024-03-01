@@ -67,12 +67,11 @@ export class AuthserviceService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 10000); // 10 minutes
+    }, 600000); // 10 minutes
   }
 
   refreshToken(onSuccess: Function, onError: Function) {
     const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
-
     if (refreshCount >= 6){
       // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
       this.showLogoutAlert();
@@ -106,10 +105,10 @@ export class AuthserviceService {
     this.logoutuser();
   }
 
-  initialize() {
-    let refresh = 0;
-    localStorage.setItem('refreshCount', JSON.stringify(refresh));
-  }
+  // initialize() {
+  //   let refresh = 0;
+  //   localStorage.setItem('refreshCount', JSON.stringify(refresh));
+  // }
 
   refreshCounter: any = 0;
 
@@ -117,7 +116,6 @@ export class AuthserviceService {
     this.logout().subscribe((response) => {
       this.isAuthenticated = false;
       localStorage.setItem('Userconnect', JSON.stringify(this.isAuthenticated));
-      this.initialize();
       this.route.navigate(['/login']);
     });
   }

@@ -49,7 +49,7 @@ export class GestionUtilisateursComponent {
   filterValue: string = '';
 
   // Attribut pour la pagination
-  itemsParPage = 3; // Nombre d'articles par page
+  itemsParPage = 5; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
@@ -92,7 +92,7 @@ export class GestionUtilisateursComponent {
     this.utilisateurservice.getUtilisateurBloque().subscribe((response) => {
       let userBloque = response.data;
       this.listeUtilisateurBloque = userBloque;
-      console.log('la liste des utilisateurs bloquée ', response);
+      // console.log('la liste des utilisateurs bloquée ', response);
     });
   }
 
@@ -101,7 +101,7 @@ export class GestionUtilisateursComponent {
       let ListeEtudiant = response.data;
       this.listeEtudiant = ListeEtudiant;
       localStorage.setItem('etudiant', JSON.stringify(this.listeEtudiant));
-      console.log('Voici la liste des etudiant', this.listeEtudiant);
+      // console.log('Voici la liste des etudiant', this.listeEtudiant);
     });
   }
 
@@ -111,7 +111,7 @@ export class GestionUtilisateursComponent {
       this.listeProprietaire = listeProprietaire;
       localStorage.setItem('proprietaire', JSON.stringify(listeProprietaire));
 
-      console.log('Voici la liste des proprietaire', listeProprietaire);
+      // console.log('Voici la liste des proprietaire', listeProprietaire);
     });
   }
 
@@ -135,10 +135,11 @@ export class GestionUtilisateursComponent {
 
         this.utilisateurservice.archiveUtilisateur(id, user).subscribe(
           (response) => {
-            console.log('mentore archive', response);
+            this.getAlluser();
+            // console.log('Ce utilisateur est archive', response);
           },
           (error) => {
-            console.error("Erreur lors de l'archivage du mentor", error);
+            // console.error("Erreur lors de l'archivage du mentor", error);
           }
         );
       }
@@ -165,6 +166,8 @@ export class GestionUtilisateursComponent {
 
         this.utilisateurservice.desarchiveUtilisateur(id, user).subscribe(
           (response) => {
+            this.getAlluserBloque();
+
             console.log('Utilisateur desarchive', response);
           },
           (error) => {
@@ -207,4 +210,15 @@ export class GestionUtilisateursComponent {
   get totalPages(): number {
     return Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
   }
+
+  onSearchBloque() {
+    // Recherche se fait selon le nom ou le prenom
+    this.tabMessageFilter = this.listeUtilisateurBloque.filter(
+      (elt: any) =>
+        elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        elt?.prenom.toLowerCase().includes(this.filterValue.toLowerCase())
+    );
+  }
+
+  // Pagination pour tous les tableaux de manières automatique
 }

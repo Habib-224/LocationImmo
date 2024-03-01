@@ -14,7 +14,7 @@ export class GestionDemandesComponent {
   filterValue: string = '';
 
   // Attribut pour la pagination
-  itemsParPage = 11; // Nombre d'articles par page
+  itemsParPage = 2; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
@@ -47,7 +47,7 @@ export class GestionDemandesComponent {
       this.tabMessageFilter = this.listeUtilisateur;
       this.tablisteuser = this.tabMessageFilter;
 
-      console.log(this.tabMessageFilter);
+      // console.log(this.tabMessageFilter);
     });
   }
 
@@ -148,4 +148,6 @@ export class GestionDemandesComponent {
   get totalPages(): number {
     return Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
   }
+
+
 }

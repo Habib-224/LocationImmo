@@ -63,6 +63,8 @@ export class HeaderComponent implements OnInit {
         'Userconnect',
         JSON.stringify(this.authservice.isAuthenticated)
       );
+      let refresh = 0;
+      localStorage.setItem('refreshCount', JSON.stringify(refresh));
       this.affichestatut();
       this.route.navigate(['/accueil']);
       Loading.remove();
