@@ -25,9 +25,6 @@
               (input)="onSearch()"
               placeholder="Rechercher ......"
             />
-            <!-- <button class="iconesearch input-group-text">
-              <i class="bi bi-search"></i>
-            </button> -->
           </div>
         </div>
       </div>
@@ -82,7 +79,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody *ngFor="let utilisateur of getItemsPage()">
+            <tbody *ngFor="let utilisateur of getItemsPage(); let i = index">
               <tr *ngIf="utilisateur.inscriptionValidee == 'enAttente'">
                 <td class="text-center">{{ utilisateur.id }}</td>
                 <td class="text-center">
@@ -94,13 +91,13 @@
                 <td class="text-center" id="acceptation">
                   <button
                     class="btn me-2"
-                    (click)="accepterDemande(utilisateur.id)"
+                    (click)="accepterDemande(utilisateur.id, i)"
                   >
                     Accepter
                   </button>
                   <button
                     class="btn me-2"
-                    (click)="refuserDemande(utilisateur.id)"
+                    (click)="refuserDemande(utilisateur.id, i)"
                   >
                     Rejeter
                   </button>
@@ -124,7 +121,10 @@
               </tr>
             </tbody>
           </table>
-           <div
+          <h4 *ngIf="ListeUserEnAttente.length == 0" style="text-align: center">
+            Pas de Demandes
+          </h4>
+          <div
             class="d-flex flex-wrap justify-content-center my-5"
             id="pagination"
           >
@@ -206,37 +206,30 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <!-- <img
-                    [src]="firstImage"
-                    alt=""
-                    id="logement"
-                  /> -->
+            
+                  <img src="http://127.0.0.1:8000/storage/{{currentUtilisateur?.papierJustificatif}}" alt="" />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">
                     <p>Nom:</p>
-                    <p>Prix:</p>
+                    <p>Prenom:</p>
                     <p>Adresse:</p>
-                    <p>Disponibilte:</p>
-                    <p>Localite:</p>
-                    <p>Nombre Chambre:</p>
-                    <p>Type:</p>
+                    <p>Email:</p>
+                    <p>Telephone:</p>
+                    <p>Role:</p>
+                    <p>Statut</p>
                   </div>
                   <div class="detail_righ">
-                    <p>bah</p>
-                    <p>bah</p>
+                    <p>{{ currentUtilisateur?.nom }}</p>
+                    <p>{{ currentUtilisateur?.prenom }}</p>
+                    <p>{{ currentUtilisateur?.adresse }}</p>
+                    <p>{{ currentUtilisateur?.email }}</p>
+                    <p>{{ currentUtilisateur?.telephone }}</p>
+                    <p>{{ currentUtilisateur?.role }}</p>
+                    <p>{{ currentUtilisateur?.inscriptionValidee }}</p>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
             </div>
           </div>
         </div>

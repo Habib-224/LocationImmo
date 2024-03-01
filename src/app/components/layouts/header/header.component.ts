@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    Loading.pulse();
+    Loading.dots();
     this.authservice.logout().subscribe((response) => {
       // console.log(response);
       this.authservice.isAuthenticated = false;

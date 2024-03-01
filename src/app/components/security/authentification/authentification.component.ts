@@ -472,7 +472,7 @@ export class AuthentificationComponent implements OnInit {
       // Effectuer la connexion
       let email = this.emailLogin;
       let Password = this.PasswordLogin;
-      Loading.pulse();
+      Loading.dots();
 
       this.AuthService.login(
         { email: email, password: Password },

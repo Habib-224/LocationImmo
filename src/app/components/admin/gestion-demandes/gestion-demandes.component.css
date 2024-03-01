@@ -71,6 +71,11 @@ thead tr th {
   border-radius: 5px;
 }
 
+.personnelle_image img{
+  width: 300px;
+  border-radius: 20px;
+}
+
 .Section_left h4 {
   color: #ffd100;
 }
@@ -89,13 +94,8 @@ thead tr th {
 .Detail_personelle {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 40px;
   align-items: center;
-}
-
-.personnelle_image img {
-  width: 420px;
-  border-radius: 20px;
 }
 
 #acceptation button{

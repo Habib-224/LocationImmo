@@ -3,6 +3,7 @@ import { Proprietaire } from 'src/app/models/Proprietaire';
 import { LogementService } from 'src/app/services/logement/logement.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 import Swal from 'sweetalert2';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-gestion-demandes',
@@ -14,7 +15,7 @@ export class GestionDemandesComponent {
   filterValue: string = '';
 
   // Attribut pour la pagination
-  itemsParPage = 2; // Nombre d'articles par page
+  itemsParPage = 5; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
@@ -23,6 +24,7 @@ export class GestionDemandesComponent {
   listeUtilisateurBloque: any = [];
   listeEtudiant: any = [];
   listeProprietaire: any = [];
+  ListeUserEnAttente: any = [];
 
   tablisteuser: any = [];
   // Déclaration des méhodes
@@ -32,13 +34,19 @@ export class GestionDemandesComponent {
     this.getAlluser();
     const proprietaire = JSON.parse(localStorage.getItem('proprietaire') || '');
     const etudiant = JSON.parse(localStorage.getItem('etudiant') || '');
+    this.tabMessageFilter = this.ListeUserEnAttente;
   }
 
   currentUtilisateur: any;
-  detailUtilisateur(paramUtilisateur: any) {
-    this.currentUtilisateur = this.tablisteuser.find(
-      (item: any) => item.id == paramUtilisateur
+  detailUtilisateur(id: any) {
+     this.currentUtilisateur = this.ListeUserEnAttente.find(
+      (item: any) => item.id == id
     );
+
+    if (this.currentUtilisateur) {
+      console.log("l'utilisateur trouvée est ",this.currentUtilisateur)
+    }
+
   }
 
   getAlluser() {
@@ -47,33 +55,40 @@ export class GestionDemandesComponent {
       this.tabMessageFilter = this.listeUtilisateur;
       this.tablisteuser = this.tabMessageFilter;
 
-      // console.log(this.tabMessageFilter);
+      if (this.ListeUserEnAttente.length == 0) {
+        for (let i = 0; i < this.tablisteuser.length; i++) {
+          if (this.tablisteuser[i].inscriptionValidee == 'enAttente') {
+            this.ListeUserEnAttente.push(this.tablisteuser[i]);
+          }
+        }
+      }
+      // console.log('voici la liste des attentes', this.ListeUserEnAttente);
     });
   }
 
-  accepterDemande(id: any) {
-    console.log("voici l'id", id);
+  accepterDemande(id: any, i: number) {
+    // console.log("voici l'id", id);
+    // console.log('voici la position', i);
     const user = new Proprietaire();
     Swal.fire({
       title: 'Etes vous sûr?',
       text: 'de vouloir Accepter La demande',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#ffd100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Archiver!',
-          text: "La demande D'inscription est approuvée",
-          icon: 'success',
-        });
+        Loading.dots();
 
         this.utilisateurservice.accepterInscritption(id, user).subscribe(
           (response) => {
-            console.log('ce utilisateur a ete accepte', response);
+            this.ListeUserEnAttente.splice(i, 1);
+            Notify.success("La demande d'inscription est approuvée");
+
             this.getAlluser();
+            Loading.remove();
           },
           (error) => {
             console.error("Erreur lors de l'acceptation", error);
@@ -83,30 +98,29 @@ export class GestionDemandesComponent {
     });
   }
 
-  refuserDemande(id: number) {
-    console.log("voici l'id", id);
-    console.log("voici l'id", id);
+  refuserDemande(id: number, i: number) {
+    // console.log("voici l'id", id);
+    // console.log("voici l'id", id);
     const user = new Proprietaire();
     Swal.fire({
       title: 'Etes vous sûr?',
       text: 'de vouloir Rejeter La demande',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#ffd100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Archiver!',
-          text: "La demande D'inscription est rejeter",
-          icon: 'success',
-        });
+        Loading.dots();
 
         this.utilisateurservice.rejeterInscritption(id, user).subscribe(
           (response) => {
-            console.log('ce utilisateur a ete rejeter', response);
+            // console.log('ce utilisateur a ete rejeter', response);
+            this.ListeUserEnAttente.splice(i, 1);
+            Notify.success("La demande d'inscription est rejeter");
             this.getAlluser();
+            Loading.remove();
           },
           (error) => {
             console.error('Erreur lors du rejet', error);
@@ -120,7 +134,7 @@ export class GestionDemandesComponent {
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.tablisteuser.filter(
+    this.tabMessageFilter = this.ListeUserEnAttente.filter(
       (elt: any) =>
         elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase()) ||
         elt?.prenom.toLowerCase().includes(this.filterValue.toLowerCase())
@@ -131,13 +145,13 @@ export class GestionDemandesComponent {
   getItemsPage() {
     const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
     const indexFin = indexDebut + this.itemsParPage;
-    return this.tabMessageFilter.slice(indexDebut, indexFin);
+    return this.ListeUserEnAttente.slice(indexDebut, indexFin);
   }
 
   // Méthode pour générer la liste des pages
   get pages(): number[] {
     const totalPages = Math.ceil(
-      this.tabMessageFilter.length / this.itemsParPage
+      this.ListeUserEnAttente.length / this.itemsParPage
     );
     return Array(totalPages)
       .fill(0)
@@ -146,8 +160,6 @@ export class GestionDemandesComponent {
 
   // Méthode pour obtenir le nombre total de pages
   get totalPages(): number {
-    return Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
+    return Math.ceil(this.ListeUserEnAttente.length / this.itemsParPage);
   }
-
-
 }
