@@ -25,9 +25,6 @@
               (input)="onSearch()"
               placeholder="Rechercher ......"
             />
-            <button class="iconesearch input-group-text">
-              <i class="bi bi-search"></i>
-            </button>
           </div>
         </div>
         <div class="col-md-3">
@@ -56,6 +53,20 @@
                   class="text-center text-white"
                   style="background-color: #133e33"
                 >
+                  Nom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
+                  Prenom
+                </th>
+                <th
+                  scope="col"
+                  class="text-center text-white"
+                  style="background-color: #133e33"
+                >
                   Budget
                 </th>
                 <th
@@ -78,6 +89,8 @@
             <tbody *ngFor="let alert of getItemsPage()">
               <tr>
                 <td class="text-center">{{ alert.id }}</td>
+                <td class="text-center">{{ alert.etudiant }}</td>
+                <td class="text-center">{{ alert.etudiantPrenom }}</td>
                 <td class="text-center">{{ alert.budget }} FCFA</td>
                 <td class="text-center">
                   {{
@@ -109,34 +122,35 @@
               </tr>
             </tbody>
           </table>
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                <i class="bi bi-caret-left-fill fs-4"></i>
-              </button>
-              <button
-                class="mx-2 page"
-                *ngFor="let page of pages"
-                (click)="pageActuelle = page"
-              >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
-              </button>
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
-              >
-                <i class="bi bi-caret-right-fill fs-4"></i>
-              </button>
-            </div>
+          <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+            Aucun resultat
+          </h4>
+          <div
+            class="d-flex flex-wrap justify-content-center my-5"
+            id="pagination"
+          >
+            <button
+              class="btn pagiColor me-2"
+              [disabled]="pageActuelle === 1"
+              (click)="pageActuelle = pageActuelle - 1"
+            >
+              Précédent
+            </button>
+            <button
+              class="btn pagiColore ms-2"
+              *ngFor="let page of pages"
+              [class.current]="page === pageActuelle"
+              (click)="pageActuelle = page"
+            >
+              {{ page }}
+            </button>
+            <button
+              class="btn pagiColor ms-2"
+              [disabled]="pageActuelle === totalPages"
+              (click)="pageActuelle = pageActuelle + 1"
+            >
+              Suivant
+            </button>
           </div>
         </div>
       </div>
@@ -162,32 +176,33 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="Detail_personelle">
-                <div class="Detail_utilisateur">
-                  <div class="Section_utilisateur">
-                    <div class="Section_budget_id">
-                      <div>
-                        <p>
-                          Budget: <span>{{ currentAlert?.budget }} FCFA</span>
-                        </p>
-                      </div>
-                      <div>
-                        <p>
-                          Prise en charge:
-                          <span>{{ currentAlert?.prisEnCharge }}</span>
-                        </p>
-                      </div>
+              <div class="Detail_utilisateur">
+                <div class="Section_utilisateur">
+                  <div class="Section_budget_id">
+                    <div>
+                      <p>
+                        Budget: <span>{{ currentAlert?.budget }} FCFA</span>
+                      </p>
                     </div>
+                    <div>
+                      <p>
+                        Prise en charge:
+                        <span>{{
+                          currentAlert?.prisEnCharge == 0
+                            ? "Non prise en charge"
+                            : "Prise en charge"
+                        }}</span>
+                      </p>
+                    </div>
+                  </div>
 
-
-                    <div class="detail">
-                      <p>Description:</p>
-                      <p>{{ currentAlert?.description }}</p>
-                    </div>
-                    <div class="detail">
-                      <p>caracteristique:</p>
-                      <p>{{ currentAlert?.caracteristiques }}</p>
-                    </div>
+                  <div class="detail">
+                    <p>Description:</p>
+                    <p>{{ currentAlert?.description }}</p>
+                  </div>
+                  <div class="detail">
+                    <p>caracteristique:</p>
+                    <p>{{ currentAlert?.caracteristiques }}</p>
                   </div>
                 </div>
               </div>

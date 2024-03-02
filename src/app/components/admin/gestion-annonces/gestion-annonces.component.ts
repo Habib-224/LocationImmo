@@ -47,7 +47,7 @@ export class GestionAnnoncesComponent {
   logementFound: any;
 
   // Attribut pour la pagination
-  itemsParPage = 3; // Nombre d'articles par page
+  itemsParPage = 5; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
   firstImage: any;
 

@@ -17,7 +17,7 @@ export class GestionAlertsComponent {
   listeAllAlert: any = [];
 
   // Attribut pour la pagination
-  itemsParPage = 3; // Nombre d'articles par page
+  itemsParPage = 5; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Déclaration des méhodes
@@ -31,7 +31,7 @@ export class GestionAlertsComponent {
       this.listAlert = response.data;
       this.tabMessageFilter = this.listAlert;
       this.listeAllAlert = this.tabMessageFilter;
-      // console.log('Voici la liste des alerts',response);
+      console.log('Voici la liste des alerts',response);
     });
   }
 
@@ -43,10 +43,10 @@ export class GestionAlertsComponent {
   }
 
   // Methode de recherche automatique pour les reseaux
-  onSearch() {
-    // Recherche se fait selon le nom ou le prenom
+  onSearch(){
     this.tabMessageFilter = this.listeAllAlert.filter((elt: any) =>
-      elt?.description.toLowerCase().includes(this.filterValue.toLowerCase())
+      elt?.etudiant.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+      elt?.etudiantPrenom.toLowerCase().includes(this.filterValue.toLowerCase())
     );
   }
 

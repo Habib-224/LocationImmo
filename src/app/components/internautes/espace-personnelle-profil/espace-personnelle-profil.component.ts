@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Loading, Notify } from 'notiflix';
 import { Alert } from 'src/app/models/Alert';
 import { Etudiant } from 'src/app/models/Etudiant';
 import { Localite } from 'src/app/models/Localite';
@@ -31,6 +32,7 @@ export class EspacePersonnelleProfilComponent {
   universite: any = '';
 
   role_profil: any = 'etudiant';
+  user_id: any;
 
   constructor(
     private profilService: AuthserviceService,
@@ -38,12 +40,26 @@ export class EspacePersonnelleProfilComponent {
     private message: MessageService
   ) {}
   UserConnect: any;
+  listEtudiant: any;
+  userfound: any;
 
   ngOnInit(): void {
     let userOnline = JSON.parse(localStorage.getItem('userOnline') || '');
+    this.listEtudiant = JSON.parse(localStorage.getItem('etudiant') || '');
     this.UserConnect = userOnline.user;
-    console.log("voici l'utilisateur connecter", this.UserConnect);
+    this.user_id = userOnline.user.id;
+    this.userfound = this.listEtudiant.find(
+      (element: any) => element.user_id == this.user_id
+    );
+    // if (this.userfound) {
+    //   console.log("Trouvé",this.userfound)
+    // }
+    // console.log("voici l'utilisateur connecter", this.UserConnect);
+    // console.log("voici l'utilisateur connecter", this.listEtudiant);
   }
+
+  exactePrix: boolean = false;
+  verifiePrix: any = false;
 
   ChargerInformation() {
     this.nom_profil = this.UserConnect.nom;
@@ -52,6 +68,8 @@ export class EspacePersonnelleProfilComponent {
     this.telephone_profil = this.UserConnect.telephone;
     this.email_profil = this.UserConnect.email;
     this.password_profil = this.UserConnect.password;
+    this.paysOrigine = this.userfound.paysOrigine;
+    this.universite = this.userfound.universite;
   }
 
   viderChamp() {
@@ -61,8 +79,8 @@ export class EspacePersonnelleProfilComponent {
     this.telephone_profil = null;
     this.email_profil = '';
     this.password_profil = '';
-    this.universite = "";
-    this.paysOrigine = "";
+    this.universite = '';
+    this.paysOrigine = '';
   }
 
   UpdateProfil() {
@@ -91,28 +109,28 @@ export class EspacePersonnelleProfilComponent {
         'center'
       );
     } else {
+      Loading.dots();
       this.profilService
         .updateEtudiantProfil(newEtudiant)
         .subscribe((response) => {
-          console.log('Information modifer avec succes ');
+          // console.log('Information modifer avec succes ');
           this.profilService.login(
             { email: this.email_profil, password: this.password_profil },
             (response: any) => {
+              Notify.success('Profil modifié avec succès');
               this.profilService.isAuthenticated = true;
               localStorage.setItem('userOnline', JSON.stringify(response));
+              window.location.reload();
             },
             (error: any) => {
-              console.log("Voici les messages d'erreur",error);
+              Notify.failure("Erreur l'ors de la modification");
+              // Notify.failure("Erreur l'ors de la modification");
+              console.log("Voici les messages d'erreur", error);
+              Loading.remove();
             }
           );
-          this.message.MessageSucces(
-            'success',
-            'Success',
-            'Profil Modifier avec Succes',
-            'center'
-          );
+          Loading.remove();
           this.viderChamp();
-          // this.route.navigate(['/login']);
         });
     }
   }

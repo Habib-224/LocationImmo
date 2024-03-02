@@ -6,8 +6,6 @@
   <div class="section">
     <!-- Le navbar  -->
     <app-navbar></app-navbar>
-
-    <!-- Liste des sections d'une ligne  -->
     <div class="containerMessage container">
       <div class="row sectionEspace search mb-3">
         <div class="col-md-3">
@@ -65,37 +63,63 @@
               </tr>
             </tbody>
           </table>
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                <i class="bi bi-caret-left-fill fs-4"></i>
-              </button>
-              <button
-                class="mx-2 page"
-                *ngFor="let page of pages"
-                (click)="pageActuelle = page"
-              >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
-              </button>
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
-              >
-                <i class="bi bi-caret-right-fill fs-4"></i>
-              </button>
+          <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+            Aucun resultat
+          </h4>
+          <div
+            class="d-flex flex-wrap justify-content-center my-5"
+            id="pagination"
+          >
+            <button
+              class="btn pagiColor me-2"
+              [disabled]="pageActuelle === 1"
+              (click)="pageActuelle = pageActuelle - 1"
+            >
+              Précédent
+            </button>
+            <button
+              class="btn pagiColore ms-2"
+              *ngFor="let page of pages"
+              [class.current]="page === pageActuelle"
+              (click)="pageActuelle = page"
+            >
+              {{ page }}
+            </button>
+            <button
+              class="btn pagiColor ms-2"
+              [disabled]="pageActuelle === totalPages"
+              (click)="pageActuelle = pageActuelle + 1"
+            >
+              Suivant
+            </button>
+          </div>
+        </div>
+        <div class="Section_Statistique_right">
+          <h5 class="text-center py-3">Statistique</h5>
+          <div class="Stat_right">
+            <div class="Section_left">
+              <h5 class="">Nombre localité</h5>
+              <h4>{{ localiteLength }}</h4>
+            </div>
+            <div class="Section_right">
+              <button routerLink="/dashboard_localites">voir plus</button>
+            </div>
+          </div>
+          <hr />
+          <div class="Stat_right">
+            <div class="Section_left">
+              <h5 class="">Nombre d'alert</h5>
+              <h4>{{ tailleAlert }}</h4>
+            </div>
+            <div class="Section_right">
+              <button routerLink="/dashboard_alerts">voir plus</button>
             </div>
           </div>
         </div>
       </div>
+      <!-- Modal -->
     </div>
+
+    <!-- Liste des sections d'une ligne  -->
   </div>
 </div>

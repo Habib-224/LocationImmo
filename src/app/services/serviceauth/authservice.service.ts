@@ -67,15 +67,15 @@ export class AuthserviceService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 600000); // 10 minutes
+    }, 10000); // 10 minutes 600000
   }
 
   refreshToken(onSuccess: Function, onError: Function) {
     const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
-    if (refreshCount >= 6){
+    if(refreshCount >= 4){
       // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
       this.showLogoutAlert();
-    } else {
+    }else {
       // Mettre à jour le nombre de rafraîchissements dans le localStorage
       localStorage.setItem('refreshCount', (refreshCount + 1).toString());
       // Réinitialiser le timer de déconnexion automatique

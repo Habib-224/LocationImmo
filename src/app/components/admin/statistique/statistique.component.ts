@@ -6,7 +6,6 @@ import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisat
 import Swal from 'sweetalert2';
 import { Loading, Notify } from 'notiflix';
 
-
 @Component({
   selector: 'app-statistique',
   templateUrl: './statistique.component.html',
@@ -106,25 +105,27 @@ export class StatistiqueComponent {
       text: 'de vouloir archiver',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#FFD100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
+      Loading.dots();
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Archiver!',
-          text: 'Ce mentor a été archiver avec succées ',
-          icon: 'success',
-        });
-
         this.utilisateurservice.archiveUtilisateur(id, user).subscribe(
           (response) => {
-            console.log('mentore archive', response);
+            Notify.success('Utilisateur Archiver');
+            this.getAlluser();
+            // console.log('mentore archive', response);
+            Loading.remove();
           },
           (error) => {
-            console.error("Erreur lors de l'archivage du mentor", error);
+            Notify.warning("Erreur l'ors de l'archivage");
+            // console.error("Erreur lors de l'archivage du mentor", error);
+            Loading.remove();
           }
         );
+      } else {
+        Loading.remove();
       }
     });
   }

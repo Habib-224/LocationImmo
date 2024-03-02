@@ -27,6 +27,7 @@ export class GestionDemandesComponent {
   ListeUserEnAttente: any = [];
 
   tablisteuser: any = [];
+  tablistAttente: any = [];
   // Déclaration des méhodes
   constructor(private utilisateurservice: UtilisateurserviceService) {}
 
@@ -34,19 +35,18 @@ export class GestionDemandesComponent {
     this.getAlluser();
     const proprietaire = JSON.parse(localStorage.getItem('proprietaire') || '');
     const etudiant = JSON.parse(localStorage.getItem('etudiant') || '');
-    this.tabMessageFilter = this.ListeUserEnAttente;
+    this.tablistAttente = this.ListeUserEnAttente;
   }
 
   currentUtilisateur: any;
   detailUtilisateur(id: any) {
-     this.currentUtilisateur = this.ListeUserEnAttente.find(
+    this.currentUtilisateur = this.ListeUserEnAttente.find(
       (item: any) => item.id == id
     );
 
     if (this.currentUtilisateur) {
-      console.log("l'utilisateur trouvée est ",this.currentUtilisateur)
+      console.log("l'utilisateur trouvée est ", this.currentUtilisateur);
     }
-
   }
 
   getAlluser() {
@@ -86,14 +86,18 @@ export class GestionDemandesComponent {
           (response) => {
             this.ListeUserEnAttente.splice(i, 1);
             Notify.success("La demande d'inscription est approuvée");
-
             this.getAlluser();
             Loading.remove();
           },
           (error) => {
+            Notify.warning("Erreur");
+
             console.error("Erreur lors de l'acceptation", error);
+            Loading.remove();
           }
         );
+      } else {
+        Loading.remove();
       }
     });
   }
@@ -124,8 +128,11 @@ export class GestionDemandesComponent {
           },
           (error) => {
             console.error('Erreur lors du rejet', error);
+            Loading.remove();
           }
         );
+      } else {
+        Loading.remove();
       }
     });
   }
@@ -134,7 +141,7 @@ export class GestionDemandesComponent {
   // Methode de recherche automatique pour les reseaux
   onSearch() {
     // Recherche se fait selon le nom ou le prenom
-    this.tabMessageFilter = this.ListeUserEnAttente.filter(
+    this.tablistAttente = this.ListeUserEnAttente.filter(
       (elt: any) =>
         elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase()) ||
         elt?.prenom.toLowerCase().includes(this.filterValue.toLowerCase())
@@ -145,13 +152,13 @@ export class GestionDemandesComponent {
   getItemsPage() {
     const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
     const indexFin = indexDebut + this.itemsParPage;
-    return this.ListeUserEnAttente.slice(indexDebut, indexFin);
+    return this.tablistAttente.slice(indexDebut, indexFin);
   }
 
   // Méthode pour générer la liste des pages
   get pages(): number[] {
     const totalPages = Math.ceil(
-      this.ListeUserEnAttente.length / this.itemsParPage
+      this.tablistAttente.length / this.itemsParPage
     );
     return Array(totalPages)
       .fill(0)
@@ -160,6 +167,6 @@ export class GestionDemandesComponent {
 
   // Méthode pour obtenir le nombre total de pages
   get totalPages(): number {
-    return Math.ceil(this.ListeUserEnAttente.length / this.itemsParPage);
+    return Math.ceil(this.tablistAttente.length / this.itemsParPage);
   }
 }

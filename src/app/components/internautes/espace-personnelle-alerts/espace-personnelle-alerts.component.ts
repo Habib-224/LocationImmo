@@ -5,6 +5,7 @@ import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { MessageService } from 'src/app/services/message/message.service';
 import Swal from 'sweetalert2';
+import { Notify, Loading } from 'notiflix';
 @Component({
   selector: 'app-espace-personnelle-alerts',
   templateUrl: './espace-personnelle-alerts.component.html',
@@ -24,7 +25,7 @@ export class EspacePersonnelleAlertsComponent {
   filterValue: string = '';
 
   // Attribut pour la pagination
-  itemsParPage = 3; // Nombre d'articles par page
+  itemsParPage = 10; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
   ListeAlerts: any = [];
   recupID: any;
@@ -49,6 +50,29 @@ export class EspacePersonnelleAlertsComponent {
     });
   }
 
+  exactePrix: boolean = false;
+  verifiePrix: any = '';
+
+  validePrix(chaine: string): boolean {
+    const regex: RegExp = /^\d+$/;
+    return regex.test(chaine);
+  }
+
+  validationPrix() {
+    if (this.budget_alert == null) {
+      this.exactePrix = false;
+      this.verifiePrix = '';
+    } else if (this.validePrix(this.budget_alert) == true) {
+      this.exactePrix = true;
+      this.verifiePrix = 'Correct';
+    }
+
+    // else {
+    //   this.exactePrix = false;
+    //   this.verifiePrix = 'Incorrect';
+    // }
+  }
+
   AjoutAlertByUser() {
     const AjoutAlert = new Alert();
     AjoutAlert.budget = this.budget_alert;
@@ -59,41 +83,45 @@ export class EspacePersonnelleAlertsComponent {
       this.description_alert == '' ||
       this.caracteristique_alert == ''
     ) {
-      this.message.MessageSucces(
-        'error',
-        'Oops...',
-        'veuillez remplir les champs',
-        'center'
-      );
+      Notify.failure('Remplissez tous les champs');
+      // this.message.MessageSucces(
+      //   'error',
+      //   'Oops...',
+      //   'veuillez remplir les champs',
+      //   'center'
+      // );
     } else {
+      Loading.dots();
       this.Alertservice.registerAlert(
         AjoutAlert,
         this.onSuccessHandler,
         this.onErrorHandler
       );
-       this.message.MessageSucces(
-         'success',
-         'Success',
-         'Alert ajoute avec Succes',
-         'center'
-       );
+
       this.getAlertByUser();
+      this.exactePrix = false;
 
       this.budget_alert = '';
       this.description_alert = '';
       this.caracteristique_alert = '';
     }
   }
-  onSuccessHandler(response: any) {
-    console.log('Ajouter avec Success:', response);
+  onSuccessHandler = (response: any) => {
+    Notify.success('Alert ajouter avec Succès');
+    Loading.remove();
+    // console.log('Ajouter avec Success:', response);
     // this.changeForme();
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
-  }
+  };
 
   // Fonction appelée en cas d'erreur lors de l'inscription
-  onErrorHandler(error: any) {
+  onErrorHandler = (error: any) => {
+    Notify.warning('Alert ajouter avec Succès');
     console.error("Erreur lors de l'ajout:", error);
-  }
+
+    Loading.remove();
+  };
+
   recuperation(id: any) {
     this.recupID = id;
     const utilisateurTrouve = this.ListeAlerts.find(
@@ -130,24 +158,24 @@ export class EspacePersonnelleAlertsComponent {
         text: 'de vouloir Modifier',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#133e33',
+        cancelButtonColor: '#ffd100',
         confirmButtonText: 'Oui, Je confirme',
       }).then((result) => {
+        Loading.dots();
         if (result.isConfirmed) {
-           this.message.MessageSucces(
-             'success',
-             'Success',
-             'Profil modifier avec Succes',
-             'center'
-           );
-         
+          Notify.success('Modifié avec Succès');
           this.Alertservice.updateAlert(id, alertModifie).subscribe(
             (response) => {
-              console.log(response);
+              // Notify.success('Modifié avec Succès');
+              // console.log(response);
+              window.location.reload();
             }
           );
           this.getAlertByUser();
+          Loading.remove();
+        } else {
+          Loading.remove();
         }
         this.budget_alert = '';
         this.description_alert = '';
@@ -169,7 +197,7 @@ export class EspacePersonnelleAlertsComponent {
   }
 
   MarquerPriseEnCharge(id: number) {
-    console.log(id);
+    // console.log(id);
     const alertModifie = new Alert();
     alertModifie.budget = this.budget_alert;
     alertModifie.description = this.description_alert;
@@ -179,22 +207,22 @@ export class EspacePersonnelleAlertsComponent {
       text: 'de vouloir Changer letat',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#ffd100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
+      Loading.dots();
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Suppression Terminée!',
-          text: 'Cette Suppression a été Effectue avec succées ',
-          icon: 'success',
-        });
         this.Alertservice.PriseEnChargeAlert(id, alertModifie).subscribe(
           (response) => {
-            console.log(response);
+            Notify.success('Etat changé avec Succès');
+            // console.log(response);
+            Loading.remove();
           }
         );
         this.getAlertByUser();
+      } else {
+        Loading.remove();
       }
     });
   }
@@ -207,25 +235,30 @@ export class EspacePersonnelleAlertsComponent {
     alertModifie.caracteristiques = this.caracteristique_alert;
     Swal.fire({
       title: 'Etes vous sûr?',
-      text: 'de vouloir Modifier',
+      text: 'de vouloir Supprimer',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#ffd100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
+      Loading.dots();
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Suppression Terminée!',
-          text: 'Cette Suppression a été Effectue avec succées ',
-          icon: 'success',
-        });
+        // Swal.fire({
+        //   title: 'Suppression Terminée!',
+        //   text: 'Cette Suppression a été Effectue avec succées ',
+        //   icon: 'success',
+        // });
         this.Alertservice.deleteAlert(id, alertModifie).subscribe(
           (response) => {
-            console.log(response);
+            Notify.success('Alert supprimer avec Succès');
+            // console.log(response);
+            Loading.remove();
           }
         );
         this.getAlertByUser();
+      } else {
+        Loading.remove();
       }
     });
   }

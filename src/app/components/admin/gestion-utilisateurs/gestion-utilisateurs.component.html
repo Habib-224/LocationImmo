@@ -23,15 +23,17 @@
                 (input)="onSearch()"
                 placeholder="Rechercher ......"
               />
-              <button class="iconesearch input-group-text">
-                <i class="bi bi-search"></i>
-              </button>
             </div>
           </div>
 
           <div class="col-md-3">
-            <select name="" id="select_option">
-              <option value="all">Tout...</option>
+            <select
+              name="search"
+              id="select_option"
+              [(ngModel)]="filtreByRole"
+              (change)="SelectRole()"
+            >
+              <option value="all" selected>Tout...</option>
               <option value="etudiant">Etudiant</option>
               <option value="prorietaire">Proprietaire</option>
             </select>
@@ -88,7 +90,11 @@
                 </tr>
               </thead>
               <tbody *ngFor="let user of getItemsPage(); let i = index">
-                <tr *ngIf="user.etat == 1">
+                <tr
+                  *ngIf="
+                    user.etat == 1 && i && user.inscriptionValidee == 'valider'
+                  "
+                >
                   <td class="text-center">{{ user.id }}</td>
                   <td class="text-center">{{ user.nom }}</td>
                   <td class="text-center">{{ user.prenom }}</td>
@@ -115,10 +121,13 @@
                         (click)="archiveUtilisateurById(user.id)"
                       ></i>
                     </button>
-                  </td>
+                  </td> 
                 </tr>
               </tbody>
             </table>
+            <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+              Aucun resultat
+            </h4>
             <div
               class="d-flex flex-wrap justify-content-center my-5"
               id="pagination"
@@ -146,37 +155,6 @@
                 Suivant
               </button>
             </div>
-            <!-- <div *ngIf="getItemsPage().length">
-              <div class="d-flex justify-content-end mb-2" id="pagination">
-                <button
-                  class="rounded-2 btnColor mx-2"
-                  [disabled]="pageActuelle === 1"
-                  (click)="pageActuelle = pageActuelle - 1"
-                >
-                  <i class="bi bi-caret-left-fill fs-4"></i>
-                </button>
-                <button
-                  class="mx-2 page"
-                  *ngFor="let page of pages"
-                  (click)="pageActuelle = page"
-                >
-                  <span
-                    class="pageActuelle fs-5"
-                    *ngIf="page === pageActuelle"
-                    >{{ page }}</span
-                  >
-                  <span *ngIf="page != pageActuelle">{{ page }}</span>
-
-                </button>
-                <button
-                  class="rounded-2 btnColor mx-2"
-                  [disabled]="pageActuelle === totalPages"
-                  (click)="pageActuelle = pageActuelle + 1"
-                >
-                  <i class="bi bi-caret-right-fill fs-4"></i>
-                </button>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -298,6 +276,7 @@
             <div
               class="d-flex flex-wrap justify-content-center my-5"
               id="pagination"
+              *ngIf="listeUtilisateurBloque.length != 0"
             >
               <button
                 class="btn pagiColor me-2"

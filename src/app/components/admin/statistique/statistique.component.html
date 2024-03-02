@@ -108,6 +108,9 @@
               </tr>
             </tbody>
           </table>
+          <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+            Aucun resultat
+          </h4>
           <div
             class="d-flex flex-wrap justify-content-center my-5"
             id="pagination"

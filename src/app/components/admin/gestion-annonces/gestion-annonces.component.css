@@ -97,3 +97,18 @@ thead tr th {
   width: 420px;
   border-radius: 20px;
 }
+
+
+.pagiColor {
+  background-color: #133e33;
+  color: white;
+}
+.pagiColore.current {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
+}

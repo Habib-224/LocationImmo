@@ -79,7 +79,6 @@ thead tr th {
   color: white;
 }
 
-
 .Section_budget_id {
   display: flex;
   align-items: center;
@@ -106,6 +105,20 @@ thead tr th {
   outline: none;
 }
 
-.detail p{
+.detail p {
   margin-bottom: 6px;
+}
+
+.pagiColor {
+  background-color: #133e33;
+  color: white;
+}
+.pagiColore.current {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
 }

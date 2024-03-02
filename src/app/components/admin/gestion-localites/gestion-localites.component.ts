@@ -6,7 +6,6 @@ import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisat
 import Swal from 'sweetalert2';
 import { Loading, Notify } from 'notiflix';
 
-
 @Component({
   selector: 'app-gestion-localites',
   templateUrl: './gestion-localites.component.html',
@@ -39,27 +38,90 @@ export class GestionLocalitesComponent {
     const localite = JSON.parse(localStorage.getItem('localite') || '');
   }
 
+  exacteLocalite: boolean = false;
+  verificarLocalite: any = '';
+
+  exacteCommune: boolean = false;
+  verificarCommune: any = '';
+
+  validateLocalite(localite: any) {
+    const regex = /^[a-zA-Z][a-zA-Z0-9]*$/;
+    return regex.test(localite);
+  }
+
+  validationLocalite() {
+    const localiteTrim = this.nom_localite.trim(); // Appliquer trim()
+
+    if (localiteTrim == '') {
+      this.exacteLocalite = false;
+      this.verificarLocalite = '';
+    } else if (
+      this.validateLocalite(localiteTrim) == true &&
+      localiteTrim.length >= 2
+    ) {
+      this.exacteLocalite = true;
+      this.verificarLocalite = '';
+    } else if (this.validateLocalite(localiteTrim) == false) {
+      this.exacteLocalite = false;
+      this.verificarLocalite = 'incorrect';
+    }
+
+    // Vérifier la taille minimale de la chaîne
+    if (this.nom_localite == '') {
+      this.exacteLocalite = false;
+      this.verificarLocalite = '';
+    } else if (localiteTrim.length < 2) {
+      this.exacteLocalite = false;
+      this.verificarLocalite = 'trop court';
+    }
+  }
+
+  validationCommune() {
+    const CommunauteTrim = this.nom_commune.trim(); // Appliquer trim()
+
+    if (CommunauteTrim == '') {
+      this.exacteCommune = false;
+      this.verificarCommune = '';
+    } else if (
+      this.validateLocalite(CommunauteTrim) == true &&
+      CommunauteTrim.length >= 2
+    ) {
+      this.exacteCommune = true;
+      this.verificarCommune = '';
+    } else if (this.validateLocalite(CommunauteTrim) == false) {
+      this.exacteCommune = false;
+      this.verificarCommune = 'incorrect';
+    }
+
+    // Vérifier la taille minimale de la chaîne
+    if (this.nom_commune == '') {
+      this.exacteCommune = false;
+      this.verificarCommune = '';
+    } else if (CommunauteTrim.length < 2) {
+      this.exacteCommune = false;
+      this.verificarCommune = 'trop court';
+    }
+  }
+
   AddLocalite() {
+    // Loading.dots();
     const localite = new Localite();
     if (this.nom_localite === '' || this.nom_commune === '') {
-      this.message.MessageSucces(
-        'error',
-        'Oops...',
-        'veuillez remplir les champs',
-        'center'
-      );
+      Notify.failure('Veuillez remplir les champs');
+      Loading.remove();
     } else {
+      Loading.dots();
+
       localite.nomLocalite = this.nom_localite;
       localite.commune = this.nom_commune;
       this.localiteservice.addLocalites(localite).subscribe((response) => {
         // console.log(response);
-        this.message.MessageSucces(
-          'success',
-          'Success',
-          'Localite ajoute avec Succes',
-          'center'
-        );
+        Notify.success('Localite ajouté avec Succès');
         this.getAllLocalite();
+        this.viderChamp();
+        this.exacteCommune = false;
+        this.exacteLocalite = false;
+        Loading.remove();
       });
     }
   }
@@ -70,7 +132,7 @@ export class GestionLocalitesComponent {
       this.tabMessageFilter = localite;
       // this.tabMessageFilter = this.ListeLocalite;
       this.ListeLocalite = this.tabMessageFilter;
-        localStorage.setItem('localite', JSON.stringify(this.ListeLocalite));
+      localStorage.setItem('localite', JSON.stringify(this.ListeLocalite));
       console.log('liste des localite', this.ListeLocalite);
     });
   }
@@ -104,36 +166,36 @@ export class GestionLocalitesComponent {
     uplocalite.commune = this.nom_commune;
     if (this.nom_localite == '' || this.nom_commune == '') {
       // console.log('veuillez remplire les champs');
-       this.message.MessageSucces(
-         'error',
-         'Oops...',
-         'veuillez remplir les champs',
-         'center'
-       );
+      this.message.MessageSucces(
+        'error',
+        'Oops...',
+        'veuillez remplir les champs',
+        'center'
+      );
     } else {
       Swal.fire({
         title: 'Etes vous sûr?',
         text: 'de vouloir Modifier',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#133e33',
+        cancelButtonColor: '#ffd100',
         confirmButtonText: 'Oui, Je confirme',
       }).then((result) => {
+        Loading.dots();
         if (result.isConfirmed) {
-          this.message.MessageSucces(
-            'success',
-            'Success',
-            'Modification Terminée!',
-            'center'
-          );
-          
+          Notify.success('Modification Terminée');
+
           this.localiteservice
             .updateLocalite(id, uplocalite)
             .subscribe((response) => {
-              console.log(response);
+              // console.log(response);
+              Loading.remove();
+              window.location.reload();
               this.getAllLocalite();
             });
+        } else {
+          Loading.remove();
         }
       });
 
@@ -148,24 +210,29 @@ export class GestionLocalitesComponent {
       text: 'de vouloir Supprimer',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#133e33',
+      cancelButtonColor: '#ffd100',
       confirmButtonText: 'Oui, Je confirme',
     }).then((result) => {
+      Loading.dots();
       if (result.isConfirmed) {
-        Swal.fire({
-          title: 'Suppression Terminée!',
-          text: 'Cette Localite a été Supprimer avec succées ',
-          icon: 'success',
-        });
+        Notify.success('Localité Supprimer avec Succès');
         this.localiteservice
           .deleteLocalite(id, localite)
           .subscribe((response) => {
-            console.log(response);
+            // console.log(response);
+            Loading.remove();
           });
+      } else {
+        Loading.remove();
       }
       this.getAllLocalite();
     });
+  }
+
+  viderChamp() {
+    this.nom_localite = '';
+    this.nom_commune = '';
   }
 
   // Methode de recherche automatique pour les reseaux

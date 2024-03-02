@@ -115,3 +115,28 @@ thead tr th {
   width: 100px;
   border-radius: 5px;
 }
+
+#suivant1 {
+  background-color: #a9a9a9;
+  color: white;
+  margin-top: 20px;
+  width: 100px;
+  padding: 0.5em;
+  border: none;
+  border-radius: 5px;
+}
+
+.pagiColor {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore.current {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
+}

@@ -108,35 +108,36 @@
               </tr>
             </tbody>
           </table>
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
+          <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+            Aucun resultat
+          </h4>
+          <div
+              class="d-flex flex-wrap justify-content-center my-5"
+              id="pagination"
+            >
               <button
-                class="rounded-2 btnColor mx-2"
+                class="btn pagiColor me-2"
                 [disabled]="pageActuelle === 1"
                 (click)="pageActuelle = pageActuelle - 1"
               >
-                <i class="bi bi-caret-left-fill fs-4"></i>
+                Précédent
               </button>
               <button
-                class="mx-2 page"
+                class="btn pagiColore ms-2"
                 *ngFor="let page of pages"
+                [class.current]="page === pageActuelle"
                 (click)="pageActuelle = page"
               >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
+                {{ page }}
               </button>
               <button
-                class="rounded-2 btnColor mx-2"
+                class="btn pagiColor ms-2"
                 [disabled]="pageActuelle === totalPages"
                 (click)="pageActuelle = pageActuelle + 1"
               >
-                <i class="bi bi-caret-right-fill fs-4"></i>
+                Suivant
               </button>
             </div>
-          </div>
         </div>
       </div>
       <!-- Modal -->

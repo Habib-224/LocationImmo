@@ -477,7 +477,7 @@ export class AuthentificationComponent implements OnInit {
       this.AuthService.login(
         { email: email, password: Password },
         (response: any) => {
-          this.AuthService.deconnexionAutomatique();
+          // this.AuthService.deconnexionAutomatique();
 
           let token = response.authorization.token;
           localStorage.setItem('TokenUser', JSON.stringify(token));

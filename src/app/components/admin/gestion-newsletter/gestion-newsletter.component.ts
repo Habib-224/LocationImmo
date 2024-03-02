@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AlerteService } from 'src/app/services/alertes/alerte.service';
+import { LocaliteService } from 'src/app/services/localites/localite.service';
 import { LogementService } from 'src/app/services/logement/logement.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
 @Component({
@@ -9,27 +11,35 @@ import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisat
 export class GestionNewsletterComponent {
   tabMessageFilter: any[] = [];
   ListeInscrit: any;
-  filterValue:any=""
+  filterValue: any = '';
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
   firstImage: any;
+  localiteLength: any;
+  tailleAlert: any;
 
   // Déclaration des méhodes
-  constructor(private utilisateurservice: UtilisateurserviceService) {}
+  constructor(
+    private utilisateurservice: UtilisateurserviceService,
+    private alerservice: AlerteService,
+    private localitetaille: LocaliteService
+  ) {}
   ngOnInit(): void {
     this.tabMessageFilter = this.ListeInscrit;
     // this.getAlluser();
     this.getAllUserNewsletter();
+    this.getAlertLength();
+    this.getLocaliteLength();
   }
 
   getAllUserNewsletter() {
     this.utilisateurservice.getAllUserNewsletter().subscribe((response) => {
       let allInscrit = response.subscribers;
       this.ListeInscrit = allInscrit;
-      this.tabMessageFilter = this.ListeInscrit
-      // console.log('la liste de tous les logements ', this.ListeInscrit);
+      this.tabMessageFilter = this.ListeInscrit;
+      console.log('la liste de tous les logements ', this.ListeInscrit);
     });
   }
 
@@ -38,6 +48,19 @@ export class GestionNewsletterComponent {
     this.tabMessageFilter = this.ListeInscrit.filter((elt: any) =>
       elt?.email.toLowerCase().includes(this.filterValue.toLowerCase())
     );
+  }
+
+  getAlertLength() {
+    this.alerservice.getAllAlerts().subscribe((response) => {
+      // console.log('taille des alerts', response.data.length);
+      this.tailleAlert = response.data.length;
+    });
+  } 
+
+  getLocaliteLength() {
+    this.localitetaille.getAllLocalites().subscribe((response) => {
+      this.localiteLength = response.localite.length;
+    });
   }
 
   // Pagination pour tous les tableaux de manières automatique
