@@ -111,3 +111,33 @@ thead tr th {
 #logement {
   width: 300px;
 }
+
+.pagiColor {
+  background-color: #133e33;
+  color: white;
+}
+.pagiColore.current {
+  background-color: #133e33;
+  color: white;
+}
+
+.pagiColore {
+  border: 1px solid var(--kergui-blue);
+  color: var(--kergui-blue);
+}
+
+#suivant {
+  background-color: #133e33;
+  color: white;
+  padding: 0.6em;
+  border: none;
+  border-radius: 5px;
+}
+
+
+#localite_id,#type {
+  width: 100%;
+  height: 35px;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+}

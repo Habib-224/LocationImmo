@@ -112,32 +112,32 @@
             Aucun resultat
           </h4>
           <div
-              class="d-flex flex-wrap justify-content-center my-5"
-              id="pagination"
+            class="d-flex flex-wrap justify-content-center my-5"
+            id="pagination"
+          >
+            <button
+              class="btn pagiColor me-2"
+              [disabled]="pageActuelle === 1"
+              (click)="pageActuelle = pageActuelle - 1"
             >
-              <button
-                class="btn pagiColor me-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                Précédent
-              </button>
-              <button
-                class="btn pagiColore ms-2"
-                *ngFor="let page of pages"
-                [class.current]="page === pageActuelle"
-                (click)="pageActuelle = page"
-              >
-                {{ page }}
-              </button>
-              <button
-                class="btn pagiColor ms-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
-              >
-                Suivant
-              </button>
-            </div>
+              Précédent
+            </button>
+            <button
+              class="btn pagiColore ms-2"
+              *ngFor="let page of pages"
+              [class.current]="page === pageActuelle"
+              (click)="pageActuelle = page"
+            >
+              {{ page }}
+            </button>
+            <button
+              class="btn pagiColor ms-2"
+              [disabled]="pageActuelle === totalPages"
+              (click)="pageActuelle = pageActuelle + 1"
+            >
+              Suivant
+            </button>
+          </div>
         </div>
       </div>
       <!-- Modal -->
@@ -164,11 +164,7 @@
             <div class="modal-body">
               <div class="Detail_personelle">
                 <div class="personnelle_image">
-                  <img
-                    [src]="firstImage"
-                    alt=""
-                    id="logement"
-                  />
+                  <img [src]="firstImage" alt="" id="logement" />
                 </div>
                 <div class="Detail_utilisateur">
                   <div class="detail_left">

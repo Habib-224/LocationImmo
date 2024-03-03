@@ -128,34 +128,35 @@
               </tr>
             </tbody>
           </table>
-          <div *ngIf="getItemsPage().length">
-            <div class="d-flex justify-content-end mb-2">
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === 1"
-                (click)="pageActuelle = pageActuelle - 1"
-              >
-                <i class="bi bi-caret-left-fill fs-4"></i>
-              </button>
-              <button
-                class="mx-2 page"
-                *ngFor="let page of pages"
-                (click)="pageActuelle = page"
-              >
-                <span class="pageActuelle fs-5" *ngIf="page === pageActuelle">{{
-                  page
-                }}</span>
-                <span *ngIf="page != pageActuelle">{{ page }}</span>
-                <!-- {{ page }} -->
-              </button>
-              <button
-                class="rounded-2 btnColor mx-2"
-                [disabled]="pageActuelle === totalPages"
-                (click)="pageActuelle = pageActuelle + 1"
-              >
-                <i class="bi bi-caret-right-fill fs-4"></i>
-              </button>
-            </div>
+          <h4 *ngIf="tabMessageFilter.length == 0" style="text-align: center">
+            Aucun resultat
+          </h4>
+          <div
+            class="d-flex flex-wrap justify-content-center my-5"
+            id="pagination"
+          >
+            <button
+              class="btn pagiColor me-2"
+              [disabled]="pageActuelle === 1"
+              (click)="pageActuelle = pageActuelle - 1"
+            >
+              Précédent
+            </button>
+            <button
+              class="btn pagiColore ms-2"
+              *ngFor="let page of pages"
+              [class.current]="page === pageActuelle"
+              (click)="pageActuelle = page"
+            >
+              {{ page }}
+            </button>
+            <button
+              class="btn pagiColor ms-2"
+              [disabled]="pageActuelle === totalPages"
+              (click)="pageActuelle = pageActuelle + 1"
+            >
+              Suivant
+            </button>
           </div>
         </div>
       </div>
@@ -225,7 +226,7 @@
                 class="modal-title fs-5 text-center"
                 id="ModificationLocaliteLabel"
               >
-                Modification Annonces
+                Modification Logement
               </h1>
               <button
                 type="button"
@@ -236,57 +237,238 @@
             </div>
             <div class="modal-body">
               <div class="Formulaire">
-                <form action="">
+                <form
+                  (ngSubmit)="ajouterLogement()"
+                  enctype="multipart/form-data"
+                >
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label"
-                      >Budget</label
-                    >
+                    <label for="adresse" class="form-label">Adresse</label>
                     <input
-                      type="email"
+                      type="text"
                       class="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="name@example.com"
-                      name="budget"
-                      [(ngModel)]="budget_alert"
+                      id="adresse"
+                      placeholder="Adresse"
+                      name="adresse"
+                      (input)="validateAdresse()"
+                      [(ngModel)]="logement.adresse"
+                      required
                     />
                   </div>
+                  <p *ngIf="exacteAdresse">{{ verifeAdresse }}</p>
+                  <p class="text-danger" *ngIf="!exacteAdresse">
+                    {{ verifeAdresse }}
+                  </p>
 
                   <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label"
+                    <label for="prix" class="form-label">Prix</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="prix"
+                      placeholder="Prix"
+                      name="prix"
+                      (input)="validatePrix()"
+                      [(ngModel)]="logement.prix"
+                      required
+                    />
+                  </div>
+                  <!-- <p *ngIf="exactePrix">{{ verifePrix }}</p> -->
+                  <p class="text-danger" *ngIf="!exactePrix">
+                    {{ verifePrix }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="equipements" class="form-label"
+                      >Équipements</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="equipements"
+                      placeholder="Équipements"
+                      name="equipements"
+                      (input)="validateEquipement()"
+                      [(ngModel)]="logement.equipements"
+                      required
+                    />
+                  </div>
+                  <p *ngIf="exacteEquipement">{{ verifeEquipement }}</p>
+                  <p class="text-danger" *ngIf="!exacteEquipement">
+                    {{ verifeEquipement }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="localite_id" class="form-label"
+                      >Localité
+                    </label>
+                    <select
+                      id="localite_id"
+                      name="localite_id"
+                      (change)="validateLocalite()"
+                      [(ngModel)]="logement.localite_id"
+                    >
+                      <option
+                        *ngFor="let localite of localite"
+                        [value]="localite.id"
+                      >
+                        {{ localite.nomLocalite }}
+                      </option>
+                    </select>
+                  </div>
+                  <p *ngIf="exacteLocalite">{{ verifeLocalite }}</p>
+                  <p class="text-danger" *ngIf="!exacteLocalite">
+                    {{ verifeLocalite }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="type" class="form-label">Type</label>
+                    <select
+                      name="type"
+                      type="text"
+                      [(ngModel)]="logement.type"
+                      (change)="validateType()"
+                      id="type"
+                    >
+                      <option value="Studio">Studio</option>
+                      <option value="Appartement">Appartement</option>
+                    </select>
+                  </div>
+                  <p *ngIf="exacteType">{{ verifeType }}</p>
+                  <p class="text-danger" *ngIf="!exacteType">
+                    {{ verifeType }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="description" class="form-label"
                       >Description</label
                     >
                     <textarea
                       class="form-control"
-                      id="exampleFormControlTextarea1"
+                      id="description"
                       rows="3"
                       name="description"
-                      [(ngModel)]="description_alert"
+                      (input)="validateDescription()"
+                      [(ngModel)]="logement.description"
+                      required
                     ></textarea>
                   </div>
+                  <p *ngIf="exacteDescription">{{ verifeDescription }}</p>
+                  <p class="text-danger" *ngIf="!exacteDescription">
+                    {{ verifeDescription }}
+                  </p>
                   <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label"
-                      >Caracteristique</label
+                    <label for="nombreChambre" class="form-label"
+                      >Nombre de Chambres</label
                     >
-                    <textarea
+                    <input
+                      type="number"
                       class="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                      name="caracteristiques"
-                      [(ngModel)]="caracteristique_alert"
-                    ></textarea>
+                      id="nombreChambre"
+                      placeholder="Nombre de Chambres"
+                      name="nombreChambre"
+                      (input)="validateChambre()"
+                      [(ngModel)]="logement.nombreChambre"
+                      required
+                    />
                   </div>
-                  <button type="submit">Modifier</button>
+                  <p *ngIf="exacteChambre">{{ verifeChambre }}</p>
+                  <p class="text-danger" *ngIf="!exacteChambre">
+                    {{ verifeChambre }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="disponibilite" class="form-label"
+                      >Disponibilité</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="disponibilite"
+                      name="disponibilite"
+                      (change)="validateDisponibilite()"
+                      [(ngModel)]="logement.disponibilite"
+                      required
+                    />
+                  </div>
+                  <p *ngIf="exacteDisponibilite">{{ verifeDisponibilite }}</p>
+                  <p class="text-danger" *ngIf="!exacteDisponibilite">
+                    {{ verifeDisponibilite }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="superficie" class="form-label"
+                      >Superficie</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="superficie"
+                      placeholder="Superficie"
+                      name="superficie"
+                      (input)="validateSurface()"
+                      [(ngModel)]="logement.superficie"
+                      required
+                    />
+                  </div>
+                  <p *ngIf="exacteSurface">{{ verifeSuface }}</p>
+                  <p class="text-danger" *ngIf="!exacteSurface">
+                    {{ verifeSuface }}
+                  </p>
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label"
+                      >Sélectionnez une image</label
+                    >
+                    <input
+                      class="form-control"
+                      name="nomImage"
+                      type="file"
+                      id="formFile"
+                      (change)="validateImage()"
+                      (change)="getFile($event)"
+                      required
+                    />
+                  </div>
+                  <p *ngIf="exacteImage">{{ verifeImage }}</p>
+                  <p class="text-danger" *ngIf="!exacteImage">
+                    {{ verifeImage }}
+                  </p>
+
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="suivant"
+                    data-bs-dismiss="modal"
+                    *ngIf="
+                      exacteDescription &&
+                      exacteAdresse &&
+                      exacteChambre &&
+                      exacteDisponibilite &&
+                      exacteEquipement &&
+                      exacteLocalite &&
+                      exactePrix &&
+                      exacteSurface &&
+                      exacteType
+                    "
+                  >
+                    Modifier
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="suivant"
+                    disabled
+                    data-bs-dismiss="modal"
+                    *ngIf="
+                      exacteDescription == false ||
+                      exacteAdresse == false ||
+                      exacteChambre == false ||
+                      exacteDisponibilite == false ||
+                      exacteEquipement == false ||
+                      exacteLocalite == false ||
+                      exactePrix == false ||
+                      exacteSurface == false ||
+                      exacteType == false
+                    "
+                  >
+                    Ajouter
+                  </button>
                 </form>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
             </div>
           </div>
         </div>
@@ -309,7 +491,7 @@
               class="modal-title fs-5 text-center"
               id="ModificationLocaliteLabel"
             >
-              Ajout Annonces
+              Ajout Logement
             </h1>
             <button
               type="button"
@@ -332,10 +514,16 @@
                     id="adresse"
                     placeholder="Adresse"
                     name="adresse"
+                    (input)="validateAdresse()"
                     [(ngModel)]="logement.adresse"
                     required
                   />
                 </div>
+                <p *ngIf="exacteAdresse">{{ verifeAdresse }}</p>
+                <p class="text-danger" *ngIf="!exacteAdresse">
+                  {{ verifeAdresse }}
+                </p>
+
                 <div class="mb-3">
                   <label for="prix" class="form-label">Prix</label>
                   <input
@@ -344,10 +532,13 @@
                     id="prix"
                     placeholder="Prix"
                     name="prix"
+                    (input)="validatePrix()"
                     [(ngModel)]="logement.prix"
                     required
                   />
                 </div>
+                <!-- <p *ngIf="exactePrix">{{ verifePrix }}</p> -->
+                <p class="text-danger" *ngIf="!exactePrix">{{ verifePrix }}</p>
                 <div class="mb-3">
                   <label for="equipements" class="form-label"
                     >Équipements</label
@@ -358,16 +549,21 @@
                     id="equipements"
                     placeholder="Équipements"
                     name="equipements"
+                    (input)="validateEquipement()"
                     [(ngModel)]="logement.equipements"
                     required
                   />
                 </div>
+                <p *ngIf="exacteEquipement">{{ verifeEquipement }}</p>
+                <p class="text-danger" *ngIf="!exacteEquipement">
+                  {{ verifeEquipement }}
+                </p>
                 <div class="mb-3">
                   <label for="localite_id" class="form-label">Localité </label>
                   <select
                     id="localite_id"
                     name="localite_id"
-                    class="form-control"
+                    (change)="validateLocalite()"
                     [(ngModel)]="logement.localite_id"
                   >
                     <option
@@ -378,18 +574,23 @@
                     </option>
                   </select>
                 </div>
+                <p *ngIf="exacteLocalite">{{ verifeLocalite }}</p>
+                <p class="text-danger" *ngIf="!exacteLocalite">
+                  {{ verifeLocalite }}
+                </p>
                 <div class="mb-3">
                   <label for="type" class="form-label">Type</label>
                   <select
-                    class="form-control"
                     name="type"
                     type="text"
                     [(ngModel)]="logement.type"
+                    (change)="validateType()"
                     id="type"
                   >
                     <option value="Studio">Studio</option>
                     <option value="Appartement">Appartement</option>
                   </select>
+
                   <!-- <input
                     type="text"
                     class="form-control"
@@ -400,6 +601,10 @@
                     required
                   /> -->
                 </div>
+                <p *ngIf="exacteType">{{ verifeType }}</p>
+                <p class="text-danger" *ngIf="!exacteType">
+                  {{ verifeType }}
+                </p>
                 <div class="mb-3">
                   <label for="description" class="form-label"
                     >Description</label
@@ -409,10 +614,15 @@
                     id="description"
                     rows="3"
                     name="description"
+                    (input)="validateDescription()"
                     [(ngModel)]="logement.description"
                     required
                   ></textarea>
                 </div>
+                <p *ngIf="exacteDescription">{{ verifeDescription }}</p>
+                <p class="text-danger" *ngIf="!exacteDescription">
+                  {{ verifeDescription }}
+                </p>
                 <div class="mb-3">
                   <label for="nombreChambre" class="form-label"
                     >Nombre de Chambres</label
@@ -423,10 +633,15 @@
                     id="nombreChambre"
                     placeholder="Nombre de Chambres"
                     name="nombreChambre"
+                    (input)="validateChambre()"
                     [(ngModel)]="logement.nombreChambre"
                     required
                   />
                 </div>
+                <p *ngIf="exacteChambre">{{ verifeChambre }}</p>
+                <p class="text-danger" *ngIf="!exacteChambre">
+                  {{ verifeChambre }}
+                </p>
                 <div class="mb-3">
                   <label for="disponibilite" class="form-label"
                     >Disponibilité</label
@@ -436,10 +651,15 @@
                     class="form-control"
                     id="disponibilite"
                     name="disponibilite"
+                    (change)="validateDisponibilite()"
                     [(ngModel)]="logement.disponibilite"
                     required
                   />
                 </div>
+                <p *ngIf="exacteDisponibilite">{{ verifeDisponibilite }}</p>
+                <p class="text-danger" *ngIf="!exacteDisponibilite">
+                  {{ verifeDisponibilite }}
+                </p>
                 <div class="mb-3">
                   <label for="superficie" class="form-label">Superficie</label>
                   <input
@@ -448,10 +668,15 @@
                     id="superficie"
                     placeholder="Superficie"
                     name="superficie"
+                    (input)="validateSurface()"
                     [(ngModel)]="logement.superficie"
                     required
                   />
                 </div>
+                <p *ngIf="exacteSurface">{{ verifeSuface }}</p>
+                <p class="text-danger" *ngIf="!exacteSurface">
+                  {{ verifeSuface }}
+                </p>
                 <div class="mb-3">
                   <label for="formFile" class="form-label"
                     >Sélectionnez une image</label
@@ -461,24 +686,59 @@
                     name="nomImage"
                     type="file"
                     id="formFile"
+                    (change)="validateImage()"
                     (change)="getFile($event)"
                     required
                   />
                 </div>
+                <p *ngIf="exacteImage">{{ verifeImage }}</p>
+                <p class="text-danger" *ngIf="!exacteImage">
+                  {{ verifeImage }}
+                </p>
 
-                <button type="submit" class="btn btn-primary">Ajouter</button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="suivant"
+                  data-bs-dismiss="modal"
+                  *ngIf="
+                    exacteDescription &&
+                    exacteAdresse &&
+                    exacteChambre &&
+                    exacteDisponibilite &&
+                    exacteEquipement &&
+                    exacteLocalite &&
+                    exactePrix &&
+                    exacteSurface &&
+                    exacteType
+                  "
+                >
+                  Ajouter
+                </button>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="suivant"
+                  disabled
+                  data-bs-dismiss="modal"
+                  *ngIf="
+                    exacteDescription == false ||
+                    exacteAdresse == false ||
+                    exacteChambre == false ||
+                    exacteDisponibilite == false ||
+                    exacteEquipement == false ||
+                    exacteLocalite == false ||
+                    exactePrix == false ||
+                    exacteSurface == false ||
+                    exacteType == false
+                  "
+                >
+                  Ajouter
+                </button>
               </form>
             </div>
           </div>
-          <!-- <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Fermer
-            </button>
-          </div> -->
         </div>
       </div>
     </div>
