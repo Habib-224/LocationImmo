@@ -11,7 +11,7 @@ import iziToast, { IziToast } from 'izitoast';
 @Component({
   selector: 'app-authentification',
   templateUrl: './authentification.component.html',
-  styleUrls: ['./authentification.component.css'],
+  styleUrls: ['./authentification.component.css'], 
 })
 export class AuthentificationComponent implements OnInit {
   // Déclarez trois variables distinctes pour représenter l'état de chaque étape
