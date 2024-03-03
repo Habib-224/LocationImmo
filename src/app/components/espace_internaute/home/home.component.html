@@ -315,8 +315,8 @@
                   [(ngModel)]="caracteristique_alert"
                 ></textarea>
               </div>
-              <p>{{ caracteristique_alert }}</p>
-              <button type="submit" (click)="RegisterAlert()" id="validerAlert">
+
+              <button type="submit" (click)="RegisterAlert()" id="validerAlert" data-bs-dismiss="modal">
                 valider
               </button>
             </form>

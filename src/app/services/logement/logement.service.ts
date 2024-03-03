@@ -23,7 +23,12 @@ export class LogementService {
 
   ajouterLogement(formData: FormData): Observable<any> {
     // const url = `${url}/votre-endpoint-d-ajout-de-logement`; // Remplacez par l'endpoint de votre API
-    return this.http.post(`${url}ajoutLogements`,formData);
+    return this.http.post(`${url}ajoutLogements`, formData);
+  }
+
+  ModifierLogement(formData: FormData, id: number): Observable<any> {
+    // const url = `${url}/votre-endpoint-d-ajout-de-logement`; // Remplacez par l'endpoint de votre API
+    return this.http.post(`${url}logements/${id}`, formData);
   }
 
   deleteLogementByOwner(id: number, alert: Logement): Observable<Logement> {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { Loading, Notify } from 'notiflix';
 import { Proprietaire } from 'src/app/models/Proprietaire';
 import { MessageService } from 'src/app/services/message/message.service';
 import { AuthserviceService } from 'src/app/services/serviceauth/authservice.service';
@@ -64,6 +65,7 @@ export class ProprioProfilComponent implements OnInit {
   }
 
   UpdateProfil() {
+    Loading.dots();
     const newProprio = new Proprietaire();
     newProprio.nom = this.nom_profil;
     newProprio.prenom = this.prenom_profil;
@@ -81,37 +83,46 @@ export class ProprioProfilComponent implements OnInit {
       this.email_profil == '' ||
       this.password_profil == ''
     ) {
-      this.message.MessageSucces(
-        'error',
-        'Oops...',
-        'veuillez remplir les champs',
-        'center'
-      );
+      Notify.failure('Veuillez remplir les champs');
+      Loading.remove();
+      // this.message.MessageSucces(
+      //   'error',
+      //   'Oops...',
+      //   'veuillez remplir les champs',
+      //   'center'
+      // );
     } else {
       this.profilService
         .updateProprioProfil(newProprio)
         .subscribe((response) => {
-          this.message.MessageSucces(
-            'success',
-            'Success',
-            'Localite Modifier avec Succes',
-            'center'
-          );
+          // this.message.MessageSucces(
+          //   'success',
+          //   'Success',
+          //   'Localite Modifier avec Succes',
+          //   'center'
+          // );
           this.autservice.login(
             { email: this.email_profil, password: this.password_profil },
             (response: any) => {
+              Notify.success('Profil modifé');
+
               this.autservice.isAuthenticated = true;
               localStorage.setItem('userOnline', JSON.stringify(response));
+              Loading.remove();
+              window.location.reload();
             },
             (error: any) => {
+              Notify.failure("Erreur l'ors de la modification");
               // this.message.MessageSucces('Error',"Error",error.error.message,'center')
-              let message = error.HttpErrorResponse .error.message
-              console.log("Voici les messages d'erreur",message);
+              let message = error.HttpErrorResponse.error.message;
+              console.log("Voici les messages d'erreur", message);
+              Loading.remove();
             }
           );
 
           // console.log('Information modifer avec succes ');
           this.viderChamp();
+          Loading.remove();
           // this.route.navigate(['/login']);
         });
     }

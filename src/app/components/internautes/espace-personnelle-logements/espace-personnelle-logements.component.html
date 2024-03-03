@@ -109,7 +109,7 @@
                   <button
                     class="btn"
                     style="background-color: #133e33; margin-right: 10px"
-                    (click)="updateLogement(logement.id)"
+                    (click)="recupidlogement(logement.id)"
                   >
                     <i
                       class="fa-regular fa-pen-to-square"
@@ -239,7 +239,7 @@
             <div class="modal-body">
               <div class="Formulaire">
                 <form
-                  (ngSubmit)="ajouterLogement()"
+                  (ngSubmit)="updateLogement()"
                   enctype="multipart/form-data"
                 >
                   <div class="mb-3">

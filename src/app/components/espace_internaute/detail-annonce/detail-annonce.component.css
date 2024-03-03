@@ -30,6 +30,38 @@
   border-radius: 15px;
 }
 
+.Section_photo_centrale {
+  width: 100%;
+  margin-top: 30px;
+  /* display: flex; */
+}
+.Section_Image_Centrale img {
+  width: 82%;
+  height: 470px;
+  display: block;
+  margin: auto;
+  border-radius: 15px;
+}
+
+.Section_photo_centrale2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  width: 100%;
+  margin-top: 30px;
+}
+
+.Section_Contenu_left_central img {
+  width: 100%;
+  height: 400px;
+  display: block;
+  margin: auto;
+  border-radius: 15px;
+}
+
 .Contenu_Left_Image img {
   width: 450px;
   height: 245px;
@@ -145,4 +177,3 @@
   width: 150px;
   padding: 0.3em;
 }
-

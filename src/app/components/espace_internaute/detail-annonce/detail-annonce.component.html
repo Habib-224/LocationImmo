@@ -3,17 +3,17 @@
   <div class="Section_Contenu">
     <div *ngIf="tailleimagelogement == 1">
       <div
-        class="Section_photo"
+        class="Section_photo_centrale"
         *ngFor="let imageLogement of image; let index = index"
       >
-        <div class="Section_Contenu_left">
+        <div class="Section_Image_Centrale">
           <img
             *ngIf="index == 0"
             src="http://127.0.0.1:8000/storage/{{ imageLogement.nomImage }}"
             alt=""
           />
         </div>
-        <div class="Section_Contenu_right">
+        <!-- <div class="Section_Contenu_right">
           <div class="Contenu_Left_Image">
             <img
               *ngIf="index == 0"
@@ -28,27 +28,24 @@
               alt=""
             />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div *ngIf="tailleimagelogement == 2">
       <div
-        class="Section_photo"
+        class="Section_photo_centrale2"
         *ngFor="let imageLogement of tabMessageFilter1; let first = first"
       >
-        <div class="Section_Contenu_left" *ngIf="first">
+        <div class="Section_Contenu_left_central" *ngIf="first">
           <img
             *ngIf="imageLogement.firstImage"
             [src]="imageLogement.firstImage"
             alt=""
           />
         </div>
-        <div class="Section_Contenu_right">
-          <div class="Contenu_Left_Image">
+        <div class="Section_Contenu_right_central">
+          <div class="Section_Contenu_left_central">
             <img *ngIf="first" [src]="imageLogement.secondImage" alt="" />
-          </div>
-          <div class="Contenu_Left_Image1">
-            <img *ngIf="first" [src]="imageLogement.firstImage" alt="" />
           </div>
         </div>
       </div>
@@ -134,8 +131,7 @@
               </span>
               <span><i class="fa-regular fa-clock"></i>22/03/2024</span>
             </div>
-          <hr />
-
+            <hr />
           </div>
           <div *ngIf="tailleCommentaire == 0">
             <p>Aucun Commentaire</p>

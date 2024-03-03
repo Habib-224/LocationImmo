@@ -355,13 +355,59 @@ export class EspacePersonnelleLogementsComponent {
 
   logementFound: any;
 
-  updateLogement(id: number) {
+  idlogement: any;
+  recupidlogement(id: any) {
+    this.idlogement = id;
+    console.log('voici les valeurs', this.idlogement);
+
     this.logementFound = this.tablistAllLogement.find(
-      (logement: any) => logement.id === id
+      (logement: any) => logement.id === this.idlogement
     );
+    if (this.logementFound) {
+      console.log('trouve', this.logement);
+    }
+
     this.logement.adresse = this.logementFound.adresse;
     this.logement.nombreChambre = this.logementFound.nombreChambre;
     this.logement.prix = this.logementFound.prix;
+
+    // ("voic  ",this.idlogement);
+  }
+
+  updateLogement() {
+
+    Loading.dots();
+
+    const formData = new FormData();
+    formData.append('adresse', this.logement.adresse);
+    formData.append('type', this.logement.type);
+    formData.append('description', this.logement.description);
+    formData.append('nombreChambre', this.logement.nombreChambre);
+    formData.append('disponibilite', this.logement.disponibilite);
+    formData.append('superficie', this.logement.superficie);
+    formData.append('prix', this.logement.prix);
+    formData.append('equipements', this.logement.equipements);
+    formData.append('localite_id', this.logement.localite_id);
+
+    // Ajout de l'image
+    if (this.image) {
+      formData.append('image[]', this.image);
+    }
+
+    this.logementService.ModifierLogement(formData, this.idlogement).subscribe(
+      (response) => {
+        Notify.success("Logement modifié")
+        this.getAllLogementByOwner();
+        // console.log('voici le message', response);
+        Loading.remove();
+      },
+
+      (error) => {
+        Notify.failure("Erreur l'ors de la modification")
+        console.log('voici le message', error);
+        Loading.remove();
+      }
+    );
   }
 
   getFile(event: any) {
