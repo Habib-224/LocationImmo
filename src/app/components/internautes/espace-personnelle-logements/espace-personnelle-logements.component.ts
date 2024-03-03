@@ -137,6 +137,20 @@ export class EspacePersonnelleLogementsComponent {
 
   //---------------------------
 
+  logement: any = {
+    adresse: '',
+    type: '',
+    description: '',
+    nombreChambre: null,
+    disponibilite: '',
+    superficie: null,
+    prix: null,
+    equipements: '',
+    localite_id: null,
+    nomImage: '',
+  };
+  image: any = [];
+
   validateLocalite() {
     if (this.logement.localite_id == '') {
       this.verifeLocalite = '';
@@ -290,20 +304,6 @@ export class EspacePersonnelleLogementsComponent {
   // --------------Methode de recherche et de pagination------------------
   // Methode de recherche automatique pour les reseaux
 
-  logement: any = {
-    adresse: '',
-    type: '',
-    description: '',
-    nombreChambre: null,
-    disponibilite: '',
-    superficie: null,
-    prix: null,
-    equipements: '',
-    localite_id: null,
-    nomImage: '',
-  };
-  image: any = [];
-
   ajouterLogement() {
     Loading.dots();
     const formData = new FormData();
@@ -323,11 +323,9 @@ export class EspacePersonnelleLogementsComponent {
       formData.append('image[]', this.image);
     }
 
-
     this.logementService.ajouterLogement(formData).subscribe(
-
       (response) => {
-        Notify.success("Ajouté avec succès")
+        Notify.success('Ajouté avec succès');
         // console.log('Logement ajouté avec succès', response);
         // console.log('information saisi', formData);
         this.logement = {
@@ -348,11 +346,22 @@ export class EspacePersonnelleLogementsComponent {
         // this.image = null;
       },
       (error) => {
-        Notify.failure("Erreur l'ors de l'ajout")
+        Notify.failure("Erreur l'ors de l'ajout");
         // console.error("Erreur lors de l'ajout du logement", error);
         Loading.remove();
       }
     );
+  }
+
+  logementFound: any;
+
+  updateLogement(id: number) {
+    this.logementFound = this.tablistAllLogement.find(
+      (logement: any) => logement.id === id
+    );
+    this.logement.adresse = this.logementFound.adresse;
+    this.logement.nombreChambre = this.logementFound.nombreChambre;
+    this.logement.prix = this.logementFound.prix;
   }
 
   getFile(event: any) {
