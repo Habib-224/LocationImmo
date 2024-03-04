@@ -149,16 +149,20 @@
           <form action="">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label"
-                >Budget</label
+                >Budget (FCFA)</label
               >
               <input
                 type="email"
                 class="form-control"
                 id="exampleFormControlInput1"
                 name="budget"
+                (input)="validationBudget()"
                 [(ngModel)]="budget_alert"
               />
             </div>
+            <p *ngIf="exacteBudget">{{verifeBudget}}</p>
+            <p class="text-danger" *ngIf="!exacteBudget">{{verifeBudget}}</p>
+
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label"
                 >Description</label
@@ -183,8 +187,10 @@
                 [(ngModel)]="caracteristique_alert"
               ></textarea>
             </div>
-            <p>{{ caracteristique_alert }}</p>
-            <button type="submit" (click)="RegisterAlert()" id="validerAlert">
+            <button type="submit" (click)="RegisterAlert()" id="validerAlert" *ngIf="exacteBudget && description_alert!='' && caracteristique_alert!=''"  data-bs-dismiss="modal">
+              valider
+            </button>
+            <button type="submit" id="validerAlert1" disabled *ngIf="exacteBudget==false || description_alert=='' || caracteristique_alert==''">
               valider
             </button>
           </form>

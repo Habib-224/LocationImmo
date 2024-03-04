@@ -95,7 +95,7 @@ export class DetailAnnonceComponent implements OnInit {
                     this.detail_logement.image[0].nomImage,
                 };
               }
-              // console.log('logement', this.detail_logement.image);
+              console.log('logement dfd', this.detail_logement.image);
               return logement;
             }
           );
@@ -116,7 +116,7 @@ export class DetailAnnonceComponent implements OnInit {
                     this.detail_logement.image[1].nomImage,
                 };
               }
-              // console.log('logement', this.detail_logement.image);
+              console.log('logement hjkh', this.detail_logement.image);
               return logement;
             }
           );
@@ -140,7 +140,7 @@ export class DetailAnnonceComponent implements OnInit {
                     this.detail_logement.image[2].nomImage,
                 };
               }
-              // console.log('logement', this.detail_logement.image);
+              console.log('logement hjkh', this.detail_logement.image);
               return logement;
             }
           );

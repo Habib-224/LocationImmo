@@ -4,7 +4,7 @@ import { Alert } from 'src/app/models/Alert';
 import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { MessageService } from 'src/app/services/message/message.service';
 import { WhatsAppService } from 'src/app/services/whatsApp/whats-app.service';
-
+import { Notify, Loading } from 'notiflix';
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.component.html',
@@ -19,7 +19,7 @@ export class AlertsComponent implements OnInit {
     private alertService: AlerteService,
     private WhatsApp: WhatsAppService,
     private route: Router,
-    private message:MessageService
+    private message: MessageService
   ) {}
 
   isModalOpen: boolean = false;
@@ -47,6 +47,34 @@ export class AlertsComponent implements OnInit {
     console.log('utilisateur connecte', this.userOnline_role);
 
     this.verifechange();
+  }
+
+  exacteBudget: boolean = false;
+  exacteDescription: boolean = false;
+  exacteCaracteristique: boolean = false;
+
+  verifeBudget: any = '';
+  verifeDescription: any = '';
+  verifeCaracteristique: any = '';
+  validateBudget(nombre: any) {
+    const regex = /^\d+$/;
+    return regex.test(nombre);
+  }
+
+  validationBudget() {
+    if (this.budget_alert == '') {
+      this.exacteBudget = false;
+      this.verifeBudget = '';
+    } else if (
+      this.budget_alert != '' &&
+      this.validateBudget(this.budget_alert) == true
+    ) {
+      this.exacteBudget = true;
+      this.verifeBudget = '';
+    } else {
+      this.exacteBudget = false;
+      this.verifeBudget = 'Incorrect';
+    }
   }
 
   verifechange() {
@@ -103,13 +131,15 @@ export class AlertsComponent implements OnInit {
   }
 
   RegisterAlert() {
+    Loading.dots();
     const alert = new Alert();
     if (
       this.budget_alert === '' ||
       this.description_alert === '' ||
       this.caracteristique_alert === ''
     ) {
-      console.log('les champs sont vides');
+      // console.log('les champs sont vides');
+      Notify.failure('Les Champs Sont vides');
     } else {
       alert.budget = this.budget_alert;
       alert.description = this.description_alert;
@@ -126,14 +156,14 @@ export class AlertsComponent implements OnInit {
   }
 
   onSuccessHandler = (response: any) => {
-    console.log('Inscription réussie:', response);
-    this.message.MessageSucces(
-      'success',
-      'Success',
-      'Alert ajoute avec Succes',
-      'center'
-    );
-    // this.route.navigate(['/alert']);
+    // console.log('Inscription réussie:', response);
+    Notify.success('Annonce ajouté avec Succès');
+    this.budget_alert = '';
+    this.description_alert = '';
+    this.caracteristique_alert = '';
+    Loading.remove();
+
+    this.route.navigate(['/alert']);
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
   };
 
@@ -143,17 +173,9 @@ export class AlertsComponent implements OnInit {
     // console.log("Erreur lors de l'inscription:", error);
     let message1 = error.error.error.email[0];
     this.messageError = message1;
-    // this.message.MessageSucces(
-    //   'error',
-    //   'Oups',
-    //   `${message1}`,
-    //   'center'
-    // );
-    // console.log(message);
-    // this.messageError = message
-    // console.log(this.messageError);
+    Notify.failure("Erreur l'ors de l'ajout");
+    Loading.remove();
 
-    // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
   };
 
   redirectToWhatsapp(): void {

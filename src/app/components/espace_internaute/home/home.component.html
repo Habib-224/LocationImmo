@@ -23,8 +23,8 @@
             étudiants
           </p>
           <div class="Content_Champs">
-            <input type="text" />
-            <button>Rechercher</button>
+            <!-- <input type="text" /> -->
+            <button routerLink="/louer">Commencer ma recherche</button>
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@
         data-bs-target="#exampleModal"
         *ngIf="!proprioEtudiant"
       >
-        Creer une alerte
+        Creer une Annonce
       </button>
       <button *ngIf="proprioEtudiant">C'est quoi une alerte</button>
     </div>
@@ -249,9 +249,9 @@
             {{ verifyEmail }}
           </p>
 
-           <p class="text-danger" *ngIf="messageError!== '' && exacteEmail ">
+          <p class="text-danger" *ngIf="messageError !== '' && exacteEmail">
             {{ messageError }}
-           </p>
+          </p>
         </div>
       </form>
     </div>
@@ -288,9 +288,15 @@
                   id="exampleFormControlInput1"
                   placeholder=""
                   name="budget"
+                  (input)="validationBudget()"
                   [(ngModel)]="budget_alert"
                 />
               </div>
+              <p *ngIf="exacteBudget">{{ verifeBudget }}</p>
+              <p class="text-danger" *ngIf="!exacteBudget">
+                {{ verifeBudget }}
+              </p>
+
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label"
                   >Description</label
@@ -316,7 +322,29 @@
                 ></textarea>
               </div>
 
-              <button type="submit" (click)="RegisterAlert()" id="validerAlert" data-bs-dismiss="modal">
+              <button
+                type="submit"
+                (click)="RegisterAlert()"
+                id="validerAlert"
+                *ngIf="
+                  exacteBudget &&
+                  description_alert != '' &&
+                  caracteristique_alert != ''
+                "
+                data-bs-dismiss="modal"
+              >
+                valider
+              </button>
+              <button
+                type="submit"
+                id="validerAlert1"
+                disabled
+                *ngIf="
+                  exacteBudget == false ||
+                  description_alert == '' ||
+                  caracteristique_alert == ''
+                "
+              >
                 valider
               </button>
             </form>

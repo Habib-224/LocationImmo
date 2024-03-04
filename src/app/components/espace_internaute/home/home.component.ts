@@ -10,6 +10,8 @@ import { AlerteService } from 'src/app/services/alertes/alerte.service';
 import { MessageService } from 'src/app/services/message/message.service';
 import { AuthserviceService } from 'src/app/services/serviceauth/authservice.service';
 import { UtilisateurserviceService } from 'src/app/services/utilisateur/utilisateurservice.service';
+import { Notify, Loading } from 'notiflix';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -41,6 +43,33 @@ export class HomeComponent implements OnInit {
     this.verifechange();
   }
 
+  exacteBudget: boolean = false;
+  exacteDescription: boolean = false;
+  exacteCaracteristique: boolean = false;
+
+  verifeBudget: any = '';
+  verifeDescription: any = '';
+  verifeCaracteristique: any = '';
+  validateBudget(nombre: any) {
+    const regex = /^\d+$/;
+    return regex.test(nombre);
+  }
+
+  validationBudget() {
+    if (this.budget_alert == '') {
+      this.exacteBudget = false;
+      this.verifeBudget = '';
+    } else if (
+      this.budget_alert != '' &&
+      this.validateBudget(this.budget_alert) == true
+    ) {
+      this.exacteBudget = true;
+      this.verifeBudget = '';
+    } else {
+      this.exacteBudget = false;
+      this.verifeBudget = 'Incorrect';
+    }
+  }
   verifechange() {
     if (this.useronline_role === 'proprietaire' || this.userStatut === false) {
       this.proprioEtudiant = true;
@@ -84,13 +113,16 @@ export class HomeComponent implements OnInit {
   }
 
   RegisterAlert() {
+    Loading.dots();
+
     const alert = new Alert();
     if (
       this.budget_alert === '' ||
       this.description_alert === '' ||
       this.caracteristique_alert === ''
     ) {
-      console.log('les champs sont vides');
+      Notify.failure('Les Champs Sont vides');
+      // Loading.remove();
     } else {
       alert.budget = this.budget_alert;
       alert.description = this.description_alert;
@@ -102,40 +134,29 @@ export class HomeComponent implements OnInit {
         this.onSuccessHandler,
         this.onErrorHandler
       );
+      // Loading.remove();
     }
   }
 
   onSuccessHandler = (response: any) => {
-    console.log('Inscription réussie:', response);
-    this.message.MessageSucces(
-      'success',
-      'Success',
-      'Alert ajoute avec Succes',
-      'center'
-    );
-    // this.route.navigate(['/alert']);
+    Notify.success('Annonce ajouté avec Succès');
+    this.budget_alert = '';
+    this.description_alert = '';
+    this.caracteristique_alert = '';
+    Loading.remove();
+
+    this.route.navigate(['/alert']);
     // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
   };
 
   // Fonction appelée en cas d'erreur lors de l'inscription
-  messageError:any='';
-  onErrorHandler =(error: any)=>{
-    // console.log("Erreur lors de l'inscription:", error);
+  messageError: any = '';
+  onErrorHandler = (error: any) => {
     let message1 = error.error.error.email[0];
-    this.messageError=message1
-    // this.message.MessageSucces(
-    //   'error',
-    //   'Oups',
-    //   `${message1}`,
-    //   'center'
-    // );
-    // console.log(message);
-    // this.messageError = message
-    // console.log(this.messageError);
-
-
-    // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur.
-  }
+    this.messageError = message1;
+    Notify.failure("Erreur l'ors de l'ajout");
+    Loading.remove();
+  };
 
   exacteEmail: boolean = false;
   verifyEmail: any = '';
@@ -170,8 +191,27 @@ export class HomeComponent implements OnInit {
     proprietaire.email = this.emailProprietaire;
     this.utilisateurService.InscriptionNewsletter(
       proprietaire,
-      this.onSuccessHandler,
-      this.onErrorHandler
+      this.onSuccessHandler1,
+      this.onErrorHandler1
     );
   }
+
+  onSuccessHandler1 = (response: any) => {
+    Notify.success('Vous êtes inscrit a notre Newsletter');
+    Loading.remove();
+
+    // this.route.navigate(['/alert']);
+    // Vous pouvez ajouter ici d'autres actions après une inscription réussie, par exemple rediriger l'utilisateur vers une autre page.
+  };
+
+  // Fonction appelée en cas d'erreur lors de l'inscription
+  messageError1: any = '';
+  onErrorHandler1 = (error: any) => {
+    let message1 = error.error.error.email[0];
+    this.messageError1 = message1;
+    Notify.failure("Erreur l'ors de l'inscription");
+    Notify.failure(message1);
+
+    Loading.remove();
+  };
 }
