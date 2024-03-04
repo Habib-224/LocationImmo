@@ -1,21 +1,21 @@
-.dashbord{
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 5fr;
+.dashbord {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
 }
 
-.container{
+.container {
   padding: 0 8vh;
 }
-.container .card{
-    border: none;
-    border-radius: 0;
-    /* min-height: 50vh; */
+.container .card {
+  border: none;
+  border-radius: 0;
+  /* min-height: 50vh; */
 }
 
 /* Recherche réseaux  */
-.search input{
-    border-right-color: white;
+.search input {
+  border-right-color: white;
 }
 
 .pagiColor {
@@ -32,58 +32,55 @@
   color: var(--kergui-blue);
 }
 
-
-
-.search .iconesearch{
-    background-color: white;
-    border-left-color: white;
-    color: var(--base2);
+.search .iconesearch {
+  background-color: white;
+  border-left-color: white;
+  color: var(--base2);
 }
 
 /* le tableau  */
-thead tr th{
-    background-color: var(--base1);
-    color: white;
+thead tr th {
+  background-color: var(--base1);
+  color: white;
 }
-
 
 /* pagination  */
-.pageActuelle{
-    color: var(--base2);
-    font-weight: bold;
+.pageActuelle {
+  color: var(--base2);
+  font-weight: bold;
 }
 
-
-.btnColor{
-    color: var(--base1);
-    border: 1px solid var(--base1);
-    background-color: white;
-}
-
-.page{
-    background-color: white;
-    border: none;
-}
-
-.Section_Statistique_right{
+.btnColor {
+  color: var(--base1);
+  border: 1px solid var(--base1);
   background-color: white;
-  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+
+.page {
+  background-color: white;
+  border: none;
+}
+
+.Section_Statistique_right {
+  background-color: white;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
   width: 100%;
   height: 270px;
-  border-radius:15px;
+  border-radius: 15px;
 }
 
-.table{
+.table {
   width: 98%;
 }
-.Stat_right{
+.Stat_right {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
 
-.Section_right button{
+.Section_right button {
   background-color: #133e33;
   color: white;
   padding: 0.6em;
@@ -91,49 +88,57 @@ thead tr th{
   border-radius: 5px;
 }
 
-.Section_left h4{
-  color: #FFD100;
+.Section_left h4 {
+  color: #ffd100;
 }
 
-.table i{
+.table i {
   color: white;
 }
 
-
-.Detail_utilisateur{
+.Detail_utilisateur {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
 
-.Detail_personelle{
+.Detail_personelle {
   display: flex;
   justify-content: center;
   gap: 40px;
   align-items: center;
 }
 
-.personnelle_image img{
+.personnelle_image img {
   width: 300px;
   border-radius: 20px;
 }
 
-#archive{
+#archive {
   background-color: #133e33;
   color: white;
   margin-right: 20px;
   border: none;
 }
 
-#select_option{
+#select_option {
   width: 250px;
   height: 35px;
   border: 1px solid darkgray;
   outline: none;
-
 }
 
-#pagination{
+#pagination {
   margin-left: -20px;
+}
+
+@media screen and (max-width: 1200px) {
+  #select_option {
+    display: none;
+  }
+
+  #recherche {
+    width: 100%;
+  }
 }

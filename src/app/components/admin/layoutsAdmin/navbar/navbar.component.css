@@ -6,7 +6,6 @@
 
 /* Les statistics  */
 
-
 .statistiqueDashbord .card .titreChiffre {
   color: white;
   font-weight: bold;
@@ -18,7 +17,7 @@
   font-weight: bold;
 }
 
-.titreText{
+.titreText {
   color: #ffd100;
 }
 
@@ -27,10 +26,11 @@
   color: white;
 }
 
-.Card{
+.Card {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
   gap: 40px;
 }
@@ -55,7 +55,9 @@
   cursor: pointer;
 }
 
-.navbar{
+.navbar {
   background-color: white;
+  /* z-index: 0; */
+  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }

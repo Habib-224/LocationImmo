@@ -71,7 +71,7 @@ thead tr th {
   border-radius: 5px;
 }
 
-.personnelle_image img{
+.personnelle_image img {
   width: 300px;
   border-radius: 20px;
 }
@@ -98,7 +98,7 @@ thead tr th {
   align-items: center;
 }
 
-#acceptation button{
+#acceptation button {
   border: 1px solid #133e33;
 }
 
@@ -116,3 +116,8 @@ thead tr th {
   color: var(--kergui-blue);
 }
 
+@media screen and (max-width: 1200px) {
+  #taille4 {
+    font-size: 15px;
+  }
+}

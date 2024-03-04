@@ -12,8 +12,8 @@
       <div class="Utilisateur_non_Archive" *ngIf="archive">
         <div class="row sectionEspace search mb-3" style="margin-left: 10px">
           <h3 class="fw-bold mb-3">Listes Utilisateurs</h3>
-          <div class="col-md-5">
-            <div class="input-group">
+          <div class="col-md-8">
+            <div class="input-group" id="recherche">
               <button id="archive" (click)="Archive()">voir Archive</button>
               <input
                 type="text"
@@ -121,7 +121,7 @@
                         (click)="archiveUtilisateurById(user.id)"
                       ></i>
                     </button>
-                  </td> 
+                  </td>
                 </tr>
               </tbody>
             </table>
