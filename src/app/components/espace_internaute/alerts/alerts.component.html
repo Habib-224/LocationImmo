@@ -11,10 +11,10 @@
       >
         Creer une Alerte
       </button>
-      <button *ngIf="!proprio_etudiant">Alerte disponible</button>
+      <button *ngIf="!proprio_etudiant" id="dispo">Alerte disponible</button>
     </div>
     <div id="cherche">
-      <label for="prix">Filtrer par prix :</label>
+      <label for="prix" id="filtre_Prix">Filtrer par prix :</label>
       <div class="Alert">
         <select id="prix" [(ngModel)]="selectedPrice">
           <option value="" selected>Tous les prix</option>

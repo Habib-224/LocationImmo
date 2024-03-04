@@ -305,11 +305,15 @@
         <div *ngIf="image1.length > 0" class="imageUpload">
           <div id="imagefile" *ngFor="let images of image1; let i = index">
             <img src="../../../../assets/images/imagefile.png" alt="" />
-            <p>{{images.name}}</p>
-            <p style="text-align: center;" (click)="retirer(i)"><i class="fa-solid fa-x"></i></p>
+            <p>{{ images.name }}</p>
+            <p style="text-align: center" (click)="retirer(i)">
+              <i class="fa-solid fa-x"></i>
+            </p>
           </div>
-          <p *ngIf="image1.length>3" class="text-danger">Vous ne pouvez pas uploader plus de 3 Images</p>
         </div>
+        <p style="text-align: center;" *ngIf="image1.length > 3" class="text-danger" >
+          Vous ne pouvez pas uploader plus de 3 Images
+        </p>
 
         <div class="mb-3">
           <label for="file" class="custum-file-upload">
@@ -337,14 +341,24 @@
           <button (click)="changerform('retour')" id="retour">retour</button>
           <button
             id="retour"
-            *ngIf="!exacteDescription || !exacteImage || image1.length > 3 || image1.length<1"
+            *ngIf="
+              !exacteDescription ||
+              !exacteImage ||
+              image1.length > 3 ||
+              image1.length < 1
+            "
             disabled
           >
             Ajouter
           </button>
           <button
             id="Add"
-            *ngIf="exacteDescription && exacteImage && image1.length <= 3 && image1.length>0"
+            *ngIf="
+              exacteDescription &&
+              exacteImage &&
+              image1.length <= 3 &&
+              image1.length > 0
+            "
           >
             Ajouter
           </button>

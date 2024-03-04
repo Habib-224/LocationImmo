@@ -12,7 +12,7 @@
             text-decoration: underline;
             margin-top: -4px;
           "
-          >Type de logement:</label
+          id="typelogement">Type de logement:</label
         >
         <div class="Section_check">
           <div>
@@ -42,9 +42,9 @@
       </div>
 
       <div class="localite">
-        <label for="localite">Localité:</label>&nbsp;&nbsp;
+        <label for="localite" id="localite1">Localité:</label>&nbsp;&nbsp;
 
-        <select name="localite" id="" [(ngModel)]="searchCriteria.localite">
+        <select name="localite" id="localiteselect" [(ngModel)]="searchCriteria.localite">
           <option value="">Selection par localite</option>
           <option
             *ngFor="let localite of localite"

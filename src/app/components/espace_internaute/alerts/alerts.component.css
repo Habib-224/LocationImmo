@@ -262,6 +262,10 @@
   margin-bottom: 30px;
 }
 
+#dispo {
+  margin-top: 22px;
+}
+
 #cherche button {
   padding: 0.3em;
   width: 100px;
@@ -334,7 +338,8 @@
   }
 
   #alerte1 {
-    display: none;
+    margin-top: 20px;
+    width: 200px;
   }
 
   .card1 {
@@ -350,6 +355,36 @@
     text-decoration: none;
     z-index: 0;
     overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #Section_filtre {
+    display: block;
+    margin: 0 auto;
+  }
+
+  #dispo {
+    width: 200px;
+  }
+
+  .section_ajout {
+    display: flex;
+    justify-content: center;
+  }
+
+  #filtre_Prix {
+    display: none;
+  }
+
+  #cherche {
+    display: flex;
+    justify-content: center;
+  }
+
+  #prix {
+    width: 220px;
+    margin-left: 70px;
   }
 }
 
@@ -373,7 +408,6 @@
   color: var(--kergui-blue);
 }
 
-
 #validerAlert {
   background-color: #1b9476;
   color: white;
@@ -382,7 +416,7 @@
   width: 100px;
 }
 
-#validerAlert1{
+#validerAlert1 {
   background-color: darkgray;
   color: white;
   padding: 0.3em;

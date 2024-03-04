@@ -353,7 +353,7 @@ export class AnnoncesComponent implements OnInit {
   //   }
   // }
   ajouterLogement() {
-    Loading.pulse();
+    Loading.dots();
 
     const formData = new FormData();
 

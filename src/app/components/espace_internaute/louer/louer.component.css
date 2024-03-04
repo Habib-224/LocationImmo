@@ -279,3 +279,110 @@ input[type="checkbox"] {
 .btnpagi {
   padding: 1em;
 }
+
+@media screen and (max-width: 1350px) {
+  #Section_filtre {
+    display: flex;
+    justify-content: space-around;
+    gap: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .filtre_localite {
+    display: none;
+  }
+
+  #localite1 {
+    display: none;
+  }
+
+  .Section_check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+
+}
+
+@media screen and (max-width: 750px) {
+  #localiteselect {
+    width: 210px;
+  }
+
+  #typelogement {
+    font-size: 14px;
+  }
+
+  .Section_check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #localiteselect {
+    width: 220px;
+  }
+
+  #typelogement {
+    font-size: 13px;
+  }
+
+  #localiteselect {
+    width: 200px;
+  }
+
+  .Section_check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
+
+
+
+@media screen and (max-width: 300px) {
+  #localiteselect {
+    width: 190px;
+  }
+
+  #typelogement {
+    font-size: 12px;
+  }
+
+  #localiteselect {
+    width: 180px;
+  }
+
+  .Section_check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .check {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
