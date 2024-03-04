@@ -45,6 +45,15 @@ export class AnnoncesComponent implements OnInit {
     private route: Router
   ) {}
 
+  min = 'minDate()';
+
+  minDate(): string {
+    const currentDate = new Date();
+    // Formate la date au format ISO (YYYY-MM-DD) pour l'attribut min
+    const isoDate = currentDate.toISOString().split('T')[0];
+    return isoDate;
+  }
+
   localite: any;
   ngOnInit(): void {
     this.getAllLogementByOwner();
@@ -323,11 +332,11 @@ export class AnnoncesComponent implements OnInit {
 
   retirer(id: number) {
     console.log('retirer', id);
-    for (let i = 0; i <this.image1.length; i++) {
+    for (let i = 0; i < this.image1.length; i++) {
       if (id == i) {
-          this.image1.splice(i, 1);
-          console.log("l'element supprimer est le ",);
-          console.log('la liste de toutes les images ', this.image1);
+        this.image1.splice(i, 1);
+        console.log("l'element supprimer est le ");
+        console.log('la liste de toutes les images ', this.image1);
       }
     }
   }

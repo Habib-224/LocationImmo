@@ -215,6 +215,7 @@
           <input
             type="date"
             class="form-control"
+            [min]="minDate()"
             id="disponibilite"
             name="disponibilite"
             [(ngModel)]="logement.disponibilite"
