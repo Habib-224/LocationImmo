@@ -304,6 +304,14 @@ export class EspacePersonnelleLogementsComponent {
   // --------------Methode de recherche et de pagination------------------
   // Methode de recherche automatique pour les reseaux
 
+  min = 'minDate()';
+
+  minDate(): string {
+    const currentDate = new Date();
+    // Formate la date au format ISO (YYYY-MM-DD) pour l'attribut min
+    const isoDate = currentDate.toISOString().split('T')[0];
+    return isoDate;
+  }
   ajouterLogement() {
     Loading.dots();
     const formData = new FormData();
@@ -375,7 +383,6 @@ export class EspacePersonnelleLogementsComponent {
   }
 
   updateLogement() {
-
     Loading.dots();
 
     const formData = new FormData();
@@ -396,14 +403,14 @@ export class EspacePersonnelleLogementsComponent {
 
     this.logementService.ModifierLogement(formData, this.idlogement).subscribe(
       (response) => {
-        Notify.success("Logement modifié")
+        Notify.success('Logement modifié');
         this.getAllLogementByOwner();
         // console.log('voici le message', response);
         Loading.remove();
       },
 
       (error) => {
-        Notify.failure("Erreur l'ors de la modification")
+        Notify.failure("Erreur l'ors de la modification");
         console.log('voici le message', error);
         Loading.remove();
       }
