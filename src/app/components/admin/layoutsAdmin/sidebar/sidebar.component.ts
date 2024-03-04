@@ -15,7 +15,9 @@ export class SidebarComponent implements OnInit {
     private route: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
+  
 
   affichestatut() {
     // this.usercon = localStorage.getItem('Userconnect');

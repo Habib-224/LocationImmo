@@ -1,25 +1,17 @@
 <div class="sidebar">
-  <h5 id="admin">{{userOnline=="etudiant"? "Espace Etudiant" : "Espace Proprietaire"}}</h5>
+  <h5 id="admin">
+    {{ userOnline == "etudiant" ? "Espace Etudiant" : "Espace Proprietaire" }}
+  </h5>
   <div class="separation"></div>
 
   <ul class="mt-2 containerLink mb-4">
-    <!-- <li
-      class="mt-4"
-      id="dash"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a href="" id="Statistique" routerLink="/espace_personnelle">
-        <i class="fa-solid fa-chart-simple"></i>
-        <span class="link ms-3 fs-7" id="">Statistique</span>
-      </a>
-    </li> -->
     <li
       class="mt-4"
       id="dash"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-     *ngIf="userOnline=='etudiant'" >
+      *ngIf="userOnline == 'etudiant'"
+    >
       <a href="" id="Statistique" routerLink="/espace_personnelle_alerts">
         <i class="fa-solid fa-chart-simple"></i>
         <span class="link ms-3 fs-7" id="">Gestion Annonces</span>
@@ -30,7 +22,8 @@
       id="dash"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-     *ngIf="userOnline=='etudiant'">
+      *ngIf="userOnline == 'etudiant'"
+    >
       <a href="" id="Statistique" routerLink="/espace_personnelle_profil">
         <i class="fa-solid fa-chart-simple"></i>
         <span class="link ms-3 fs-7" id="">Information Profil</span>
@@ -42,7 +35,8 @@
       id="dash"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-    *ngIf="userOnline=='proprietaire'" >
+      *ngIf="userOnline == 'proprietaire'"
+    >
       <a href="" id="Statistique" routerLink="/espace_personnelle_logement">
         <i class="fa-solid fa-chart-simple"></i>
         <span class="link ms-3 fs-7" id="">Gestion Logement</span>
@@ -64,8 +58,13 @@
       id="dash"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-     *ngIf="userOnline=='proprietaire'">
-      <a href="" id="Statistique" routerLink="/espace_personnelle_proprioProfil">
+      *ngIf="userOnline == 'proprietaire'"
+    >
+      <a
+        href=""
+        id="Statistique"
+        routerLink="/espace_personnelle_proprioProfil"
+      >
         <i class="fa-solid fa-chart-simple"></i>
         <span class="link ms-3 fs-7" id="">Information Personnelle</span>
       </a>
@@ -77,7 +76,9 @@
   <div class="deconnection">
     <button class="btn btnDeconnect fs-5">
       <i class="fa-solid fa-right-from-bracket"></i>
-      <span class="ms-3 link" (click)="returnAccueil()">Revenir a l'accueil</span>
+      <span class="ms-3 link" (click)="returnAccueil()"
+        >Revenir a l'accueil</span
+      >
     </button>
   </div>
 </div>

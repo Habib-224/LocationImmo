@@ -11,7 +11,7 @@
     <div class="containerMessage container">
       <div class="row sectionEspace search mb-3">
         <div class="col-md-3">
-          <h3 class="fw-bold mb-3" style="margin-left: 20px">
+          <h3 class="fw-bold mb-3" style="margin-left: 20px" id="alerte">
             Listes des Alerts
           </h3>
         </div>
@@ -91,7 +91,7 @@
                       : "Prise en charge"
                   }}
                 </td>
-                <td class="text-center">
+                <td class="text-center" id="boutton">
                   <button
                     class="btn me-2"
                     style="background-color: #133e33"
@@ -288,7 +288,6 @@
                     type="submit"
                     (click)="UpdateAlertByUser(recupID)"
                     id="modifier"
-                    
                   >
                     Modifier
                   </button>
@@ -371,7 +370,11 @@
                   ></textarea>
                 </div>
                 <button
-                  *ngIf="exactePrix && description_alert!='' && caracteristique_alert!=''"
+                  *ngIf="
+                    exactePrix &&
+                    description_alert != '' &&
+                    caracteristique_alert != ''
+                  "
                   type="submit"
                   (click)="AjoutAlertByUser()"
                   id="modifier"
@@ -380,7 +383,11 @@
                   Ajouter
                 </button>
                 <button
-                *ngIf="!exactePrix || description_alert=='' || caracteristique_alert==''"
+                  *ngIf="
+                    !exactePrix ||
+                    description_alert == '' ||
+                    caracteristique_alert == ''
+                  "
                   type="submit"
                   (click)="AjoutAlertByUser()"
                   id="modifier"

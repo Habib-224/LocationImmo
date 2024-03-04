@@ -19,7 +19,7 @@ export class EspacePersonnelleProfilComponent {
   button_show: boolean = true;
 
   showButton() {
-    this.button_show = !this.button_show;
+    this.button_show = !this.button_show; 
   }
 
   nom_profil: any = '';

@@ -90,3 +90,23 @@
   width: 180px;
   margin-top: 30px;
 }
+
+
+@media screen and (max-width: 800px) {
+  .Information_profil {
+    display: block;
+    margin: auto;
+  }
+
+  .Profil {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  .Formulaire{
+     display: block;
+    margin: 0 auto;
+    /* margin-bottom: 20px; */
+  }
+}

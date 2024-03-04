@@ -4,7 +4,6 @@
   grid-template-columns: 1fr 5fr;
 }
 
-
 .Section_Statistique_right {
   background-color: white;
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
@@ -13,8 +12,6 @@
   height: 270px;
   border-radius: 15px;
 }
-
-
 
 #publication button {
   margin-left: 10px;
@@ -118,3 +115,21 @@
   margin-top: 30px;
 }
 
+@media screen and (max-width: 800px) {
+  .Information_profil {
+    display: block;
+    margin: auto;
+  }
+
+  .Profil {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  .Formulaire{
+     display: block;
+    margin: 0 auto;
+    /* margin-bottom: 20px; */
+  }
+}

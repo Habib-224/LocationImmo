@@ -137,3 +137,27 @@ thead tr th {
   border: 1px solid var(--kergui-blue);
   color: var(--kergui-blue);
 }
+
+@media screen and (max-width: 1400px) {
+  #alerte {
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #alerte {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #alerte {
+    display: none;
+  }
+
+  #boutton {
+    display: block; /* Utiliser Flexbox */
+    align-items: center; /* Aligner verticalement les éléments */
+    justify-content: center;
+  }
+}
